@@ -114,10 +114,10 @@ Install-OSPlatformServiceCenter -Verbose
 Install-OSPlatformSysComponents -Verbose
 
 # -- Install license
-Install-OSPlatformLicense -Path $LicensePath -Verbose
+#Install-OSPlatformLicense -Path $LicensePath -Verbose
 
 # -- Install Lifetime
-Install-OSPlatformLifetime -Verbose
+#Install-OSPlatformLifetime -Verbose
 
 # -- System tunning
 Set-OSPlatformPerformanceTunning -Verbose
