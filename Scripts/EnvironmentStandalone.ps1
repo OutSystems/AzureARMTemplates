@@ -12,10 +12,10 @@
     [string]$OSDBCatalog,
 
     [Parameter()]
-    [string]$DBSAUser,
+    [string]$OSDBSAUser,
 
     [Parameter()]
-    [string]$DBSAPass,
+    [string]$OSDBSAPass,
 
     [Parameter()]
     [string]$OSDBSessionServer,
@@ -63,17 +63,17 @@ $ConfigToolArgs = @{
 
     DBServer            = $OSDBServer
     DBCatalog           = $OSDBCatalog
-    DBSAUser            = $DBSAUser              # For Windows auth you need to add the domain like DOMAIN\Username
-    DBSAPass            = $DBSAPass
+    DBSAUser            = $OSDBSAUser              # For Windows auth you need to add the domain like DOMAIN\Username
+    DBSAPass            = $OSDBSAPass
 
-    DBSessionServer     = $DBSessionServer
+    DBSessionServer     = $OSDBSessionServer
     DBSessionCatalog    = $OSDBSessionCatalog
     DBSessionUser       = $OSDBSessionUser            # For Windows auth you need to add the domain like DOMAIN\Username
     DBSessionPass       = $OSDBSessionPass
 
     DBAdminUser         = $OSDBAdminUser              # For Windows auth you need to add the domain like DOMAIN\Username
     DBAdminPass         = $OSDBAdminPass
-    DBRuntimeUser       = $DBRuntimeUser            # For Windows auth you need to add the domain like DOMAIN\Username
+    DBRuntimeUser       = $OSDBRuntimeUser            # For Windows auth you need to add the domain like DOMAIN\Username
     DBRuntimePass       = $OSDBRuntimePass
     DBLogUser           = $OSDBLogUser               # For Windows auth you need to add the domain like DOMAIN\Username
     DBLogPass           = $OSDBLogPass
