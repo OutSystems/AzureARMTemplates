@@ -6,7 +6,8 @@
             "type": "string"
         },
         "virtualMachineSize": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "Standard_D2s_v3"
         },
         "adminUsername": {
             "type": "string"
