@@ -18,6 +18,9 @@
         "virtualNetworkName": {
             "type": "string"
         },
+        "virtualNetworkResourceGroup": {
+            "type": "string"
+        },
         "subnetName": {
             "type": "string"
         },
@@ -87,7 +90,7 @@
         }
     },
     "variables": {
-        "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
+        "vnetId": "[resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
         "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
         "nicName": "[concat(parameters('virtualMachineName'), '-nic01')]",
         "nsgName": "[concat(parameters('virtualMachineName'), '-nsg')]",
@@ -182,7 +185,7 @@
                         "name": "ipconfig1",
                         "properties": {
                             "subnet": {
-                                "id": "[concat(reference(concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))), '/subnets/', parameters('subnetName'))]"
+                                "id": "[variables('subnetRef')]"
                             },
                             "privateIPAllocationMethod": "Dynamic",
                             "publicIpAddress": {
