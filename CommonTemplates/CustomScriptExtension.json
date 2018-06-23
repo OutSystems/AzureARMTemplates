@@ -12,7 +12,7 @@
         "type": "string"
       },
       "arguments": {
-        "type": "string",
+        "type": "securestring",
         "defaultValue": " "
       }
     },

@@ -51,7 +51,7 @@
             "defaultValue": "sa"
         },
         "OSDBSAPass": {
-            "type": "string"
+            "type": "securestring"
         },
         "OSDBSessionServer": {
             "type": "string"
@@ -65,28 +65,28 @@
             "defaultValue": "OSSTATE"
         },
         "OSDBSessionPass": {
-            "type": "string"
+            "type": "securestring"
         },
         "OSDBAdminUser": {
             "type": "string",
             "defaultValue": "OSADMIN"
         },
         "OSDBAdminPass": {
-            "type": "string"
+            "type": "securestring"
         },
         "OSDBRuntimeUser": {
             "type": "string",
             "defaultValue": "OSRUNTIME"
         },
         "OSDBRuntimePass": {
-            "type": "string"
+            "type": "securestring"
         },
         "OSDBLogUser": {
             "type": "string",
             "defaultValue": "OSLOG"
         },
         "OSDBLogPass": {
-            "type": "string"
+            "type": "securestring"
         }
     },
     "variables": {
@@ -162,7 +162,7 @@
                         "value": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Scripts/EnvironmentStandalone.ps1"
                     },
                     "arguments": {
-                        "value": "[concat('-OSDBProvider', parameters('OSDBProvider'), ' -OSDBAuth', parameters('OSDBAuth'), ' -OSDBServer', parameters('OSDBServer'), ' -OSDBCatalog', parameters('OSDBCatalog'), ' -OSDBSAUser', parameters('OSDBSAUser'), ' -OSDBSAPass', parameters('OSDBSAPass'), ' -OSDBSessionServer', parameters('OSDBSessionServer'), ' -OSDBSessionCatalog', parameters('OSDBSessionCatalog'), ' -OSDBSessionUser', parameters('OSDBSessionUser'), ' -OSDBSessionPass', parameters('OSDBSessionPass'), ' -OSDBAdminUser', parameters('OSDBAdminUser'), ' -OSDBAdminPass', parameters('OSDBAdminPass'), ' -OSDBRuntimeUser', parameters('OSDBRuntimeUser'), ' -OSDBRuntimePass', parameters('OSDBRuntimePass'), ' -OSDBLogUser', parameters('OSDBLogUser'), ' -OSDBLogPass', parameters('OSDBLogPass'))]"
+                        "value": "[concat('-OSDBProvider ', parameters('OSDBProvider'), ' -OSDBAuth ', parameters('OSDBAuth'), ' -OSDBServer ', parameters('OSDBServer'), ' -OSDBCatalog ', parameters('OSDBCatalog'), ' -OSDBSAUser ', parameters('OSDBSAUser'), ' -OSDBSAPass ', parameters('OSDBSAPass'), ' -OSDBSessionServer ', parameters('OSDBSessionServer'), ' -OSDBSessionCatalog ', parameters('OSDBSessionCatalog'), ' -OSDBSessionUser ', parameters('OSDBSessionUser'), ' -OSDBSessionPass ', parameters('OSDBSessionPass'), ' -OSDBAdminUser ', parameters('OSDBAdminUser'), ' -OSDBAdminPass ', parameters('OSDBAdminPass'), ' -OSDBRuntimeUser ', parameters('OSDBRuntimeUser'), ' -OSDBRuntimePass ', parameters('OSDBRuntimePass'), ' -OSDBLogUser ', parameters('OSDBLogUser'), ' -OSDBLogPass ', parameters('OSDBLogPass'))]"
                     }
                 }
             },
