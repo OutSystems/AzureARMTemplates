@@ -122,8 +122,8 @@ $ConfigToolArgs = @{
 Invoke-OSConfigurationTool -Verbose @ConfigToolArgs
 
 # -- Install Service Center and SysComponents
-Install-OSPlatformServiceCenter
-Install-OSPlatformSysComponents
+Install-OSPlatformServiceCenter -Verbose
+Install-OSPlatformSysComponents -Verbose
 
 # -- Install license
 Install-OSPlatformLicense -Path $OSLicensePath -Verbose
