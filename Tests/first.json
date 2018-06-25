@@ -149,7 +149,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/CommonTemplates/CustomScriptExtension.json"
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/CommonTemplates/Microsoft.CustomScriptExtension.json"
                 },
                 "parameters": {
                     "vmName": {
