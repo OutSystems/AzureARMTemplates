@@ -79,7 +79,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/CommonTemplates/CustomScriptExtension.json"
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/CommonTemplates/Microsoft.CustomScriptExtension.json"
                 },
                 "parameters": {
                     "vmName": {
@@ -89,7 +89,7 @@
                         "value": "[resourceGroup().location]"
                     },
                     "fileUris": {
-                        "value": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Scripts/EnvironmentStandalone.ps1"
+                        "value": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Scripts/ControllerNewStandalone.ps1"
                     },
                     "arguments": {
                         "value": "[concat('-OSDBProvider ', parameters('OSDBProvider'), ' -OSDBAuth ', parameters('OSDBAuth'), ' -OSDBServer ', parameters('OSDBServer'), ' -OSDBCatalog ', parameters('OSDBCatalog'), ' -OSDBSAUser ', parameters('OSDBSAUser'), ' -OSDBSAPass ', parameters('OSDBSAPass'), ' -OSDBSessionServer ', parameters('OSDBSessionServer'), ' -OSDBSessionCatalog ', parameters('OSDBSessionCatalog'), ' -OSDBSessionUser ', parameters('OSDBSessionUser'), ' -OSDBSessionPass ', parameters('OSDBSessionPass'), ' -OSDBAdminUser ', parameters('OSDBAdminUser'), ' -OSDBAdminPass ', parameters('OSDBAdminPass'), ' -OSDBRuntimeUser ', parameters('OSDBRuntimeUser'), ' -OSDBRuntimePass ', parameters('OSDBRuntimePass'), ' -OSDBLogUser ', parameters('OSDBLogUser'), ' -OSDBLogPass ', parameters('OSDBLogPass'))]"

@@ -1,0 +1,237 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01-preview/deploymentTemplate.json",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachineSize": {
+            "type": "string",
+            "defaultValue": "Standard_D2s_v3"
+        },
+        "virtualNetworkName": {
+            "type": "string"
+        },
+        "virtualNetworkResourceGroup": {
+            "type": "string"
+        },
+        "subnetName": {
+            "type": "string"
+        },
+        "appGwSubnetName": {
+            "type": "string"
+        }, 
+      "vmssName": {
+        "type": "string",
+        "metadata": {
+          "description": "String used as a base for naming resources. Must be 3-57 characters in length and globally unique across Azure. A hash is prepended to this string for some resources, and resource-specific information is appended."
+        },
+        "maxLength": 57
+      },
+      "instanceCount": {
+        "type": "int",
+        "metadata": {
+          "description": "Number of VM instances (1000 or less)."
+        },
+        "maxValue": 1000
+      },
+      "adminUsername": {
+        "type": "string",
+        "metadata": {
+          "description": "Admin username on all VMs."
+        }
+      },
+      "adminPassword": {
+        "type": "securestring",
+        "metadata": {
+          "description": "Admin password on all VMs."
+        }
+      }
+    },
+    "variables": {
+        "namingInfix": "[toLower(substring(concat(parameters('vmssName'), uniqueString(resourceGroup().id)), 0, 9))]",
+        "vnetId": "[resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
+        "subnetId": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
+        "appgwsubnetId": "[concat(variables('vnetId'), '/subnets/', parameters('appGwSubnetName'))]",
+        "nicName": "[concat(variables('namingInfix'), '-nic')]",
+        "appgwName": "[concat(variables('namingInfix'), 'appgw')]",
+        "appgwId": "[resourceId('Microsoft.Network/applicationGateways',variables('appgwName'))]",
+        "appgwpipName": "[concat(variables('namingInfix'), 'appgwpip')]",
+        "appgwpipId": "[resourceId('Microsoft.Network/publicIPAddresses',variables('appgwpipName'))]",
+
+
+      "ipConfigName": "[concat(variables('namingInfix'), 'ipconfig')]",
+            
+      "appGwSubnetName": "[concat(variables('namingInfix'),'appGwSubnet')]",
+
+      "appGwBePoolName": "[concat(variables('namingInfix'), 'appGwBepool')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[variables('appgwpipName')]",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2016-03-30",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "sku": {
+                    "name": "Basic"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/applicationGateways",
+            "name": "[variables('appgwName')]",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2016-03-30",
+            "dependsOn": [
+                "[concat('Microsoft.Network/publicIPAddresses/', variables('appgwpipName'))]"
+            ],
+            "properties": {
+                "sku": {
+                    "name": "Standard_Medium",
+                    "tier": "Standard",
+                    "capacity": "2"
+                },
+                "gatewayIPConfigurations": [
+                    {
+                        "name": "appGatewayIpConfig",
+                        "properties": {
+                            "subnet": {
+                                "id": "[variables('appgwsubnetId')]"
+                            }
+                        }
+                    }
+                ],
+                "frontendIPConfigurations": [
+                    {
+                        "name": "appGatewayFrontendIP",
+                        "properties": {
+                            "PublicIPAddress": {
+                            "id": "[variables('appgwpipId')]"
+                            }
+                        }
+                    }
+                ],
+                "frontendPorts": [
+                    {
+                        "name": "appGatewayFrontendPort",
+                        "properties": {
+                            "Port": 80
+                        }
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "appGatewayBackendPool"
+                    }
+                ],
+                "backendHttpSettingsCollection": [
+                    {
+                        "name": "appGwBackendHttpSettings",
+                        "properties": {
+                            "Port": 80,
+                            "Protocol": "Http",
+                            "CookieBasedAffinity": "Disabled"
+                        }
+                    }
+                ],
+                "httpListeners": [
+                    {
+                        "name": "appGatewayHttpListener",
+                        "properties": {
+                            "FrontendIPConfiguration": {
+                                "Id": "[concat(variables('appgwId'), '/frontendIPConfigurations/appGatewayFrontendIP')]"
+                            },
+                            "FrontendPort": {
+                                "Id": "[concat(variables('appgwId'), '/frontendPorts/appGatewayFrontendPort')]"
+                            },
+                            "Protocol": "Http",
+                            "SslCertificate": null
+                        }
+                    }
+                ],
+                "requestRoutingRules": [
+                    {
+                        "Name": "rule1",
+                        "properties": {
+                            "RuleType": "Basic",
+                            "httpListener": {
+                                "id": "[concat(variables('appgwId'), '/httpListeners/appGwHttpListener')]"
+                            },
+                            "backendAddressPool": {
+                                "id": "[concat(variables('appgwId'), '/backendAddressPools/appGatewayBackendPool')]"
+                            },
+                            "backendHttpSettings": {
+                                "id": "[concat(variables('appGwID'), '/backendHttpSettingsCollection/appGatewayBackendHttpSettings')]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachineScaleSets",
+            "name": "[variables('namingInfix')]",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2016-04-30-preview",
+            "dependsOn": [
+                "[concat('Microsoft.Network/applicationGateways/', variables('appgwName'))]"
+            ],
+            "sku": {
+                "name": "[parameters('virtualMachineSize')]",
+                "tier": "Standard",
+                "capacity": "[parameters('instanceCount')]"
+            },
+            "properties": {
+                "overprovision": "true",
+                "singlePlacementGroup": "false",
+                "upgradePolicy": {
+                    "mode": "Automatic"
+                },
+                "virtualMachineProfile": {
+                    "storageProfile": {
+                        "osDisk": {
+                            "caching": "ReadWrite",
+                            "createOption": "FromImage"
+                        },
+                        "dataDisks": [],
+                        "imageReference": {
+                            "publisher": "MicrosoftWindowsServer",
+                            "offer": "WindowsServer",
+                            "sku": "2016-Datacenter",
+                            "version": "latest"
+                        }
+                    },
+                    "osProfile": {
+                        "computerNamePrefix": "[variables('namingInfix')]",
+                        "adminUsername": "[parameters('adminUsername')]",
+                        "adminPassword": "[parameters('adminPassword')]"
+                    },
+                    "networkProfile": {
+                        "networkInterfaceConfigurations": [
+                            {
+                                "name": "[variables('nicName')]",
+                                "properties": {
+                                    "primary": true,
+                                    "ipConfigurations": [
+                                        {
+                                            "name": "[variables('ipConfigName')]",
+                                            "properties": {
+                                                "subnet": {
+                                                    "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'), '/subnets/', parameters('subnetName'))]"
+                                                },
+                                                "ApplicationGatewayBackendAddressPools": [
+                                                    {
+                                                        "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/applicationGateways/', variables('appGwName'), '/backendAddressPools/appGatewayBackendPool')]"
+                                                    }
+                                                ]
+                                            }   
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    ]
+}
