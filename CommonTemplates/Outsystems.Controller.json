@@ -2,7 +2,7 @@
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "virtualMachineName": {
+        "resourceName": {
             "type": "string"
         },
         "OSController": {
@@ -87,11 +87,11 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/CommonTemplates/Microsoft.CustomScriptExtension.json"
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/CommonTemplates/Microsoft.Compute.CustomScriptExtension.json"
                 },
                 "parameters": {
-                    "vmName": {
-                        "value": "[parameters('virtualMachineName')]"
+                    "resourceName": {
+                        "value": "[parameters('resourceName')]"
                     },
                     "location": {
                         "value": "[resourceGroup().location]"

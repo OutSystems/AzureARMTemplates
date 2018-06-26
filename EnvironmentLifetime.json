@@ -152,7 +152,7 @@
                     "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/CommonTemplates/Outsystems.Lifetime.json"
                 },
                 "parameters": {
-                    "virtualMachineName": {
+                    "resourceName": {
                         "value": "[parameters('virtualMachineName')]"
                     },
                     "OSDBProvider": {

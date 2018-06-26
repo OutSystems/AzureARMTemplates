@@ -2,7 +2,7 @@
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-      "vmName": {
+      "resourceName": {
         "type": "string"
       },
       "location": {
@@ -24,7 +24,7 @@
     },
     "resources": [
       {
-        "name": "[concat(parameters('vmName'),'/CustomScriptExtension')]",
+        "name": "[concat(parameters('resourceName'),'/CustomScriptExtension')]",
         "type": "Microsoft.Compute/virtualMachines/extensions",
         "location": "[parameters('location')]",
         "apiVersion": "2015-06-15",

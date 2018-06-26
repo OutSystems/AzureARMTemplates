@@ -1,118 +1,63 @@
 {
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01-preview/deploymentTemplate.json",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "vmssName": {
-            "type": "string"
-        },
         "virtualMachineSize": {
             "type": "string",
             "defaultValue": "Standard_D2s_v3"
         },
-        "instanceCount": {
-            "type": "int",
-            "defaultValue": 2
-        },
-        "adminUsername": {
+        "virtualNetworkName": {
             "type": "string"
-        },
-        "adminPassword": {
-            "type": "securestring"
         },
         "virtualNetworkResourceGroup": {
             "type": "string"
         },
-        "virtualNetworkName": {
+        "subnetName": {
             "type": "string"
         },
-        "virtualNetworkSubnetName": {
+        "appGwSubnetName": {
             "type": "string"
+        }, 
+      "vmssName": {
+        "type": "string",
+        "metadata": {
+          "description": "String used as a base for naming resources. Must be 3-57 characters in length and globally unique across Azure. A hash is prepended to this string for some resources, and resource-specific information is appended."
         },
-        "applicationGatewaySubnetName": {
-            "type": "string"
+        "maxLength": 57
+      },
+      "instanceCount": {
+        "type": "int",
+        "metadata": {
+          "description": "Number of VM instances (1000 or less)."
         },
-        "databaseProvider": {
-            "type": "string",
-            "allowedValues": [
-                "SQL",
-                "SQLExpress",
-                "AzureSQL"
-            ]
-        },
-        "databaseServer": {
-            "type": "string"
-        },
-        "databaseCatalog": {
-            "type": "string",
-            "defaultValue": "outsystems"
-        },
-        "databaseAuthenticationType": {
-            "type": "string",
-            "allowedValues": [
-                "SQL",
-                "Windows"
-            ]
-        },
-        "databaseAdminUser": {
-            "type": "string",
-            "defaultValue": "sa"
-        },
-        "databaseAdminPass": {
-            "type": "securestring"
-        },
-        "OutsystemsDatabaseAdminUser": {
-            "type": "string",
-            "defaultValue": "OSADMIN"
-        },
-        "OutsystemsDatabaseAdminPass": {
-            "type": "securestring"
-        },
-        "OutsystemsDatabaseRuntimeUser": {
-            "type": "string",
-            "defaultValue": "OSRUNTIME"
-        },
-        "OutsystemsDatabaseRuntimePass": {
-            "type": "securestring"
-        },
-        "OutsystemsDatabaseLogUser": {
-            "type": "string",
-            "defaultValue": "OSLOG"
-        },
-        "OutsystemsDatabaseLogPass": {
-            "type": "securestring"
-        },
-        "databaseSessionServer": {
-            "type": "string"
-        },
-        "databaseSessionCatalog": {
-            "type": "string",
-            "defaultValue": "osSession"
-        },
-        "databaseSessionUser": {
-            "type": "string",
-            "defaultValue": "OSSTATE"
-        },
-        "databaseSessionPass": {
-            "type": "securestring"
-        },
-        "outsystemsEnvironmentController": {
-            "type": "string"
-        },
-        "outsystemsEnvironmentPrivatekey": {
-            "type": "string"
-        }      
+        "maxValue": 1000
+      },
+      "adminUsername": {
+        "type": "string",
+        "metadata": {
+          "description": "Admin username on all VMs."
+        }
+      },
+      "adminPassword": {
+        "type": "securestring",
+        "metadata": {
+          "description": "Admin password on all VMs."
+        }
+      }
     },
     "variables": {
         "namingInfix": "[toLower(substring(concat(parameters('vmssName'), uniqueString(resourceGroup().id)), 0, 9))]",
         "vnetId": "[resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
-        "subnetId": "[concat(variables('vnetId'), '/subnets/', parameters('virtualNetworkSubnetName'))]",
-        "appgwsubnetId": "[concat(variables('vnetId'), '/subnets/', parameters('applicationGatewaySubnetName'))]",
+        "subnetId": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
+        "appgwsubnetId": "[concat(variables('vnetId'), '/subnets/', parameters('appGwSubnetName'))]",
         "nicName": "[concat(variables('namingInfix'), '-nic')]",
-        "appgwName": "[concat(parameters('vmssName'), '-appgw')]",
+        "appgwName": "[concat(variables('namingInfix'), 'appgw')]",
         "appgwId": "[resourceId('Microsoft.Network/applicationGateways',variables('appgwName'))]",
-        "appgwpipName": "[concat(parameters('vmssName'), '-pip')]",
+        "appgwpipName": "[concat(variables('namingInfix'), 'appgwpip')]",
         "appgwpipId": "[resourceId('Microsoft.Network/publicIPAddresses',variables('appgwpipName'))]",
-        "ipConfigName": "[concat(variables('namingInfix'), 'ipconfig')]"
+
+
+      "ipConfigName": "[concat(variables('namingInfix'), 'ipconfig')]"
     },
     "resources": [
         {
@@ -131,7 +76,7 @@
             "type": "Microsoft.Network/applicationGateways",
             "name": "[variables('appgwName')]",
             "location": "[resourceGroup().location]",
-            "apiVersion": "2017-06-01",
+            "apiVersion": "2016-03-30",
             "dependsOn": [
                 "[concat('Microsoft.Network/publicIPAddresses/', variables('appgwpipName'))]"
             ],
@@ -139,7 +84,7 @@
                 "sku": {
                     "name": "Standard_Medium",
                     "tier": "Standard",
-                    "capacity": 2
+                    "capacity": "2"
                 },
                 "gatewayIPConfigurations": [
                     {
@@ -220,7 +165,7 @@
         },
         {
             "type": "Microsoft.Compute/virtualMachineScaleSets",
-            "name": "[parameters('vmssName')]",
+            "name": "[variables('namingInfix')]",
             "location": "[resourceGroup().location]",
             "apiVersion": "2017-03-30",
             "dependsOn": [
@@ -232,8 +177,8 @@
                 "capacity": "[parameters('instanceCount')]"
             },
             "properties": {
-                "overprovision": true,
-                "singlePlacementGroup": false,
+                "overprovision": "true",
+                "singlePlacementGroup": "false",
                 "upgradePolicy": {
                     "mode": "Automatic"
                 },
@@ -252,22 +197,22 @@
                         }
                     },
                     "osProfile": {
-                        "computerNamePrefix": "[concat(parameters('vmssName'),'node')]",
+                        "computerNamePrefix": "[variables('namingInfix')]",
                         "adminUsername": "[parameters('adminUsername')]",
                         "adminPassword": "[parameters('adminPassword')]"
                     },
                     "networkProfile": {
                         "networkInterfaceConfigurations": [
                             {
-                                "name": "[concat(parameters('vmssName'),'netconfig')]",
+                                "name": "[variables('nicName')]",
                                 "properties": {
                                     "primary": true,
                                     "ipConfigurations": [
                                         {
-                                            "name": "[concat(parameters('vmssName'),'ipconfig')]",
+                                            "name": "[variables('ipConfigName')]",
                                             "properties": {
                                                 "subnet": {
-                                                    "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', parameters('virtualNetworkResourceGroup'), '/providers/Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'), '/subnets/', parameters('virtualNetworkSubnetName'))]"
+                                                    "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', parameters('virtualNetworkResourceGroup'), '/providers/Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'), '/subnets/', parameters('subnetName'))]"
                                                 },
                                                 "publicIPAddressconfiguration": {
                                                     "name": "publicip",
@@ -289,79 +234,6 @@
                     }
                 }
             }
-        },
-        {
-            "name": "Microsoft.OutsystemsFrontend",
-            "apiVersion": "2015-01-01",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/CommonTemplates/Outsystems.Frontend.json"
-                },
-                "parameters": {
-                    "resourceName": {
-                        "value": "[parameters('vmssName')]"
-                    },
-                    "OSController": {
-                        "value": "[parameters('outsystemsEnvironmentController')]"
-                    },
-                    "OSPrivateKey": {
-                        "value": "[parameters('outsystemsEnvironmentPrivatekey')]"
-                    },
-                    "OSDBProvider": {
-                        "value": "[parameters('databaseProvider')]"
-                    },
-                    "OSDBAuth": {
-                        "value": "[parameters('databaseAuthenticationType')]"
-                    },
-                    "OSDBServer": {
-                        "value": "[parameters('databaseServer')]"
-                    },
-                    "OSDBCatalog": {
-                        "value": "[parameters('databaseCatalog')]"
-                    },
-                    "OSDBSAUser": {
-                        "value": "[parameters('databaseAdminUser')]"
-                    },
-                    "OSDBSAPass": {
-                        "value": "[parameters('databaseAdminPass')]"
-                    },
-                    "OSDBSessionServer": {
-                        "value": "[parameters('databaseSessionServer')]"
-                    },
-                    "OSDBSessionCatalog": {
-                        "value": "[parameters('databaseSessionCatalog')]"
-                    },
-                    "OSDBSessionUser": {
-                        "value": "[parameters('databaseSessionUser')]"
-                    },
-                    "OSDBSessionPass": {
-                        "value": "[parameters('databaseSessionPass')]"
-                    },
-                    "OSDBAdminUser": {
-                        "value": "[parameters('OutsystemsDatabaseAdminUser')]"
-                    },
-                    "OSDBAdminPass": {
-                        "value": "[parameters('OutsystemsDatabaseAdminPass')]"
-                    },
-                    "OSDBRuntimeUser": {
-                        "value": "[parameters('OutsystemsDatabaseRuntimeUser')]"
-                    },
-                    "OSDBRuntimePass": {
-                        "value": "[parameters('OutsystemsDatabaseRuntimePass')]"
-                    },
-                    "OSDBLogUser": {
-                        "value": "[parameters('OutsystemsDatabaseLogUser')]"
-                    },
-                    "OSDBLogPass": {
-                        "value": "[parameters('OutsystemsDatabaseLogPass')]"
-                    }
-                }
-            },
-            "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachineScaleSets/', parameters('vmssName'))]"
-            ]
         }
     ]
 }

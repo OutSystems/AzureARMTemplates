@@ -1,0 +1,108 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "resourceName": {
+            "type": "string"
+        },
+        "OSController": {
+            "type": "string"
+        },
+        "OSPrivateKey": {
+            "type": "string"
+        },
+        "OSDBProvider": {
+            "type": "string",
+            "allowedValues": [
+                "SQL",
+                "SQLExpress",
+                "AzureSQL"
+            ]
+        },
+        "OSDBAuth": {
+            "type": "string",
+            "allowedValues": [
+                "SQL",
+                "Windows"
+            ]
+        },
+        "OSDBServer": {
+            "type": "string"
+        },
+        "OSDBCatalog": {
+            "type": "string",
+            "defaultValue": "outsystems"
+        },
+        "OSDBSAUser": {
+            "type": "string",
+            "defaultValue": "sa"
+        },
+        "OSDBSAPass": {
+            "type": "securestring"
+        },
+        "OSDBSessionServer": {
+            "type": "string"
+        },
+        "OSDBSessionCatalog": {
+            "type": "string",
+            "defaultValue": "osSession"
+        },
+        "OSDBSessionUser": {
+            "type": "string",
+            "defaultValue": "OSSTATE"
+        },
+        "OSDBSessionPass": {
+            "type": "securestring"
+        },
+        "OSDBAdminUser": {
+            "type": "string",
+            "defaultValue": "OSADMIN"
+        },
+        "OSDBAdminPass": {
+            "type": "securestring"
+        },
+        "OSDBRuntimeUser": {
+            "type": "string",
+            "defaultValue": "OSRUNTIME"
+        },
+        "OSDBRuntimePass": {
+            "type": "securestring"
+        },
+        "OSDBLogUser": {
+            "type": "string",
+            "defaultValue": "OSLOG"
+        },
+        "OSDBLogPass": {
+            "type": "securestring"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "name": "Microsoft.CustomScriptExtension",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/CommonTemplates/Microsoft.VMSS.CustomScriptExtension.json"
+                },
+                "parameters": {
+                    "resourceName": {
+                        "value": "[parameters('resourceName')]"
+                    },
+                    "location": {
+                        "value": "[resourceGroup().location]"
+                    },
+                    "fileUris": {
+                        "value": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Scripts/Frontend.ps1"
+                    },
+                    "arguments": {
+                        "value": "[concat('-OSController ', trim(parameters('OSController')),' -OSPrivateKey ', trim(parameters('OSPrivateKey')),' -OSDBProvider ', parameters('OSDBProvider'), ' -OSDBAuth ', parameters('OSDBAuth'), ' -OSDBServer ', parameters('OSDBServer'), ' -OSDBCatalog ', parameters('OSDBCatalog'), ' -OSDBSAUser ', parameters('OSDBSAUser'), ' -OSDBSAPass ', parameters('OSDBSAPass'), ' -OSDBSessionServer ', parameters('OSDBSessionServer'), ' -OSDBSessionCatalog ', parameters('OSDBSessionCatalog'), ' -OSDBSessionUser ', parameters('OSDBSessionUser'), ' -OSDBSessionPass ', parameters('OSDBSessionPass'), ' -OSDBAdminUser ', parameters('OSDBAdminUser'), ' -OSDBAdminPass ', parameters('OSDBAdminPass'), ' -OSDBRuntimeUser ', parameters('OSDBRuntimeUser'), ' -OSDBRuntimePass ', parameters('OSDBRuntimePass'), ' -OSDBLogUser ', parameters('OSDBLogUser'), ' -OSDBLogPass ', parameters('OSDBLogPass'))]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}
