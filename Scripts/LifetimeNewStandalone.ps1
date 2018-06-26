@@ -82,7 +82,7 @@ Import-Module Outsystems.SetupTools
 # Import-Module .\..\..\src\Outsystems.SetupTools
 
 # -- Start logging
-Start-Transcript -Path "$OSLogPath\$($MyInvocation.MyCommand.Name)-$(get-date -Format 'yyyyMMddHHmmss').log" -Force
+Start-Transcript -Path "$OSLogPath\InstallLog-$(get-date -Format 'yyyyMMddHHmmss').log" -Force
 
 # -- Check HW and OS for compability
 Test-OSPlatformHardwareReqs -Verbose
