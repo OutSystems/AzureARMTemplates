@@ -218,6 +218,12 @@
                                                 "subnet": {
                                                     "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', parameters('virtualNetworkResourceGroup'), '/providers/Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'), '/subnets/', parameters('subnetName'))]"
                                                 },
+                                                "publicIPAddressconfiguration": {
+                                                    "name": "publicip",
+                                                    "properties": {
+                                                        "idleTimeoutInMinutes": 10
+                                                    }
+                                                },
                                                 "ApplicationGatewayBackendAddressPools": [
                                                     {
                                                         "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/applicationGateways/', variables('appGwName'), '/backendAddressPools/appGatewayBackendPool')]"
