@@ -171,7 +171,7 @@
             "type": "Microsoft.Compute/virtualMachineScaleSets",
             "name": "[variables('namingInfix')]",
             "location": "[resourceGroup().location]",
-            "apiVersion": "2016-04-30-preview",
+            "apiVersion": "2017-03-30",
             "dependsOn": [
                 "[concat('Microsoft.Network/applicationGateways/', variables('appgwName'))]"
             ],
