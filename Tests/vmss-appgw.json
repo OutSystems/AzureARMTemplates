@@ -154,7 +154,7 @@
                         "properties": {
                             "RuleType": "Basic",
                             "httpListener": {
-                                "id": "[concat(variables('appgwId'), '/httpListeners/appGwHttpListener')]"
+                                "id": "[concat(variables('appgwId'), '/httpListeners/appGatewayHttpListener')]"
                             },
                             "backendAddressPool": {
                                 "id": "[concat(variables('appgwId'), '/backendAddressPools/appGatewayBackendPool')]"
