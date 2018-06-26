@@ -89,7 +89,8 @@
             "type": "securestring"
         },
         "outsystemsEnvironmentPrivatekey": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": " "
         }
     },
     "variables": {
@@ -207,7 +208,7 @@
                         "value": "[parameters('OutsystemsDatabaseLogPass')]"
                     },
                     "OSPrivateKey": {
-                        "value": "[parameters('outsystemsEnvironmentPrivatekey')]"
+                        "value": "[trim(parameters('outsystemsEnvironmentPrivatekey'))]"
                     }
                 }
             },
