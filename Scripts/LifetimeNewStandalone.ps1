@@ -68,6 +68,9 @@ Param(
 
 )
 
+# -- Disable windows defender realtime scan
+Set-MpPreference -DisableRealtimeMonitoring $true
+
 # -- Import module from Powershell Gallery
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 Remove-Module Outsystems.SetupTools -ErrorAction SilentlyContinue
