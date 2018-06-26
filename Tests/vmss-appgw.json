@@ -11,7 +11,7 @@
         },
         "instanceCount": {
             "type": "int",
-            "defaultValue": 2
+            "defaultValue": 1
         },
         "adminUsername": {
             "type": "string"
@@ -105,14 +105,11 @@
     "variables": {
         "namingInfix": "[toLower(substring(concat(parameters('vmssName'), uniqueString(resourceGroup().id)), 0, 9))]",
         "vnetId": "[resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
-        "subnetId": "[concat(variables('vnetId'), '/subnets/', parameters('virtualNetworkSubnetName'))]",
         "appgwsubnetId": "[concat(variables('vnetId'), '/subnets/', parameters('applicationGatewaySubnetName'))]",
-        "nicName": "[concat(variables('namingInfix'), '-nic')]",
         "appgwName": "[concat(parameters('vmssName'), '-appgw')]",
         "appgwId": "[resourceId('Microsoft.Network/applicationGateways',variables('appgwName'))]",
         "appgwpipName": "[concat(parameters('vmssName'), '-pip')]",
-        "appgwpipId": "[resourceId('Microsoft.Network/publicIPAddresses',variables('appgwpipName'))]",
-        "ipConfigName": "[concat(variables('namingInfix'), 'ipconfig')]"
+        "appgwpipId": "[resourceId('Microsoft.Network/publicIPAddresses',variables('appgwpipName'))]"
     },
     "resources": [
         {
