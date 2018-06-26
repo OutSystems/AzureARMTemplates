@@ -125,7 +125,7 @@
                 ],
                 "backendHttpSettingsCollection": [
                     {
-                        "name": "appGwBackendHttpSettings",
+                        "name": "appGatewayBackendHttpSettings",
                         "properties": {
                             "Port": 80,
                             "Protocol": "Http",
@@ -160,7 +160,7 @@
                                 "id": "[concat(variables('appgwId'), '/backendAddressPools/appGatewayBackendPool')]"
                             },
                             "backendHttpSettings": {
-                                "id": "[concat(variables('appGwID'), '/backendHttpSettingsCollection/appGatewayBackendHttpSettings')]"
+                                "id": "[concat(variables('appgwId'), '/backendHttpSettingsCollection/appGatewayBackendHttpSettings')]"
                             }
                         }
                     }
