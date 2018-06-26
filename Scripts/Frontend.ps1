@@ -130,7 +130,12 @@ $ConfigToolArgs = @{
     DBLogUser           = $OSDBLogUser
     DBLogPass           = $OSDBLogPass
 }
+#Sleep here 10 seconds to avoid the error machine.config is being used by another process.
+Start-Sleep -Seconds 10
 Invoke-OSConfigurationTool -Verbose @ConfigToolArgs
+
+# -- Configure windows firewall
+Set-OSPlatformWindowsFirewall -Verbose
 
 # -- Install Service Center and SysComponents
 # Install-OSPlatformServiceCenter -Verbose
