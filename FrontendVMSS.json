@@ -176,13 +176,13 @@
             }
         },
         {
-            "name": "Outsystems.Frontend",
+            "name": "Outsystems.FrontendVMSS",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/CommonTemplates/outsystemsFrontend.json"
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/CommonTemplates/outsystemsFrontendVMSS.json"
                 },
                 "parameters": {
                     "resourceName": {
