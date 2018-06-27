@@ -130,7 +130,7 @@
                 "publicIPAllocationMethod": "Dynamic"
             },
             "sku": {
-                "name": "[parameters('virtualMachineSku')]"
+                "name": "Basic"
             }
         },
         {
@@ -157,7 +157,7 @@
                     "imageReference": {
                         "publisher": "MicrosoftWindowsServer",
                         "offer": "WindowsServer",
-                        "sku": "2016-Datacenter",
+                        "sku": "[parameters('virtualMachineSku')]",
                         "version": "latest"
                     },
                     "osDisk": {
@@ -179,5 +179,6 @@
             }
         }
     ],
-    "outputs": {}
+    "outputs": {
+    }
 }

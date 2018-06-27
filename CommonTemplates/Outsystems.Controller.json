@@ -81,13 +81,13 @@
     "variables": {},
     "resources": [
         {
-            "name": "Microsoft.CustomScriptExtension",
+            "name": "CustomScriptExtension",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/CommonTemplates/Microsoft.Compute.CustomScriptExtension.json"
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Resources/CustomScriptExtension.json"
                 },
                 "parameters": {
                     "resourceName": {
@@ -100,7 +100,7 @@
                         "value": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Scripts/Controller.ps1"
                     },
                     "arguments": {
-                        "value": "[concat('-OSController \"', trim(parameters('OSController')),'\" -OSPrivateKey \"', trim(parameters('OSPrivateKey')),'\" -OSDBProvider ', parameters('OSDBProvider'), ' -OSDBAuth ', parameters('OSDBAuth'), ' -OSDBServer ', parameters('OSDBServer'), ' -OSDBCatalog ', parameters('OSDBCatalog'), ' -OSDBSAUser ', parameters('OSDBSAUser'), ' -OSDBSAPass ', parameters('OSDBSAPass'), ' -OSDBSessionServer ', parameters('OSDBSessionServer'), ' -OSDBSessionCatalog ', parameters('OSDBSessionCatalog'), ' -OSDBSessionUser ', parameters('OSDBSessionUser'), ' -OSDBSessionPass ', parameters('OSDBSessionPass'), ' -OSDBAdminUser ', parameters('OSDBAdminUser'), ' -OSDBAdminPass ', parameters('OSDBAdminPass'), ' -OSDBRuntimeUser ', parameters('OSDBRuntimeUser'), ' -OSDBRuntimePass ', parameters('OSDBRuntimePass'), ' -OSDBLogUser ', parameters('OSDBLogUser'), ' -OSDBLogPass ', parameters('OSDBLogPass'))]"
+                        "value": "[concat(' -OSDBProvider ', parameters('OSDBProvider'), ' -OSDBAuth ', parameters('OSDBAuth'), ' -OSDBServer ', parameters('OSDBServer'), ' -OSDBCatalog ', parameters('OSDBCatalog'), ' -OSDBSAUser ', parameters('OSDBSAUser'), ' -OSDBSAPass ', parameters('OSDBSAPass'), ' -OSDBSessionServer ', parameters('OSDBSessionServer'), ' -OSDBSessionCatalog ', parameters('OSDBSessionCatalog'), ' -OSDBSessionUser ', parameters('OSDBSessionUser'), ' -OSDBSessionPass ', parameters('OSDBSessionPass'), ' -OSDBAdminUser ', parameters('OSDBAdminUser'), ' -OSDBAdminPass ', parameters('OSDBAdminPass'), ' -OSDBRuntimeUser ', parameters('OSDBRuntimeUser'), ' -OSDBRuntimePass ', parameters('OSDBRuntimePass'), ' -OSDBLogUser ', parameters('OSDBLogUser'), ' -OSDBLogPass ', parameters('OSDBLogPass'))]"
                     }
                 }
             }
