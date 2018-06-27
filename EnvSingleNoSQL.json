@@ -128,7 +128,7 @@
             }
         },
         {
-            "name": "Microsoft.OutsystemsController",
+            "name": "OutsystemsController",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -138,7 +138,7 @@
                 },
                 "parameters": {
                     "resourceName": {
-                        "value": "[parameters('virtualMachineName')]"
+                        "value": "[reference(concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))).outputs.virtualMachineName.value]"
                     },
                     "OSDBProvider": {
                         "value": "[parameters('databaseProvider')]"

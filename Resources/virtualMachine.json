@@ -180,5 +180,9 @@
         }
     ],
     "outputs": {
+        "virtualMachineName" : {
+            "type" : "string",
+            "value": "[parameters('virtualMachineName')]"
+        }
     }
 }
