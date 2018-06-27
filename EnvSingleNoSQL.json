@@ -194,7 +194,7 @@
                 }
             },
             "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
+                "Microsoft.Resources/deployments/virtualMachine"
             ]
         }
     ],
