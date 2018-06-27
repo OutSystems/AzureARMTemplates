@@ -192,10 +192,7 @@
                         "value": "[trim(parameters('outsystemsEnvironmentPrivatekey'))]"
                     }
                 }
-            },
-            "dependsOn": [
-                "Microsoft.Resources/deployments/virtualMachine"
-            ]
+            }
         }
     ],
     "outputs": {
