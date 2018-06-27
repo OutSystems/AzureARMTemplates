@@ -97,7 +97,7 @@
     },
     "resources": [
         {
-            "name": "virtualMachine",
+            "name": "Outsystems.VirtualMachine",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -128,7 +128,7 @@
             }
         },
         {
-            "name": "OutsystemsController",
+            "name": "Outsystems.Controller",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -138,7 +138,7 @@
                 },
                 "parameters": {
                     "resourceName": {
-                        "value": "[reference('Microsoft.Resources/deployments/virtualMachine').outputs.virtualMachineName.value]"
+                        "value": "[reference('Microsoft.Resources/deployments/Outsystems.VirtualMachine').outputs.virtualMachineName.value]"
                     },
                     "OSDBProvider": {
                         "value": "[parameters('databaseProvider')]"
