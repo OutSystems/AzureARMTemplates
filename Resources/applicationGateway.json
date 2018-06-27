@@ -21,7 +21,8 @@
         "pipName": "[concat(parameters('applicationGatewayName'), '-pip')]",
         "pipId": "[resourceId('Microsoft.Network/publicIPAddresses',variables('pipName'))]",
         "appgwName": "[parameters('applicationGatewayName')]",
-        "appgwId": "[resourceId('Microsoft.Network/applicationGateways',variables('appgwName'))]"
+        "appgwId": "[resourceId('Microsoft.Network/applicationGateways',variables('appgwName'))]",
+        "appgwBackendPoolName": "appGatewayBackendPool"
     },
     "resources": [
         {
@@ -65,7 +66,7 @@
                         "name": "appGatewayFrontendIP",
                         "properties": {
                             "PublicIPAddress": {
-                            "id": "[variables('pipId')]"
+                                "id": "[variables('pipId')]"
                             }
                         }
                     }
@@ -80,7 +81,7 @@
                 ],
                 "backendAddressPools": [
                     {
-                        "name": "appGatewayBackendPool"
+                        "name": "[variables('appgwBackendPoolName')]"
                     }
                 ],
                 "backendHttpSettingsCollection": [
@@ -127,5 +128,15 @@
                 ]
             }
         }
-    ]
+    ],
+    "outputs": {
+        "applicationGatewayName" : {
+            "type" : "string",
+            "value": "[parameters('applicationGatewayName')]"
+        },
+        "applicationGatewayBackendId" : {
+            "type" : "string",
+            "value": "[concat(variables('appgwId'), '/backendAddressPools/appGatewayBackendPool')]"
+        }
+    }
 }

@@ -28,7 +28,7 @@
         "virtualNetworkSubnetName": {
             "type": "string"
         },
-        "applicationGatewaySubnetName": {
+        "applicationGatewayVirtualNetworkSubnetName": {
             "type": "string"
         },
         "databaseProvider": {
@@ -96,215 +96,97 @@
             "type": "securestring"
         },
         "outsystemsEnvironmentController": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": " "
         },
         "outsystemsEnvironmentPrivatekey": {
-            "type": "string"
-        }      
+            "type": "string",
+            "defaultValue": " "
+        }
     },
     "variables": {
-        "namingInfix": "[toLower(substring(concat(parameters('vmssName'), uniqueString(resourceGroup().id)), 0, 9))]",
-        "vnetId": "[resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
-        "appgwsubnetId": "[concat(variables('vnetId'), '/subnets/', parameters('applicationGatewaySubnetName'))]",
-        "appgwName": "[concat(parameters('vmssName'), '-appgw')]",
-        "appgwId": "[resourceId('Microsoft.Network/applicationGateways',variables('appgwName'))]",
-        "appgwpipName": "[concat(parameters('vmssName'), '-pip')]",
-        "appgwpipId": "[resourceId('Microsoft.Network/publicIPAddresses',variables('appgwpipName'))]"
     },
     "resources": [
         {
-            "type": "Microsoft.Network/publicIPAddresses",
-            "name": "[variables('appgwpipName')]",
-            "location": "[resourceGroup().location]",
-            "apiVersion": "2016-03-30",
-            "properties": {
-                "publicIPAllocationMethod": "Dynamic",
-                "sku": {
-                    "name": "Basic"
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Network/applicationGateways",
-            "name": "[variables('appgwName')]",
-            "location": "[resourceGroup().location]",
-            "apiVersion": "2017-06-01",
-            "dependsOn": [
-                "[concat('Microsoft.Network/publicIPAddresses/', variables('appgwpipName'))]"
-            ],
-            "properties": {
-                "sku": {
-                    "name": "Standard_Medium",
-                    "tier": "Standard",
-                    "capacity": 2
-                },
-                "gatewayIPConfigurations": [
-                    {
-                        "name": "appGatewayIpConfig",
-                        "properties": {
-                            "subnet": {
-                                "id": "[variables('appgwsubnetId')]"
-                            }
-                        }
-                    }
-                ],
-                "frontendIPConfigurations": [
-                    {
-                        "name": "appGatewayFrontendIP",
-                        "properties": {
-                            "PublicIPAddress": {
-                            "id": "[variables('appgwpipId')]"
-                            }
-                        }
-                    }
-                ],
-                "frontendPorts": [
-                    {
-                        "name": "appGatewayFrontendPort",
-                        "properties": {
-                            "Port": 80
-                        }
-                    }
-                ],
-                "backendAddressPools": [
-                    {
-                        "name": "appGatewayBackendPool"
-                    }
-                ],
-                "backendHttpSettingsCollection": [
-                    {
-                        "name": "appGatewayBackendHttpSettings",
-                        "properties": {
-                            "Port": 80,
-                            "Protocol": "Http",
-                            "CookieBasedAffinity": "Disabled"
-                        }
-                    }
-                ],
-                "httpListeners": [
-                    {
-                        "name": "appGatewayHttpListener",
-                        "properties": {
-                            "FrontendIPConfiguration": {
-                                "Id": "[concat(variables('appgwId'), '/frontendIPConfigurations/appGatewayFrontendIP')]"
-                            },
-                            "FrontendPort": {
-                                "Id": "[concat(variables('appgwId'), '/frontendPorts/appGatewayFrontendPort')]"
-                            },
-                            "Protocol": "Http",
-                            "SslCertificate": null
-                        }
-                    }
-                ],
-                "requestRoutingRules": [
-                    {
-                        "Name": "rule1",
-                        "properties": {
-                            "RuleType": "Basic",
-                            "httpListener": {
-                                "id": "[concat(variables('appgwId'), '/httpListeners/appGatewayHttpListener')]"
-                            },
-                            "backendAddressPool": {
-                                "id": "[concat(variables('appgwId'), '/backendAddressPools/appGatewayBackendPool')]"
-                            },
-                            "backendHttpSettings": {
-                                "id": "[concat(variables('appgwId'), '/backendHttpSettingsCollection/appGatewayBackendHttpSettings')]"
-                            }
-                        }
-                    }
-                ]
-            }
-        },
-        {
-            "type": "Microsoft.Compute/virtualMachineScaleSets",
-            "name": "[parameters('vmssName')]",
-            "location": "[resourceGroup().location]",
-            "apiVersion": "2017-03-30",
-            "dependsOn": [
-                "[concat('Microsoft.Network/applicationGateways/', variables('appgwName'))]"
-            ],
-            "sku": {
-                "name": "[parameters('virtualMachineSize')]",
-                "tier": "Standard",
-                "capacity": "[parameters('instanceCount')]"
-            },
-            "properties": {
-                "overprovision": true,
-                "singlePlacementGroup": false,
-                "upgradePolicy": {
-                    "mode": "Automatic"
-                },
-                "virtualMachineProfile": {
-                    "storageProfile": {
-                        "osDisk": {
-                            "caching": "ReadWrite",
-                            "createOption": "FromImage"
-                        },
-                        "dataDisks": [],
-                        "imageReference": {
-                            "publisher": "MicrosoftWindowsServer",
-                            "offer": "WindowsServer",
-                            "sku": "2016-Datacenter",
-                            "version": "latest"
-                        }
-                    },
-                    "osProfile": {
-                        "computerNamePrefix": "[concat(parameters('vmssName'),'node')]",
-                        "adminUsername": "[parameters('adminUsername')]",
-                        "adminPassword": "[parameters('adminPassword')]"
-                    },
-                    "networkProfile": {
-                        "networkInterfaceConfigurations": [
-                            {
-                                "name": "[concat(parameters('vmssName'),'netconfig')]",
-                                "properties": {
-                                    "primary": true,
-                                    "ipConfigurations": [
-                                        {
-                                            "name": "[concat(parameters('vmssName'),'ipconfig')]",
-                                            "properties": {
-                                                "subnet": {
-                                                    "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', parameters('virtualNetworkResourceGroup'), '/providers/Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'), '/subnets/', parameters('virtualNetworkSubnetName'))]"
-                                                },
-                                                "publicIPAddressconfiguration": {
-                                                    "name": "publicip",
-                                                    "properties": {
-                                                        "idleTimeoutInMinutes": 10
-                                                    }
-                                                },
-                                                "ApplicationGatewayBackendAddressPools": [
-                                                    {
-                                                        "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/applicationGateways/', variables('appGwName'), '/backendAddressPools/appGatewayBackendPool')]"
-                                                    }
-                                                ]
-                                            }   
-                                        }
-                                    ]
-                                }
-                            }
-                        ]
-                    }
-                }
-            }
-        },
-        {
-            "name": "Microsoft.OutsystemsFrontend",
+            "name": "Outsystems.ApplicationGateway",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/CommonTemplates/Outsystems.Frontend.json"
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Resources/applicationGateway.json"
+                },
+                "parameters": {
+                    "applicationGatewayName": {
+                        "value": "[concat(parameters('vmssName'), '-appgw')]"
+                    },
+                    "virtualNetworkResourceGroup": {
+                        "value": "[parameters('virtualNetworkResourceGroup')]"
+                    },
+                    "virtualNetworkName": {
+                        "value": "[parameters('virtualNetworkName')]"
+                    },
+                    "virtualNetworkSubnetName": {
+                        "value": "[parameters('applicationGatewayVirtualNetworkSubnetName')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "Outsystems.VirtualMachineScaleSet",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Resources/virtualMachineScaleSets.json"
+                },
+                "parameters": {
+                    "vmssName": {
+                        "value": "[parameters('vmssName')]"
+                    },
+                    "virtualMachineSize": {
+                        "value": "[parameters('virtualMachineSize')]"
+                    },
+                    "virtualMachineSku": {
+                        "value": "2016-Datacenter"
+                    },
+                    "instanceCount": {
+                        "value": "[parameters('instanceCount')]"
+                    },
+                    "adminUsername": {
+                        "value": "[parameters('adminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "virtualNetworkResourceGroup": {
+                        "value": "[parameters('virtualNetworkResourceGroup')]"
+                    },
+                    "virtualNetworkName": {
+                        "value": "[parameters('virtualNetworkName')]"
+                    },
+                    "virtualNetworkSubnetName": {
+                        "value": "[parameters('virtualNetworkSubnetName')]"
+                    },
+                    "applicationGatewayBackendPoolId": {
+                        "value": "[reference('Microsoft.Resources/deployments/Outsystems.ApplicationGateway').outputs.virtualMachineName.value]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "Outsystems.Controller",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/CommonTemplates/outsystemsFrontend.json"
                 },
                 "parameters": {
                     "resourceName": {
-                        "value": "[parameters('vmssName')]"
-                    },
-                    "OSController": {
-                        "value": "[parameters('outsystemsEnvironmentController')]"
-                    },
-                    "OSPrivateKey": {
-                        "value": "[parameters('outsystemsEnvironmentPrivatekey')]"
+                        "value": "[reference('Microsoft.Resources/deployments/Outsystems.VirtualMachineScaleSet').outputs.vmssName.value]"
                     },
                     "OSDBProvider": {
                         "value": "[parameters('databaseProvider')]"
@@ -353,12 +235,16 @@
                     },
                     "OSDBLogPass": {
                         "value": "[parameters('OutsystemsDatabaseLogPass')]"
+                    },
+                    "OSController": {
+                        "value": "[trim(parameters('outsystemsEnvironmentController'))]"
+                    },
+                    "OSPrivateKey": {
+                        "value": "[trim(parameters('outsystemsEnvironmentPrivatekey'))]"
                     }
                 }
-            },
-            "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachineScaleSets/', parameters('vmssName'))]"
-            ]
+            }
         }
-    ]
+    ],
+    "outputs": {}
 }
