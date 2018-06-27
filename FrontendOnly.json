@@ -113,6 +113,9 @@
                     "virtualMachineName": {
                         "value": "[parameters('virtualMachineName')]"
                     },
+                    "virtualMachineSize": {
+                        "value": "[parameters('virtualMachineSize')]"
+                    },
                     "adminUsername": {
                         "value": "[parameters('adminUsername')]"
                     },
@@ -132,7 +135,7 @@
             }
         },
         {
-            "name": "Outsystems.Controller",
+            "name": "Outsystems.Frontend",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {

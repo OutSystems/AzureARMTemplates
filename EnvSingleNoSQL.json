@@ -109,6 +109,9 @@
                     "virtualMachineName": {
                         "value": "[parameters('virtualMachineName')]"
                     },
+                    "virtualMachineSize": {
+                        "value": "[parameters('virtualMachineSize')]"
+                    },
                     "adminUsername": {
                         "value": "[parameters('adminUsername')]"
                     },

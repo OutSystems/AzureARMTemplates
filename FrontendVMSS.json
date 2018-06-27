@@ -170,13 +170,13 @@
                         "value": "[parameters('virtualNetworkSubnetName')]"
                     },
                     "applicationGatewayBackendPoolId": {
-                        "value": "[reference('Microsoft.Resources/deployments/Outsystems.ApplicationGateway').outputs.virtualMachineName.value]"
+                        "value": "[reference('Microsoft.Resources/deployments/Outsystems.ApplicationGateway').outputs.applicationGatewayBackendId.value]"
                     }
                 }
             }
         },
         {
-            "name": "Outsystems.Controller",
+            "name": "Outsystems.Frontend",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
