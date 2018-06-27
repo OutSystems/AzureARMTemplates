@@ -134,11 +134,11 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/CommonTemplates/Outsystems.Controller.json"
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/CommonTemplates/outsystemsController.json"
                 },
                 "parameters": {
                     "resourceName": {
-                        "value": "[reference(concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))).outputs.virtualMachineName.value]"
+                        "value": "[reference('Microsoft.Resources/deployments/virtualMachine').outputs.virtualMachineName.value]"
                     },
                     "OSDBProvider": {
                         "value": "[parameters('databaseProvider')]"
