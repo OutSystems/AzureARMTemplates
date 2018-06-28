@@ -47,5 +47,10 @@
             }
         }
     ],
-    "outputs": {}
+    "outputs": {
+        "databaseName": {
+            "type": "string",
+            "value": "[parameters('databaseName')]"
+        }
+    }
 }
