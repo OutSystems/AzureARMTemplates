@@ -1,0 +1,210 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachineName": {
+            "type": "string"
+        },
+        "virtualMachineSize": {
+            "type": "string",
+            "defaultValue": "Standard_D2s_v3"
+        },
+        "adminUsername": {
+            "type": "string"
+        },
+        "adminPassword": {
+            "type": "securestring"
+        },
+        "virtualNetworkResourceGroup": {
+            "type": "string"
+        },
+        "virtualNetworkName": {
+            "type": "string"
+        },
+        "virtualNetworkSubnetName": {
+            "type": "string"
+        },
+        "databaseProvider": {
+            "type": "string",
+            "allowedValues": [
+                "SQL",
+                "SQLExpress",
+                "AzureSQL"
+            ]
+        },
+        "databaseServer": {
+            "type": "string"
+        },
+        "databaseCatalog": {
+            "type": "string",
+            "defaultValue": "outsystems"
+        },
+        "databaseAuthenticationType": {
+            "type": "string",
+            "allowedValues": [
+                "SQL",
+                "Windows"
+            ]
+        },
+        "databaseAdminUser": {
+            "type": "string",
+            "defaultValue": "sa"
+        },
+        "databaseAdminPass": {
+            "type": "securestring"
+        },
+        "outsystemsDatabaseAdminUser": {
+            "type": "string",
+            "defaultValue": "OSADMIN"
+        },
+        "outsystemsDatabaseAdminPass": {
+            "type": "securestring"
+        },
+        "outsystemsDatabaseRuntimeUser": {
+            "type": "string",
+            "defaultValue": "OSRUNTIME"
+        },
+        "outsystemsDatabaseRuntimePass": {
+            "type": "securestring"
+        },
+        "outsystemsDatabaseLogUser": {
+            "type": "string",
+            "defaultValue": "OSLOG"
+        },
+        "outsystemsDatabaseLogPass": {
+            "type": "securestring"
+        },
+        "databaseSessionServer": {
+            "type": "string"
+        },
+        "databaseSessionCatalog": {
+            "type": "string",
+            "defaultValue": "osSession"
+        },
+        "databaseSessionUser": {
+            "type": "string",
+            "defaultValue": "OSSTATE"
+        },
+        "databaseSessionPass": {
+            "type": "securestring"
+        },
+        "outsystemsEnvironmentController": {
+            "type": "string",
+            "defaultValue": " "
+        },
+        "outsystemsEnvironmentPrivatekey": {
+            "type": "string",
+            "defaultValue": " "
+        }
+    },
+    "variables": {
+    },
+    "resources": [
+        {
+            "name": "Outsystems.VirtualMachine",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Resources/virtualMachine.json"
+                },
+                "parameters": {
+                    "virtualMachineName": {
+                        "value": "[parameters('virtualMachineName')]"
+                    },
+                    "virtualMachineSize": {
+                        "value": "[parameters('virtualMachineSize')]"
+                    },
+                    "adminUsername": {
+                        "value": "[parameters('adminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "virtualNetworkResourceGroup": {
+                        "value": "[parameters('virtualNetworkResourceGroup')]"
+                    },
+                    "virtualNetworkName": {
+                        "value": "[parameters('virtualNetworkName')]"
+                    },
+                    "virtualNetworkSubnetName": {
+                        "value": "[parameters('virtualNetworkSubnetName')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "Outsystems.Frontend",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/CommonTemplates/outsystemsFrontend.json"
+                },
+                "parameters": {
+                    "resourceName": {
+                        "value": "[reference('Microsoft.Resources/deployments/Outsystems.VirtualMachine').outputs.virtualMachineName.value]"
+                    },
+                    "OSDBProvider": {
+                        "value": "[parameters('databaseProvider')]"
+                    },
+                    "OSDBAuth": {
+                        "value": "[parameters('databaseAuthenticationType')]"
+                    },
+                    "OSDBServer": {
+                        "value": "[parameters('databaseServer')]"
+                    },
+                    "OSDBCatalog": {
+                        "value": "[parameters('databaseCatalog')]"
+                    },
+                    "OSDBSAUser": {
+                        "value": "[parameters('databaseAdminUser')]"
+                    },
+                    "OSDBSAPass": {
+                        "value": "[parameters('databaseAdminPass')]"
+                    },
+                    "OSDBSessionServer": {
+                        "value": "[parameters('databaseSessionServer')]"
+                    },
+                    "OSDBSessionCatalog": {
+                        "value": "[parameters('databaseSessionCatalog')]"
+                    },
+                    "OSDBSessionUser": {
+                        "value": "[parameters('databaseSessionUser')]"
+                    },
+                    "OSDBSessionPass": {
+                        "value": "[parameters('databaseSessionPass')]"
+                    },
+                    "OSDBAdminUser": {
+                        "value": "[parameters('outsystemsDatabaseAdminUser')]"
+                    },
+                    "OSDBAdminPass": {
+                        "value": "[parameters('outsystemsDatabaseAdminPass')]"
+                    },
+                    "OSDBRuntimeUser": {
+                        "value": "[parameters('outsystemsDatabaseRuntimeUser')]"
+                    },
+                    "OSDBRuntimePass": {
+                        "value": "[parameters('outsystemsDatabaseRuntimePass')]"
+                    },
+                    "OSDBLogUser": {
+                        "value": "[parameters('outsystemsDatabaseLogUser')]"
+                    },
+                    "OSDBLogPass": {
+                        "value": "[parameters('outsystemsDatabaseLogPass')]"
+                    },
+                    "OSController": {
+                        "value": "[trim(parameters('outsystemsEnvironmentController'))]"
+                    },
+                    "OSPrivateKey": {
+                        "value": "[trim(parameters('outsystemsEnvironmentPrivatekey'))]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {
+    }
+}
