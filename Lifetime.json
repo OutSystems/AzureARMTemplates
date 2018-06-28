@@ -53,25 +53,25 @@
         "databaseAdminPass": {
             "type": "securestring"
         },
-        "OutsystemsDatabaseAdminUser": {
+        "outsystemsDatabaseAdminUser": {
             "type": "string",
             "defaultValue": "OSADMIN"
         },
-        "OutsystemsDatabaseAdminPass": {
+        "outsystemsDatabaseAdminPass": {
             "type": "securestring"
         },
-        "OutsystemsDatabaseRuntimeUser": {
+        "outsystemsDatabaseRuntimeUser": {
             "type": "string",
             "defaultValue": "OSRUNTIME"
         },
-        "OutsystemsDatabaseRuntimePass": {
+        "outsystemsDatabaseRuntimePass": {
             "type": "securestring"
         },
-        "OutsystemsDatabaseLogUser": {
+        "outsystemsDatabaseLogUser": {
             "type": "string",
             "defaultValue": "OSLOG"
         },
-        "OutsystemsDatabaseLogPass": {
+        "outsystemsDatabaseLogPass": {
             "type": "securestring"
         },
         "databaseSessionServer": {
@@ -127,7 +127,7 @@
             }
         },
         {
-            "name": "Outsystems.Controller",
+            "name": "Outsystems.Lifetime",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -170,22 +170,22 @@
                         "value": "[parameters('databaseSessionPass')]"
                     },
                     "OSDBAdminUser": {
-                        "value": "[parameters('OutsystemsDatabaseAdminUser')]"
+                        "value": "[parameters('outsystemsDatabaseAdminUser')]"
                     },
                     "OSDBAdminPass": {
-                        "value": "[parameters('OutsystemsDatabaseAdminPass')]"
+                        "value": "[parameters('outsystemsDatabaseAdminPass')]"
                     },
                     "OSDBRuntimeUser": {
-                        "value": "[parameters('OutsystemsDatabaseRuntimeUser')]"
+                        "value": "[parameters('outsystemsDatabaseRuntimeUser')]"
                     },
                     "OSDBRuntimePass": {
-                        "value": "[parameters('OutsystemsDatabaseRuntimePass')]"
+                        "value": "[parameters('outsystemsDatabaseRuntimePass')]"
                     },
                     "OSDBLogUser": {
-                        "value": "[parameters('OutsystemsDatabaseLogUser')]"
+                        "value": "[parameters('outsystemsDatabaseLogUser')]"
                     },
                     "OSDBLogPass": {
-                        "value": "[parameters('OutsystemsDatabaseLogPass')]"
+                        "value": "[parameters('outsystemsDatabaseLogPass')]"
                     }
                 }
             }

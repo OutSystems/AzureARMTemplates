@@ -15,6 +15,8 @@ Example:
 
 <img src="https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Docs/Controller.PNG"/>
 
+Time to deploy: 20-30 minutes
+
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FController.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
@@ -22,6 +24,8 @@ Example:
 ### 2. Lifetime Environment
 
 This is the same as the previous template but installs Lifetime. The private key option is not available in this template.
+
+Time to deploy: 30-40 minutes
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FLifetime.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
@@ -31,6 +35,8 @@ This is the same as the previous template but installs Lifetime. The private key
 
 TThis template deploys and configures a VM as an Outsystems frontend server. A working environment is needed to connect this frontend. You will need to specify the same parameters as for the controller template plus the controller host.
 
+Time to deploy: 10 minutes
+
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FFrontendSingle.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
@@ -38,6 +44,8 @@ TThis template deploys and configures a VM as an Outsystems frontend server. A w
 ### 4. Frontend server ( Virtual Machine Scale Set cluster )
 
 Same as the previous one but the frontends will be deployed in a Virtual Machine Scale Set behind an Application Gateway. The trial license included in this templates only allow two frontend servers. To scale to two you need to remove the controller as a frontend server in Service Center.
+
+Time to deploy: 30-40 minutes
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FFrontendVMSS.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
