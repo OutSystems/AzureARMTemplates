@@ -11,6 +11,10 @@ This template deploys and configures a VM as an Outsystems controller/frontend. 
 
 You have an optional parameter for the environment private key. Usefull if you want to join the VM to an existing Outsystems database.
 
+Example:
+
+<img src="https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Docs/Controller.PNG"/>
+
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FController.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
