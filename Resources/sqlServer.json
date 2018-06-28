@@ -20,15 +20,28 @@
             "apiVersion": "2015-05-01-preview",
             "location": "[resourceGroup().location]",
             "properties": {
-              "administratorLogin": "[parameters('databaseAdministratorLogin')]",
-              "administratorLoginPassword": "[parameters('databaseAdministratorPass')]",
-              "version": "12.0"
+                "administratorLogin": "[parameters('databaseAdministratorLogin')]",
+                "administratorLoginPassword": "[parameters('databaseAdministratorPass')]",
+                "version": "12.0"
             }
+        },
+        {
+            "name": "[concat(parameters('serverName'), '/AllowAllWindowsAzureIps')]",
+            "type": "Microsoft.Sql/servers/firewallRules",
+            "apiVersion": "2015-05-01-preview",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "startIpAddress": "0.0.0.0",
+                "endIpAddress": "0.0.0.0"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]"
+            ]
         }
     ],
     "outputs": {
-        "serverName" : {
-            "type" : "string",
+        "serverName": {
+            "type": "string",
             "value": "[parameters('serverName')]"
         }
     }
