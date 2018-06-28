@@ -90,7 +90,10 @@
                         "properties": {
                             "Port": 80,
                             "Protocol": "Http",
-                            "CookieBasedAffinity": "Disabled"
+                            "CookieBasedAffinity": "Disabled",
+                            "probe": {
+                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('appgwName')), '/probes/servicecenterhttp')]"
+                              }
                         }
                     }
                 ],
@@ -109,9 +112,23 @@
                         }
                     }
                 ],
+                "probes": [
+                    {
+                        "name": "servicecenterhttp",
+                        "properties": {
+                            "protocol": "Http",
+                            "host": "127.0.0.1",
+                            "path": "/servicecenter/_ping.aspx",
+                            "interval": 30,
+                            "timeout": 30,
+                            "unhealthyThreshold": 3,
+                            "pickHostNameFromBackendHttpSettings": false
+                        }
+                    }
+                ],
                 "requestRoutingRules": [
                     {
-                        "Name": "rule1",
+                        "Name": "http",
                         "properties": {
                             "RuleType": "Basic",
                             "httpListener": {
@@ -130,12 +147,12 @@
         }
     ],
     "outputs": {
-        "applicationGatewayName" : {
-            "type" : "string",
+        "applicationGatewayName": {
+            "type": "string",
             "value": "[parameters('applicationGatewayName')]"
         },
-        "applicationGatewayBackendId" : {
-            "type" : "string",
+        "applicationGatewayBackendId": {
+            "type": "string",
             "value": "[concat(variables('appgwId'), '/backendAddressPools/appGatewayBackendPool')]"
         }
     }
