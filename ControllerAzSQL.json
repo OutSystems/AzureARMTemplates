@@ -1,0 +1,216 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachineName": {
+            "type": "string"
+        },
+        "virtualMachineSize": {
+            "type": "string",
+            "defaultValue": "Standard_D2s_v3"
+        },
+        "adminUsername": {
+            "type": "string"
+        },
+        "adminPassword": {
+            "type": "securestring"
+        },
+        "virtualNetworkResourceGroup": {
+            "type": "string"
+        },
+        "virtualNetworkName": {
+            "type": "string"
+        },
+        "virtualNetworkSubnetName": {
+            "type": "string"
+        },
+        "sqlServerName": {
+            "type": "string"
+        },
+        "databaseAdministratorLogin": {
+            "type": "string"
+        },
+        "databaseAdministratorPass": {
+            "type": "securestring"
+        },
+        "outsystemsEnvironmentPrivatekey": {
+            "type": "string",
+            "defaultValue": " "
+        }
+    },
+    "variables": {
+        "environmentDB": "outsystems",
+        "sessionDB": "osSession"
+    },
+    "resources": [
+        {
+            "name": "Outsystems.AzureSQLServer",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Resources/sqlServer.json"
+                },
+                "parameters": {
+                    "serverName": {
+                        "value": "[parameters('sqlServerName')]"
+                    },
+                    "databaseAdministratorLogin": {
+                        "value": "[parameters('databaseAdministratorLogin')]"
+                    },
+                    "databaseAdministratorPass": {
+                        "value": "[parameters('databaseAdministratorPass')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "Outsystems.AzureSQLDatabasePlatform",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Resources/sqlServerDatabase.json"
+                },
+                "parameters": {
+                    "serverName": {
+                        "value": "[reference('Microsoft.Resources/deployments/Outsystems.AzureSQLServer').outputs.serverName.value]"
+                    },
+                    "databaseName": {
+                        "value": "[variables('environmentDB')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "Outsystems.AzureSQLDatabaseSession",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Resources/sqlServerDatabase.json"
+                },
+                "parameters": {
+                    "serverName": {
+                        "value": "[reference('Microsoft.Resources/deployments/Outsystems.AzureSQLServer').outputs.serverName.value]"
+                    },
+                    "databaseName": {
+                        "value": "[variables('sessionDB')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "Outsystems.AzureSQLFirewallRule",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Resources/sqlServerFirewallRule.json"
+                },
+                "parameters": {
+                    "serverName": {
+                        "value": "[reference('Microsoft.Resources/deployments/Outsystems.AzureSQLServer').outputs.serverName.value]"
+                    },
+                    "ipAddress": {
+                        "value": "[reference('Microsoft.Resources/deployments/Outsystems.VirtualMachine').outputs.virtualMachinePIP.value]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "Outsystems.VirtualMachine",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Resources/virtualMachine.json"
+                },
+                "parameters": {
+                    "virtualMachineName": {
+                        "value": "[parameters('virtualMachineName')]"
+                    },
+                    "virtualMachineSize": {
+                        "value": "[parameters('virtualMachineSize')]"
+                    },
+                    "adminUsername": {
+                        "value": "[parameters('adminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "virtualNetworkResourceGroup": {
+                        "value": "[parameters('virtualNetworkResourceGroup')]"
+                    },
+                    "virtualNetworkName": {
+                        "value": "[parameters('virtualNetworkName')]"
+                    },
+                    "virtualNetworkSubnetName": {
+                        "value": "[parameters('virtualNetworkSubnetName')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "Outsystems.Controller",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/CommonTemplates/outsystemsController.json"
+                },
+                "parameters": {
+                    "resourceName": {
+                        "value": "[reference('Microsoft.Resources/deployments/Outsystems.VirtualMachine').outputs.virtualMachineName.value]"
+                    },
+                    "OSDBProvider": {
+                        "value": "AzureSQL"
+                    },
+                    "OSDBAuth": {
+                        "value": "SQL"
+                    },
+                    "OSDBServer": {
+                        "value": "[concat(reference('Microsoft.Resources/deployments/Outsystems.AzureSQLServer').outputs.serverName.value, '.database.windows.net')]"
+                    },
+                    "OSDBCatalog": {
+                        "value": "[reference('Microsoft.Resources/deployments/Outsystems.AzureSQLDatabasePlatform').outputs.databaseName.value]"
+                    },
+                    "OSDBSAUser": {
+                        "value": "[parameters('databaseAdministratorLogin')]"
+                    },
+                    "OSDBSAPass": {
+                        "value": "[parameters('databaseAdministratorPass')]"
+                    },
+                    "OSDBSessionServer": {
+                        "value": "[concat(reference('Microsoft.Resources/deployments/Outsystems.AzureSQLServer').outputs.serverName.value, '.database.windows.net')]"
+                    },
+                    "OSDBSessionCatalog": {
+                        "value": "[reference('Microsoft.Resources/deployments/Outsystems.AzureSQLDatabaseSession').outputs.databaseName.value]"
+                    },
+                    "OSDBSessionPass": {
+                        "value": "[parameters('databaseAdministratorPass')]"
+                    },
+                    "OSDBAdminPass": {
+                        "value": "[parameters('databaseAdministratorPass')]"
+                    },
+                    "OSDBRuntimePass": {
+                        "value": "[parameters('databaseAdministratorPass')]"
+                    },
+                    "OSDBLogPass": {
+                        "value": "[parameters('databaseAdministratorPass')]"
+                    },
+                    "OSPrivateKey": {
+                        "value": "[trim(parameters('outsystemsEnvironmentPrivatekey'))]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}

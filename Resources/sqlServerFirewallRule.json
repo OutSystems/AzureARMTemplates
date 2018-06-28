@@ -1,0 +1,34 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "serverName": {
+            "type": "string"
+        },
+        "ipAddress": {
+            "type": "string"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "name": "[concat(parameters('serverName'), '/AllowAllWindowsAzureIps')]",
+            "type": "Microsoft.Sql/servers/firewallRules",
+            "apiVersion": "2015-05-01-preview",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "startIpAddress": "[parameters('ipAddress')]",
+                "endIpAddress": "[parameters('ipAddress')]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]"
+            ]
+        }
+    ],
+    "outputs": {
+        "serverName": {
+            "type": "string",
+            "value": "[parameters('serverName')]"
+        }
+    }
+}

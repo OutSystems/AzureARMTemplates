@@ -33,7 +33,7 @@ Time to deploy: 30-40 minutes
 
 ### 3. Frontend server ( Single )
 
-TThis template deploys and configures a VM as an Outsystems frontend server. A working environment is needed to connect this frontend. You will need to specify the same parameters as for the controller template plus the controller host.
+This template deploys and configures a VM as an Outsystems frontend server. A working environment is needed to connect this frontend. You will need to specify the same parameters as for the controller template plus the controller host.
 
 Time to deploy: 10 minutes
 

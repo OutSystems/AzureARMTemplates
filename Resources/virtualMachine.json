@@ -127,7 +127,7 @@
             "apiVersion": "2017-08-01",
             "location": "[resourceGroup().location]",
             "properties": {
-                "publicIPAllocationMethod": "Dynamic"
+                "publicIPAllocationMethod": "Static"
             },
             "sku": {
                 "name": "Basic"
@@ -183,6 +183,11 @@
         "virtualMachineName" : {
             "type" : "string",
             "value": "[parameters('virtualMachineName')]"
+        },
+        "virtualMachinePIP" : {
+            "type" : "string",
+            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses',variables('pipName'))).IpAddress]"
         }
+        
     }
 }
