@@ -14,7 +14,7 @@
         },
         "databaseSKU" : {
             "type": "string",
-            "defaultValue": "S0"
+            "defaultValue": "S3"
         },
         "databaseTier" : {
             "type": "string",

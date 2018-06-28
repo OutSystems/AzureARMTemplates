@@ -174,26 +174,14 @@
                     "OSDBSessionCatalog": {
                         "value": "[reference('Microsoft.Resources/deployments/Outsystems.AzureSQLDatabaseSession').outputs.databaseName.value]"
                     },
-                    "OSDBSessionUser": {
-                        "value": "[parameters('databaseAdministratorLogin')]"
-                    },
                     "OSDBSessionPass": {
                         "value": "[parameters('databaseAdministratorPass')]"
-                    },
-                    "OSDBAdminUser": {
-                        "value": "[parameters('databaseAdministratorLogin')]"
                     },
                     "OSDBAdminPass": {
                         "value": "[parameters('databaseAdministratorPass')]"
                     },
-                    "OSDBRuntimeUser": {
-                        "value": "[parameters('databaseAdministratorLogin')]"
-                    },
                     "OSDBRuntimePass": {
                         "value": "[parameters('databaseAdministratorPass')]"
-                    },
-                    "OSDBLogUser": {
-                        "value": "[parameters('databaseAdministratorLogin')]"
                     },
                     "OSDBLogPass": {
                         "value": "[parameters('databaseAdministratorPass')]"
