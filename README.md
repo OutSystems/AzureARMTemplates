@@ -51,7 +51,7 @@ Time to deploy: 30-40 minutes
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-## With Azure SQL, without VNET
+## With Azure SQL, without VNET - UNDER DEV
 
 This set of templates are exactly like the ones in the previous section but an Azure SQL Server is deployed for the Controller and Lifetime templates. The Azure SQL Server admin username and password will be asked.
 
@@ -61,7 +61,7 @@ This set of templates are exactly like the ones in the previous section but an A
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-### 6. Lifetime Environment
+### 6. Lifetime Environment - UNDER DEV
 
 This is the same as the previous template but installs Lifetime. The private key option is not available in this template.
 
