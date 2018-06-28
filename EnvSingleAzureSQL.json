@@ -1,0 +1,65 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "serverName": {
+            "type": "string"
+        },
+        "databaseAdministratorLogin": {
+            "type": "string"
+        },
+        "databaseAdministratorPass": {
+            "type": "securestring"
+        },
+        "databaseName": {
+            "type": "string"
+        }
+    },
+    "variables": {
+    },
+    "resources": [
+        {
+            "name": "Outsystems.AzureSQLServer",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Resources/sqlServer.json"
+                },
+                "parameters": {
+                    "serverName": {
+                        "value": "[parameters('serverName')]"
+                    },
+                    "databaseAdministratorLogin": {
+                        "value": "[parameters('databaseAdministratorLogin')]"
+                    },
+                    "databaseAdministratorPass": {
+                        "value": "[parameters('databaseAdministratorPass')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "Outsystems.AzureSQLDatabase",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Resources/sqlServerDatabase.json"
+                },
+                "parameters": {
+                    "serverName": {
+                        "value": "[reference('Microsoft.Resources/deployments/Outsystems.AzureSQLServer').outputs.serverName.value]"
+                    },
+                    "databaseName": {
+                        "value": "[parameters('databaseName')]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {
+    }
+}
