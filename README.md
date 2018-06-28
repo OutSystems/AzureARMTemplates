@@ -37,7 +37,7 @@ TThis template deploys and configures a VM as an Outsystems frontend server. A w
 
 Time to deploy: 10 minutes
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FFrontendSingle.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FFrontend.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
@@ -73,7 +73,7 @@ This is the same as the previous template but installs Lifetime. The private key
 
 TThis template deploys and configures a VM as an Outsystems frontend server. A working environment is needed to connect this frontend. You will need to specify the same parameters as for the controller template plus the controller host.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FFrontendSingleAzSQL.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FFrontendAzSQL.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
