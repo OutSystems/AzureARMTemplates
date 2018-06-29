@@ -52,7 +52,7 @@
     },
     "resources": [
         {
-            "name": "Outsystems.AzureSQLServer",
+            "name": "[concat('Outsystems.AzureSQLServer.', substring(uniqueString(resourceGroup().id),0,4))]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -74,7 +74,7 @@
             }
         },
         {
-            "name": "Outsystems.AzureSQLDatabase.Platform",
+            "name": "[concat('Outsystems.AzureSQLDatabase.Platform.', substring(uniqueString(resourceGroup().id),0,4))]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -96,7 +96,7 @@
             }
         },
         {
-            "name": "Outsystems.AzureSQLDatabase.Session",
+            "name": "[concat('Outsystems.AzureSQLDatabase.Session.', substring(uniqueString(resourceGroup().id),0,4))]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -118,7 +118,7 @@
             }
         },
         {
-            "name": "Outsystems.AzureSQLServer.FirewallRule",
+            "name": "[concat('Outsystems.AzureSQLServer.FirewallRule.', substring(uniqueString(resourceGroup().id),0,4))]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -140,7 +140,7 @@
             }
         },
         {
-            "name": "Outsystems.VirtualMachine",
+            "name": "[concat('Outsystems.VirtualMachine.', substring(uniqueString(resourceGroup().id),0,4))]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -174,7 +174,7 @@
             }
         },
         {
-            "name": "Outsystems.Controller",
+            "name": "[concat('Outsystems.Controller.', substring(uniqueString(resourceGroup().id),0,4))]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {

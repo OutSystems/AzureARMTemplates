@@ -3,7 +3,8 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "solutionIdentifier": {
-            "type": "string"
+            "type": "string",
+            "maxLength": 6
         },
         "adminUsername": {
             "type": "string"
@@ -80,7 +81,7 @@
     },
     "resources": [
         {
-            "name": "Outsystems.Network",
+            "name": "[concat('Outsystems.Network.', substring(uniqueString(resourceGroup().id),0,4))]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -129,7 +130,7 @@
             }
         },
         {
-            "name": "Outsystems.DevEnvironment",
+            "name": "[concat('Outsystems.DevEnvironment.', substring(uniqueString(resourceGroup().id),0,4))]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -184,7 +185,7 @@
             }
         },
         {
-            "name": "Outsystems.TestEnvironment",
+            "name": "[concat('Outsystems.TestEnvironment.', substring(uniqueString(resourceGroup().id),0,4))]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -239,7 +240,7 @@
             }
         },
         {
-            "name": "Outsystems.LifetimeEnvironment",
+            "name": "[concat('Outsystems.LifetimeEnvironment.', substring(uniqueString(resourceGroup().id),0,4))]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -249,7 +250,7 @@
                 },
                 "parameters": {
                     "virtualMachineName": {
-                        "value": "[concat(parameters('solutionIdentifier'),'-lifetime-vm')]"
+                        "value": "[concat(parameters('solutionIdentifier'),'-life-vm')]"
                     },
                     "virtualMachineSize": {
                         "value": "[parameters('lifetimeEnvironmentVmSize')]"
@@ -270,7 +271,7 @@
                         "value": "[parameters('lifetimeSubnetName')]"
                     },
                     "sqlServerName": {
-                        "value": "[concat(parameters('solutionIdentifier'),'-lifetime-srv', substring(uniqueString(resourceGroup().id),0,4))]"
+                        "value": "[concat(parameters('solutionIdentifier'),'-life-srv', substring(uniqueString(resourceGroup().id),0,4))]"
                     },
                     "databaseSKU": {
                         "value": "S3"
@@ -282,10 +283,10 @@
                         "value": "[parameters('adminPassword')]"
                     },
                     "databasePlatform": {
-                        "value": "concat(parameters('solutionIdentifier'),'-lifetime-db-outsystems')"
+                        "value": "concat(parameters('solutionIdentifier'),'-life-db-outsystems')"
                     },
                     "databaseSession": {
-                        "value": "concat(parameters('solutionIdentifier'),'-lifetime-db-session')"
+                        "value": "concat(parameters('solutionIdentifier'),'-life-db-session')"
                     }
                 }
             }
