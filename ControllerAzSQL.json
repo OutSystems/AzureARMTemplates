@@ -116,6 +116,9 @@
                     "serverName": {
                         "value": "[reference('Microsoft.Resources/deployments/Outsystems.AzureSQLServer').outputs.serverName.value]"
                     },
+                    "ruleName": {
+                        "value": "AllowVMPublicIP"
+                    },
                     "ipAddress": {
                         "value": "[reference('Microsoft.Resources/deployments/Outsystems.VirtualMachine').outputs.virtualMachinePIP.value]"
                     }
