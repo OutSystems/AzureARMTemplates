@@ -5,6 +5,9 @@
         "serverName": {
             "type": "string"
         },
+        "ruleName": {
+            "type": "string"
+        },
         "ipAddress": {
             "type": "string"
         }
@@ -12,17 +15,14 @@
     "variables": {},
     "resources": [
         {
-            "name": "[concat(parameters('serverName'), '/AllowAllWindowsAzureIps')]",
+            "name": "[concat(reference(concat('Microsoft.Sql/servers/',parameters('serverName')),'2017-10-01-preview'), '/', parameters('ruleName'))]",
             "type": "Microsoft.Sql/servers/firewallRules",
             "apiVersion": "2015-05-01-preview",
             "location": "[resourceGroup().location]",
             "properties": {
                 "startIpAddress": "[parameters('ipAddress')]",
                 "endIpAddress": "[parameters('ipAddress')]"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]"
-            ]
+            }
         }
     ],
     "outputs": {
