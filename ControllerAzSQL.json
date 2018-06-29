@@ -27,6 +27,10 @@
         "sqlServerName": {
             "type": "string"
         },
+        "databaseSKU": {
+            "type": "string",
+            "defaultValue": "S3"
+        },
         "databaseAdministratorLogin": {
             "type": "string"
         },
@@ -80,6 +84,9 @@
                     },
                     "databaseName": {
                         "value": "[variables('environmentDB')]"
+                    },
+                    "databaseSKU": {
+                        "value": "[parameters('databaseSKU')]"
                     }
                 }
             }
@@ -99,6 +106,9 @@
                     },
                     "databaseName": {
                         "value": "[variables('sessionDB')]"
+                    },
+                    "databaseSKU": {
+                        "value": "[parameters('databaseSKU')]"
                     }
                 }
             }
