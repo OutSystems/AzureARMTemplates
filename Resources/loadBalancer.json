@@ -11,7 +11,8 @@
         "pipId": "[resourceId('Microsoft.Network/publicIPAddresses',variables('pipName'))]",
         "slbName": "[parameters('loadbalancerName')]",
         "slbId": "[resourceId('Microsoft.Network/loadBalancers',variables('slbName'))]",
-        "slbBackendPoolName": "BackendPool"
+        "slbBackendPoolName": "BackendPool",
+        "slbNatPoolName": "RDPNatPool"
     },
     "resources": [
         {
@@ -52,7 +53,21 @@
                 ],
                 "inboundNatRules": [],
                 "loadBalancingRules": [],
-                "probes": []
+                "probes": [],
+                "inboundNatPools": [
+                    {
+                      "name": "[variables('slbNatPoolName')]",
+                      "properties": {
+                        "frontendIPConfiguration": {
+                          "id": "[variables('pipId')]"
+                        },
+                        "protocol": "tcp",
+                        "frontendPortRangeStart": 50000,
+                        "frontendPortRangeEnd": 50119,
+                        "backendPort": 3389
+                      }
+                    }
+                  ]
             }
         }
     ],
@@ -64,6 +79,10 @@
         "loadbalancerBackendId": {
             "type": "string",
             "value": "[concat(variables('slbId'), '/backendAddressPools/',variables('slbBackendPoolName'))]"
+        },
+        "loadbalancerNatpoolId": {
+            "type": "string",
+            "value": "[concat(variables('slbId'), '/inboundNatPools/',variables('slbNatPoolName'))]"
         }
     }
 }

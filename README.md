@@ -51,17 +51,17 @@ Time to deploy: 30-40 minutes
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-## On Azure SQL in existing VNET - UNDER DEV
+## On Azure SQL in existing VNET
 
 This set of templates are exactly like the ones in the previous section but an Azure SQL Server is deployed for the Controller and Lifetime templates. The Azure SQL Server admin username and password will be asked and cannot be the equal to the VM admin username or the deployment will fail.
 
-### 5. Controller ( Standalone Environment ) - UNDER DEV
+### 5. Controller ( Standalone Environment )
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FControllerAzSQL.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-### 6. Lifetime Environment - UNDER DEV
+### 6. Lifetime Environment
 
 This is the same as the previous template but installs Lifetime. The private key option is not available in this template.
 
@@ -85,7 +85,7 @@ Same as the previous one but the frontends will be deployed in a Virtual Machine
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-## Full stack - UNDER DEV
+## Full stack on existing Database server - UNDER DEV
 
 Full stack environments with Dev, Test, Prod and Lifetime deployed on a new VNET.
 
