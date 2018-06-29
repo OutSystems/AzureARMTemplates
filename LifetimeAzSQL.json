@@ -188,7 +188,7 @@
                         "value": "[concat(reference('Microsoft.Resources/deployments/Outsystems.AzureSQLServer').outputs.serverName.value, '.database.windows.net')]"
                     },
                     "OSDBCatalog": {
-                        "value": "[reference('Microsoft.Resources/deployments/Outsystems.AzureSQLDatabasePlatform').outputs.databaseName.value]"
+                        "value": "[reference('Microsoft.Resources/deployments/Outsystems.AzureSQLDatabase.Platform').outputs.databaseName.value]"
                     },
                     "OSDBSAUser": {
                         "value": "[parameters('databaseAdministratorLogin')]"
@@ -200,7 +200,7 @@
                         "value": "[concat(reference('Microsoft.Resources/deployments/Outsystems.AzureSQLServer').outputs.serverName.value, '.database.windows.net')]"
                     },
                     "OSDBSessionCatalog": {
-                        "value": "[reference('Microsoft.Resources/deployments/Outsystems.AzureSQLDatabaseSession').outputs.databaseName.value]"
+                        "value": "[reference('Microsoft.Resources/deployments/Outsystems.AzureSQLDatabase.Session').outputs.databaseName.value]"
                     },
                     "OSDBSessionPass": {
                         "value": "[parameters('databaseAdministratorPass')]"
