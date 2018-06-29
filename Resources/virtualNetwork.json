@@ -52,7 +52,7 @@
     "variables": {},
     "resources": [
         {
-            "type": "Microsoft.Network/publicIPAddresses",
+            "type": "Microsoft.Network/virtualNetworks",
             "name": "[parameters('virtualNetworkName')]",
             "location": "[resourceGroup().location]",
             "apiVersion": "2017-10-01",
