@@ -36,12 +36,17 @@
         },
         "databaseAdministratorPass": {
             "type": "securestring"
+        },
+        "databasePlatform": {
+            "type": "string",
+            "defaultValue": "outsystems"
+        },
+        "databaseSession": {
+            "type": "string",
+            "defaultValue": "osSession"
         }
     },
-    "variables": {
-        "environmentDB": "outsystems",
-        "sessionDB": "osSession"
-    },
+    "variables": {},
     "resources": [
         {
             "name": "Outsystems.AzureSQLServer",
@@ -79,7 +84,7 @@
                         "value": "[reference('Microsoft.Resources/deployments/Outsystems.AzureSQLServer').outputs.serverName.value]"
                     },
                     "databaseName": {
-                        "value": "[variables('environmentDB')]"
+                        "value": "[parameters('databasePlatform')]"
                     },
                     "databaseSKU": {
                         "value": "[parameters('databaseSKU')]"
@@ -101,7 +106,7 @@
                         "value": "[reference('Microsoft.Resources/deployments/Outsystems.AzureSQLServer').outputs.serverName.value]"
                     },
                     "databaseName": {
-                        "value": "[variables('sessionDB')]"
+                        "value": "[parameters('databaseSession')]"
                     },
                     "databaseSKU": {
                         "value": "[parameters('databaseSKU')]"

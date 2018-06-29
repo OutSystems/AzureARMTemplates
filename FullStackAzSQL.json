@@ -74,9 +74,10 @@
             "type": "string",
             "defaultValue": "10.0.4.0/24"
         }
-
     },
-    "variables": {},
+    "variables": {
+        "outsystemsEnvironmentPrivatekey": "0Ew2B7J6od4DKlL+rt8G2Q=="
+    },
     "resources": [
         {
             "name": "Outsystems.Network",
@@ -177,7 +178,114 @@
                         "value": "concat(parameters('solutionIdentifier'),'-dev-db-session')"
                     },
                     "outsystemsEnvironmentPrivatekey": {
-                        "value": "0Ew2B7J6od4DKlL+rt8G2Q=="
+                        "value": "[variables('outsystemsEnvironmentPrivatekey')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "Outsystems.TestEnvironment",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/ControllerAzSQL.json"
+                },
+                "parameters": {
+                    "virtualMachineName": {
+                        "value": "[concat(parameters('solutionIdentifier'),'-test-vm')]"
+                    },
+                    "virtualMachineSize": {
+                        "value": "[parameters('testEnvironmentVmSize')]"
+                    },
+                    "adminUsername": {
+                        "value": "[parameters('adminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "virtualNetworkResourceGroup": {
+                        "value": "[resourceGroup().name]"
+                    },
+                    "virtualNetworkName": {
+                        "value": "[reference('Microsoft.Resources/deployments/Outsystems.Network').outputs.virtualNetworkName.value]"
+                    },
+                    "virtualNetworkSubnetName": {
+                        "value": "[parameters('testSubnetName')]"
+                    },
+                    "sqlServerName": {
+                        "value": "[concat(parameters('solutionIdentifier'),'-test-srv', substring(uniqueString(resourceGroup().id),0,4))]"
+                    },
+                    "databaseSKU": {
+                        "value": "S3"
+                    },
+                    "databaseAdministratorLogin": {
+                        "value": "[concat(parameters('adminUsername'),'-sql')]"
+                    },
+                    "databaseAdministratorPass": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "databasePlatform": {
+                        "value": "concat(parameters('solutionIdentifier'),'-test-db-outsystems')"
+                    },
+                    "databaseSession": {
+                        "value": "concat(parameters('solutionIdentifier'),'-test-db-session')"
+                    },
+                    "outsystemsEnvironmentPrivatekey": {
+                        "value": "[variables('outsystemsEnvironmentPrivatekey')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "Outsystems.LifetimeEnvironment",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/LifetimeAzSQL.json"
+                },
+                "parameters": {
+                    "virtualMachineName": {
+                        "value": "[concat(parameters('solutionIdentifier'),'-lifetime-vm')]"
+                    },
+                    "virtualMachineSize": {
+                        "value": "[parameters('lifetimeEnvironmentVmSize')]"
+                    },
+                    "adminUsername": {
+                        "value": "[parameters('adminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "virtualNetworkResourceGroup": {
+                        "value": "[resourceGroup().name]"
+                    },
+                    "virtualNetworkName": {
+                        "value": "[reference('Microsoft.Resources/deployments/Outsystems.Network').outputs.virtualNetworkName.value]"
+                    },
+                    "virtualNetworkSubnetName": {
+                        "value": "[parameters('lifetimeSubnetName')]"
+                    },
+                    "sqlServerName": {
+                        "value": "[concat(parameters('solutionIdentifier'),'-lifetime-srv', substring(uniqueString(resourceGroup().id),0,4))]"
+                    },
+                    "databaseSKU": {
+                        "value": "S3"
+                    },
+                    "databaseAdministratorLogin": {
+                        "value": "[concat(parameters('adminUsername'),'-sql')]"
+                    },
+                    "databaseAdministratorPass": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "databasePlatform": {
+                        "value": "concat(parameters('solutionIdentifier'),'-lifetime-db-outsystems')"
+                    },
+                    "databaseSession": {
+                        "value": "concat(parameters('solutionIdentifier'),'-lifetime-db-session')"
                     }
                 }
             }
