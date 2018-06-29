@@ -138,7 +138,7 @@
                 },
                 "parameters": {
                     "virtualMachineName": {
-                        "value": "[concat(parameters('solutionIdentifier'),'-dev')]"
+                        "value": "[concat(parameters('solutionIdentifier'),'-dev-vm')]"
                     },
                     "virtualMachineSize": {
                         "value": "[parameters('devEnvironmentVmSize')]"
@@ -150,7 +150,7 @@
                         "value": "[parameters('adminPassword')]"
                     },
                     "virtualNetworkResourceGroup": {
-                        "value": "[resourceGroup().location]"
+                        "value": "[resourceGroup().name]"
                     },
                     "virtualNetworkName": {
                         "value": "[reference('Microsoft.Resources/deployments/Outsystems.Network').outputs.virtualNetworkName.value]"
@@ -159,7 +159,7 @@
                         "value": "[parameters('devSubnetName')]"
                     },
                     "sqlServerName": {
-                        "value": "[toLower(concat(parameters('solutionIdentifier'),'-dev-', substring(uniqueString(resourceGroup().id),0,4)))]"
+                        "value": "[concat(parameters('solutionIdentifier'),'-dev-srv', substring(uniqueString(resourceGroup().id),0,4))]"
                     },
                     "databaseSKU": {
                         "value": "S3"
@@ -169,6 +169,12 @@
                     },
                     "databaseAdministratorPass": {
                         "value": "[parameters('adminPassword')]"
+                    },
+                    "databasePlatform": {
+                        "value": "concat(parameters('solutionIdentifier'),'-dev-db-outsystems')"
+                    },
+                    "databaseSession": {
+                        "value": "concat(parameters('solutionIdentifier'),'-dev-db-session')"
                     },
                     "outsystemsEnvironmentPrivatekey": {
                         "value": "0Ew2B7J6od4DKlL+rt8G2Q=="
