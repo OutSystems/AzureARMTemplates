@@ -52,7 +52,7 @@
     },
     "resources": [
         {
-            "name": "[concat(parameters('virtualMachineName'), '/Outsystems.AzureSQLServer')]",
+            "name": "[concat(parameters('virtualMachineName'), '.Outsystems.AzureSQLServer')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -74,7 +74,7 @@
             }
         },
         {
-            "name": "[concat(parameters('virtualMachineName'), '/Outsystems.AzureSQLDatabase.Platform')]",
+            "name": "[concat(parameters('virtualMachineName'), '.Outsystems.AzureSQLDatabase.Platform')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -84,7 +84,7 @@
                 },
                 "parameters": {
                     "serverName": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'/Outsystems.AzureSQLServer')).outputs.serverName.value]"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLServer')).outputs.serverName.value]"
                     },
                     "databaseName": {
                         "value": "[parameters('databasePlatform')]"
@@ -96,7 +96,7 @@
             }
         },
         {
-            "name": "[concat(parameters('virtualMachineName'), '/Outsystems.AzureSQLDatabase.Session')]",
+            "name": "[concat(parameters('virtualMachineName'), '.Outsystems.AzureSQLDatabase.Session')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -106,7 +106,7 @@
                 },
                 "parameters": {
                     "serverName": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'/Outsystems.AzureSQLServer')).outputs.serverName.value]"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLServer')).outputs.serverName.value]"
                     },
                     "databaseName": {
                         "value": "[parameters('databaseSession')]"
@@ -118,7 +118,7 @@
             }
         },
         {
-            "name": "[concat(parameters('virtualMachineName'), '/Outsystems.AzureSQLServer.FirewallRule')]",
+            "name": "[concat(parameters('virtualMachineName'), '.Outsystems.AzureSQLServer.FirewallRule')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -128,19 +128,19 @@
                 },
                 "parameters": {
                     "serverName": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'/Outsystems.AzureSQLServer')).outputs.serverName.value]"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLServer')).outputs.serverName.value]"
                     },
                     "ruleName": {
                         "value": "AllowVMPublicIP"
                     },
                     "ipAddress": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'/Outsystems.VirtualMachine')).outputs.virtualMachinePIP.value]"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.VirtualMachine')).outputs.virtualMachinePIP.value]"
                     }
                 }
             }
         },
         {
-            "name": "[concat(parameters('virtualMachineName'), '/Outsystems.VirtualMachine')]",
+            "name": "[concat(parameters('virtualMachineName'), '.Outsystems.VirtualMachine')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -174,7 +174,7 @@
             }
         },
         {
-            "name": "[concat(parameters('virtualMachineName'), '/Outsystems.Controller')]",
+            "name": "[concat(parameters('virtualMachineName'), '.Outsystems.Controller')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -184,7 +184,7 @@
                 },
                 "parameters": {
                     "resourceName": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'/Outsystems.VirtualMachine')).outputs.virtualMachineName.value]"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.VirtualMachine')).outputs.virtualMachineName.value]"
                     },
                     "OSDBProvider": {
                         "value": "AzureSQL"
@@ -193,10 +193,10 @@
                         "value": "SQL"
                     },
                     "OSDBServer": {
-                        "value": "[concat(reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'/Outsystems.AzureSQLServer')).outputs.serverName.value, '.database.windows.net')]"
+                        "value": "[concat(reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLServer')).outputs.serverName.value, '.database.windows.net')]"
                     },
                     "OSDBCatalog": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'/Outsystems.AzureSQLDatabase.Platform')).outputs.databaseName.value]"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLDatabase.Platform')).outputs.databaseName.value]"
                     },
                     "OSDBSAUser": {
                         "value": "[parameters('databaseAdministratorLogin')]"
@@ -205,10 +205,10 @@
                         "value": "[parameters('databaseAdministratorPass')]"
                     },
                     "OSDBSessionServer": {
-                        "value": "[concat(reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'/Outsystems.AzureSQLServer')).outputs.serverName.value, '.database.windows.net')]"
+                        "value": "[concat(reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLServer')).outputs.serverName.value, '.database.windows.net')]"
                     },
                     "OSDBSessionCatalog": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'/Outsystems.AzureSQLDatabase.Session')).outputs.databaseName.value]"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLDatabase.Session')).outputs.databaseName.value]"
                     },
                     "OSDBSessionPass": {
                         "value": "[parameters('databaseAdministratorPass')]"

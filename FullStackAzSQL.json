@@ -81,7 +81,7 @@
     },
     "resources": [
         {
-            "name": "[concat(parameters('solutionIdentifier'), '/Outsystems.Network')]",
+            "name": "[concat(parameters('solutionIdentifier'), '.Outsystems.Network')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -130,7 +130,7 @@
             }
         },
         {
-            "name": "[concat(parameters('solutionIdentifier'), '/Outsystems.DevEnvironment')]",
+            "name": "[concat(parameters('solutionIdentifier'), '.Outsystems.DevEnvironment')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -155,7 +155,7 @@
                         "value": "[resourceGroup().name]"
                     },
                     "virtualNetworkName": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('solutionIdentifier'),'/Outsystems.Network')).outputs.virtualNetworkName.value]"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('solutionIdentifier'),'.Outsystems.Network')).outputs.virtualNetworkName.value]"
                     },
                     "virtualNetworkSubnetName": {
                         "value": "[parameters('devSubnetName')]"
@@ -185,7 +185,7 @@
             }
         },
         {
-            "name": "[concat(parameters('solutionIdentifier'), '/Outsystems.TestEnvironment')]",
+            "name": "[concat(parameters('solutionIdentifier'), '.Outsystems.TestEnvironment')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -210,7 +210,7 @@
                         "value": "[resourceGroup().name]"
                     },
                     "virtualNetworkName": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('solutionIdentifier'),'/Outsystems.Network')).outputs.virtualNetworkName.value]"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('solutionIdentifier'),'.Outsystems.Network')).outputs.virtualNetworkName.value]"
                     },
                     "virtualNetworkSubnetName": {
                         "value": "[parameters('testSubnetName')]"
@@ -240,7 +240,7 @@
             }
         },
         {
-            "name": "[concat(parameters('solutionIdentifier'), '/Outsystems.LifetimeEnvironment')]",
+            "name": "[concat(parameters('solutionIdentifier'), '.Outsystems.LifetimeEnvironment')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -265,7 +265,7 @@
                         "value": "[resourceGroup().name]"
                     },
                     "virtualNetworkName": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('solutionIdentifier'),'/Outsystems.Network')).outputs.virtualNetworkName.value]"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('solutionIdentifier'),'.Outsystems.Network')).outputs.virtualNetworkName.value]"
                     },
                     "virtualNetworkSubnetName": {
                         "value": "[parameters('lifetimeSubnetName')]"
