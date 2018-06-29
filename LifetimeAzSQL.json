@@ -172,7 +172,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/CommonTemplates/outsystemsController.json"
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/CommonTemplates/outsystemsLifetime.json"
                 },
                 "parameters": {
                     "resourceName": {

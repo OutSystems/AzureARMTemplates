@@ -153,7 +153,7 @@
         },
         "applicationGatewayBackendId": {
             "type": "string",
-            "value": "[concat(variables('appgwId'), '/backendAddressPools/appGatewayBackendPool')]"
+            "value": "[concat(variables('appgwId'), '/backendAddressPools/',variables('appgwBackendPoolName'))]"
         }
     }
 }

@@ -51,7 +51,7 @@ Time to deploy: 30-40 minutes
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-## Using Azure SQL. Existing VNET - UNDER DEV
+## On Azure SQL in existing VNET - UNDER DEV
 
 This set of templates are exactly like the ones in the previous section but an Azure SQL Server is deployed for the Controller and Lifetime templates. The Azure SQL Server admin username and password will be asked and cannot be the equal to the VM admin username or the deployment will fail.
 

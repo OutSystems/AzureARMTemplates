@@ -28,7 +28,7 @@
       "instanceCount": {
         "type": "int",
         "metadata": {
-          "description": "Number of VM instances (1000 or less)."
+          "description": "Number of VM instances (1000 or less). "
         },
         "maxValue": 1000
       },
