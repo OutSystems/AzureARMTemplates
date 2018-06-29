@@ -59,7 +59,7 @@
                       "name": "[variables('slbNatPoolName')]",
                       "properties": {
                         "frontendIPConfiguration": {
-                          "id": "[variables('pipId')]"
+                          "id": "[concat(variables('slbId'),'/frontendIPConfigurations/LoadBalancerFrontEnd')]"
                         },
                         "protocol": "tcp",
                         "frontendPortRangeStart": 50000,

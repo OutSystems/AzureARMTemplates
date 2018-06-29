@@ -34,6 +34,12 @@
         },
         "applicationGatewayBackendPoolId": {
             "type": "string"
+        },
+        "loadbalancerBackendPoolId": {
+            "type": "string"
+        },
+        "loadbalancerNatPoolId": {
+            "type": "string"
         }
     },
     "variables": {
@@ -52,8 +58,8 @@
                 "capacity": "[parameters('instanceCount')]"
             },
             "properties": {
-                "overprovision": true,
-                "singlePlacementGroup": false,
+                "overprovision": false,
+                "singlePlacementGroup": true,
                 "upgradePolicy": {
                     "mode": "Automatic"
                 },
@@ -72,7 +78,7 @@
                         }
                     },
                     "osProfile": {
-                        "computerNamePrefix": "[concat(parameters('vmssName'),'node')]",
+                        "computerNamePrefix": "node",
                         "adminUsername": "[parameters('adminUsername')]",
                         "adminPassword": "[parameters('adminPassword')]"
                     },
@@ -89,18 +95,22 @@
                                                 "subnet": {
                                                     "id": "[variables('subnetid')]"
                                                 },
-                                                "publicIPAddressconfiguration": {
-                                                    "name": "publicip",
-                                                    "properties": {
-                                                        "idleTimeoutInMinutes": 10
-                                                    }
-                                                },
                                                 "ApplicationGatewayBackendAddressPools": [
                                                     {
                                                         "id": "[parameters('applicationGatewayBackendPoolId')]"
                                                     }
-                                                ]
-                                            }   
+                                                ],
+                                                "loadBalancerBackendAddressPools": [
+                                                    {
+                                                        "id": "[parameters('loadbalancerBackendPoolId')]"
+                                                    }
+                                                ],
+                                                "loadBalancerInboundNatPools": [
+                                                    {
+                                                      "id": "[parameters('loadbalancerNatPoolId')]"
+                                                    }
+                                                  ]
+                                            }
                                         }
                                     ]
                                 }
@@ -112,8 +122,8 @@
         }
     ],
     "outputs": {
-        "vmssName" : {
-            "type" : "string",
+        "vmssName": {
+            "type": "string",
             "value": "[parameters('vmssName')]"
         }
     }

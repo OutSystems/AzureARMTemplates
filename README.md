@@ -91,7 +91,7 @@ Full stack environments with Dev, Test, Prod and Lifetime deployed on a new VNET
 
 ### 9. Full stack with AzureSQL, single frontend on the Prod environment - UNDER DEV
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FFullStackSingle.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FFullStack.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
