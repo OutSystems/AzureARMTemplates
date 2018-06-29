@@ -1,7 +1,7 @@
 # Outsystems Azure ARM templates
 This is collection of quick start templates to deploy the Outsystems platform to Microsoft Azure.
 
-## Without VNET, without database server
+## Existing VNET and Database Server
 
 For this set of templates you need a VNET already deployed and a database server reachable from the VMs.
 
@@ -51,9 +51,9 @@ Time to deploy: 30-40 minutes
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-## With Azure SQL, without VNET - UNDER DEV
+## Using Azure SQL. Existing VNET - UNDER DEV
 
-This set of templates are exactly like the ones in the previous section but an Azure SQL Server is deployed for the Controller and Lifetime templates. The Azure SQL Server admin username and password will be asked.
+This set of templates are exactly like the ones in the previous section but an Azure SQL Server is deployed for the Controller and Lifetime templates. The Azure SQL Server admin username and password will be asked and cannot be the equal to the VM admin username or the deployment will fail.
 
 ### 5. Controller ( Standalone Environment ) - UNDER DEV
 

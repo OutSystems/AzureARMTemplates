@@ -36,10 +36,6 @@
         },
         "databaseAdministratorPass": {
             "type": "securestring"
-        },
-        "outsystemsEnvironmentPrivatekey": {
-            "type": "string",
-            "defaultValue": " "
         }
     },
     "variables": {
@@ -217,9 +213,6 @@
                     },
                     "OSDBLogPass": {
                         "value": "[parameters('databaseAdministratorPass')]"
-                    },
-                    "OSPrivateKey": {
-                        "value": "[trim(parameters('outsystemsEnvironmentPrivatekey'))]"
                     }
                 }
             }
