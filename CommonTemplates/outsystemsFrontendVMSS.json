@@ -79,7 +79,7 @@
     "variables": {},
     "resources": [
         {
-            "name": "Microsoft.CustomScriptExtension",
+            "name": "[concat(parameters('resourceName'), '.Outsystems.CustomScriptExtension')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {

@@ -173,10 +173,10 @@
                         "value": "[parameters('adminPassword')]"
                     },
                     "databasePlatform": {
-                        "value": "concat(parameters('solutionIdentifier'),'-dev-db-outsystems')"
+                        "value": "[concat(parameters('solutionIdentifier'),'-dev-db-outsystems')]"
                     },
                     "databaseSession": {
-                        "value": "concat(parameters('solutionIdentifier'),'-dev-db-session')"
+                        "value": "[concat(parameters('solutionIdentifier'),'-dev-db-session')]"
                     },
                     "outsystemsEnvironmentPrivatekey": {
                         "value": "[variables('outsystemsEnvironmentPrivatekey')]"
@@ -228,10 +228,10 @@
                         "value": "[parameters('adminPassword')]"
                     },
                     "databasePlatform": {
-                        "value": "concat(parameters('solutionIdentifier'),'-test-db-outsystems')"
+                        "value": "[concat(parameters('solutionIdentifier'),'-test-db-outsystems')]"
                     },
                     "databaseSession": {
-                        "value": "concat(parameters('solutionIdentifier'),'-test-db-session')"
+                        "value": "[concat(parameters('solutionIdentifier'),'-test-db-session')]"
                     },
                     "outsystemsEnvironmentPrivatekey": {
                         "value": "[variables('outsystemsEnvironmentPrivatekey')]"
@@ -283,10 +283,10 @@
                         "value": "[parameters('adminPassword')]"
                     },
                     "databasePlatform": {
-                        "value": "concat(parameters('solutionIdentifier'),'-life-db-outsystems')"
+                        "value": "[concat(parameters('solutionIdentifier'),'-life-db-outsystems')]"
                     },
                     "databaseSession": {
-                        "value": "concat(parameters('solutionIdentifier'),'-life-db-session')"
+                        "value": "[concat(parameters('solutionIdentifier'),'-life-db-session')]"
                     }
                 }
             }

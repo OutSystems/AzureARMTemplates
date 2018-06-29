@@ -108,7 +108,7 @@
     },
     "resources": [
         {
-            "name": "Outsystems.ApplicationGateway",
+            "name": "[concat(parameters('vmssName'), '.Outsystems.ApplicationGateway')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -133,7 +133,7 @@
             }
         },
         {
-            "name": "Outsystems.VirtualMachineScaleSet",
+            "name": "[concat(parameters('vmssName'), '.Outsystems.VirtualMachineScaleSet')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -170,13 +170,13 @@
                         "value": "[parameters('virtualNetworkSubnetName')]"
                     },
                     "applicationGatewayBackendPoolId": {
-                        "value": "[reference('Microsoft.Resources/deployments/Outsystems.ApplicationGateway').outputs.applicationGatewayBackendId.value]"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('vmssName'),'.Outsystems.ApplicationGateway')).outputs.applicationGatewayBackendId.value]"
                     }
                 }
             }
         },
         {
-            "name": "Outsystems.FrontendVMSS",
+            "name": "[concat(parameters('vmssName'), '.Outsystems.FrontendVMSS')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -186,7 +186,7 @@
                 },
                 "parameters": {
                     "resourceName": {
-                        "value": "[reference('Microsoft.Resources/deployments/Outsystems.VirtualMachineScaleSet').outputs.vmssName.value]"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('vmssName'),'.Outsystems.VirtualMachineScaleSet')).outputs.vmssName.value]"
                     },
                     "OSDBProvider": {
                         "value": "[parameters('databaseProvider')]"
