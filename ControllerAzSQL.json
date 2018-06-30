@@ -229,5 +229,14 @@
             }
         }
     ],
-    "outputs": {}
+    "outputs": {
+        "virtualMachineName" : {
+            "type" : "string",
+            "value": "[parameters('virtualMachineName')]"
+        },
+        "sqlServerName" : {
+            "type" : "string",
+            "value": "[concat(reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLServer')).outputs.serverName.value, '.database.windows.net')]"
+        }
+    }
 }
