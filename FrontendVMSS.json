@@ -108,31 +108,6 @@
     },
     "resources": [
         {
-            "name": "[concat(parameters('vmssName'), '.Outsystems.ApplicationGateway')]",
-            "apiVersion": "2015-01-01",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Resources/applicationGateway.json"
-                },
-                "parameters": {
-                    "applicationGatewayName": {
-                        "value": "[concat(parameters('vmssName'), '-appgw')]"
-                    },
-                    "virtualNetworkResourceGroup": {
-                        "value": "[parameters('virtualNetworkResourceGroup')]"
-                    },
-                    "virtualNetworkName": {
-                        "value": "[parameters('virtualNetworkName')]"
-                    },
-                    "virtualNetworkSubnetName": {
-                        "value": "[parameters('applicationGatewayVirtualNetworkSubnetName')]"
-                    }
-                }
-            }
-        },
-        {
             "name": "[concat(parameters('vmssName'), '.Outsystems.VirtualMachineScaleSet')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
@@ -169,8 +144,8 @@
                     "virtualNetworkSubnetName": {
                         "value": "[parameters('virtualNetworkSubnetName')]"
                     },
-                    "applicationGatewayBackendPoolId": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('vmssName'),'.Outsystems.ApplicationGateway')).outputs.applicationGatewayBackendId.value]"
+                    "applicationGatewayvirtualNetworkSubnetName": {
+                        "value": "[parameters('applicationGatewayvirtualNetworkSubnetName')]"
                     }
                 }
             }

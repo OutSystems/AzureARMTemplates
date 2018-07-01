@@ -97,7 +97,7 @@
                         "value": "[resourceGroup().location]"
                     },
                     "fileUris": {
-                        "value": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Scripts/Controller.ps1"
+                        "value": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Scripts/OutsystemsSetup.ps1"
                     },
                     "arguments": {
                         "value": "[concat(' -OSPrivateKey \"', trim(parameters('OSPrivateKey')), '\" -OSController \"', trim(parameters('OSController')), '\" -OSDBProvider ', parameters('OSDBProvider'), ' -OSDBAuth ', parameters('OSDBAuth'), ' -OSDBServer ', parameters('OSDBServer'), ' -OSDBCatalog ', parameters('OSDBCatalog'), ' -OSDBSAUser ', parameters('OSDBSAUser'), ' -OSDBSAPass ', parameters('OSDBSAPass'), ' -OSDBSessionServer ', parameters('OSDBSessionServer'), ' -OSDBSessionCatalog ', parameters('OSDBSessionCatalog'), ' -OSDBSessionUser ', parameters('OSDBSessionUser'), ' -OSDBSessionPass ', parameters('OSDBSessionPass'), ' -OSDBAdminUser ', parameters('OSDBAdminUser'), ' -OSDBAdminPass ', parameters('OSDBAdminPass'), ' -OSDBRuntimeUser ', parameters('OSDBRuntimeUser'), ' -OSDBRuntimePass ', parameters('OSDBRuntimePass'), ' -OSDBLogUser ', parameters('OSDBLogUser'), ' -OSDBLogPass ', parameters('OSDBLogPass'))]"
