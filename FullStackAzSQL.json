@@ -401,7 +401,7 @@
                         "value": "SQL"
                     },
                     "OSDBServer": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',concat(parameters('solutionIdentifier'), '.Outsystems.ProdEnvironment'))).outputs.sqlServerName.value]"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',concat(parameters('solutionIdentifier'), '.Outsystems.ProdEnvironment'))).outputs.sqlServerNameFQDN.value]"
                     },
                     "OSDBCatalog": {
                         "value": "[concat(parameters('solutionIdentifier'),'-prod-db-outsystems')]"
@@ -413,7 +413,7 @@
                         "value": "[parameters('adminPassword')]"
                     },
                     "OSDBSessionServer": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',concat(parameters('solutionIdentifier'), '.Outsystems.ProdEnvironmentFEVMSS'))).outputs.sqlServerName.value]"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',concat(parameters('solutionIdentifier'), '.Outsystems.ProdEnvironmentFEVMSS'))).outputs.sqlServerNameFQDN.value]"
                     },
                     "OSDBSessionCatalog": {
                         "value": "[concat(parameters('solutionIdentifier'),'-prod-db-session')]"
@@ -435,6 +435,28 @@
                     },
                     "OSPrivateKey": {
                         "value": "[variables('outsystemsEnvironmentPrivatekey')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[concat(parameters('solutionIdentifier'), '.Outsystems.AzureSQLServer.FirewallRule')]",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Resources/sqlServerFirewallRule.json"
+                },
+                "parameters": {
+                    "serverName": {
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('solutionIdentifier'),'.Outsystems.ProdEnvironment')).outputs.sqlServerName.value]"
+                    },
+                    "ruleName": {
+                        "value": "AllowLBPublicIP"
+                    },
+                    "ipAddress": {
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('solutionIdentifier'),'.Outsystems.ProdEnvironmentFEVMSS')).outputs.loadbalancerPIP.value]"
                     }
                 }
             }
