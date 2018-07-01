@@ -392,7 +392,7 @@
                 },
                 "parameters": {
                     "resourceName": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',concat(parameters('solutionIdentifier'), '.Outsystems.ProdEnvironmentFEVMSS'))).outputs.vmssName.value]"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',concat(parameters('solutionIdentifier'), '.Outsystems.ProdEnvironment'))).outputs.vmssName.value]"
                     },
                     "OSDBProvider": {
                         "value": "AzureSQL"
@@ -401,7 +401,7 @@
                         "value": "SQL"
                     },
                     "OSDBServer": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',concat(parameters('solutionIdentifier'), '.Outsystems.ProdEnvironmentFEVMSS'))).outputs.sqlServerName.value]"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',concat(parameters('solutionIdentifier'), '.Outsystems.ProdEnvironment'))).outputs.sqlServerName.value]"
                     },
                     "OSDBCatalog": {
                         "value": "[concat(parameters('solutionIdentifier'),'-prod-db-outsystems')]"
