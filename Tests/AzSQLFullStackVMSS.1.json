@@ -299,7 +299,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/AzSQLProdVMSS.json"
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/AzSQLController.json"
                 },
                 "parameters": {
                     "virtualMachineName": {
@@ -343,12 +343,123 @@
                     },
                     "outsystemsEnvironmentPrivatekey": {
                         "value": "[variables('outsystemsEnvironmentPrivatekey')]"
-                    },
+                    }
+                }
+            }
+        },
+        {
+            "name": "[concat(parameters('solutionIdentifier'), '.Outsystems.ProdEnvironmentFEVMSS')]",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Resources/virtualMachineScaleSets.json"
+                },
+                "parameters": {
                     "vmssName": {
                         "value": "[concat(parameters('solutionIdentifier'),'-vmss')]"
                     },
+                    "virtualMachineSize": {
+                        "value": "[parameters('prodEnvironmentVmSize')]"
+                    },
+                    "adminUsername": {
+                        "value": "[parameters('adminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "virtualNetworkResourceGroup": {
+                        "value": "[resourceGroup().name]"
+                    },
+                    "virtualNetworkName": {
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('solutionIdentifier'),'.Outsystems.Network')).outputs.virtualNetworkName.value]"
+                    },
+                    "virtualNetworkSubnetName": {
+                        "value": "[parameters('prodSubnetName')]"
+                    },
                     "applicationGatewayvirtualNetworkSubnetName": {
-                        "value": "[parameters('appgwSubnetAddressSpace')]"
+                        "value": "[parameters('appgwSubnetName')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[concat(parameters('solutionIdentifier'), '.Outsystems.ProdEnvironmentFE')]",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/CommonTemplates/outsystemsFrontendVMSS.json"
+                },
+                "parameters": {
+                    "resourceName": {
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',concat(parameters('solutionIdentifier'), '.Outsystems.ProdEnvironmentFEVMSS'))).outputs.vmssName.value]"
+                    },
+                    "OSDBProvider": {
+                        "value": "AzureSQL"
+                    },
+                    "OSDBAuth": {
+                        "value": "SQL"
+                    },
+                    "OSDBServer": {
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',concat(parameters('solutionIdentifier'), '.Outsystems.ProdEnvironment'))).outputs.sqlServerNameFQDN.value]"
+                    },
+                    "OSDBCatalog": {
+                        "value": "[concat(parameters('solutionIdentifier'),'-prod-db-outsystems')]"
+                    },
+                    "OSDBSAUser": {
+                        "value": "[concat(parameters('adminUsername'),'-sql')]"
+                    },
+                    "OSDBSAPass": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "OSDBSessionServer": {
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',concat(parameters('solutionIdentifier'), '.Outsystems.ProdEnvironment'))).outputs.sqlServerNameFQDN.value]"
+                    },
+                    "OSDBSessionCatalog": {
+                        "value": "[concat(parameters('solutionIdentifier'),'-prod-db-session')]"
+                    },
+                    "OSDBSessionPass": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "OSDBAdminPass": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "OSDBRuntimePass": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "OSDBLogPass": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "OSController": {
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',concat(parameters('solutionIdentifier'), '.Outsystems.ProdEnvironment'))).outputs.virtualMachineName.value]"
+                    },
+                    "OSPrivateKey": {
+                        "value": "[variables('outsystemsEnvironmentPrivatekey')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[concat(parameters('solutionIdentifier'), '.Outsystems.AzureSQLServer.FirewallRule')]",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Resources/sqlServerFirewallRule.json"
+                },
+                "parameters": {
+                    "serverName": {
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('solutionIdentifier'),'.Outsystems.ProdEnvironment')).outputs.sqlServerName.value]"
+                    },
+                    "ruleName": {
+                        "value": "AllowLBPublicIP"
+                    },
+                    "ipAddress": {
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('solutionIdentifier'),'.Outsystems.ProdEnvironmentFEVMSS')).outputs.loadbalancerPIP.value]"
                     }
                 }
             }
