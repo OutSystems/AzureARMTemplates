@@ -99,6 +99,12 @@ Install-OSPlatformServerPreReqs
 # -- Download and install OS Server and Dev environment from repo
 Install-OSPlatformServer -Version $OSPlatformVersion -InstallDir $OSInstallDir
 
+# -- Configure windows firewall
+Set-OSPlatformWindowsFirewall
+
+# -- Disable IPv6
+Disable-OSIPv6
+
 # -- Configure environment
 $ConfigToolArgs = @{
 
@@ -126,10 +132,7 @@ $ConfigToolArgs = @{
     DBLogPass           = $OSDBLogPass
 }
 #Sleep here 10 seconds to avoid the error machine.config is being used by another process.
-Invoke-OSConfigurationTool -Verbose @ConfigToolArgs
-
-# -- Configure windows firewall
-Set-OSPlatformWindowsFirewall
+Invoke-OSConfigurationTool @ConfigToolArgs
 
 # -- Install Service Center, SysComponents and license if not frontend
 If ($OSRole -ne "FE") {
