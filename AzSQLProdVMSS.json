@@ -50,10 +50,6 @@
         "databaseSession": {
             "type": "string",
             "defaultValue": "osSession"
-        },
-        "outsystemsEnvironmentPrivatekey": {
-            "type": "string",
-            "defaultValue": " "
         }
     },
     "variables": {
@@ -107,9 +103,6 @@
                     },
                     "databaseSession": {
                         "value": "[parameters('databaseSession')]"
-                    },
-                    "outsystemsEnvironmentPrivatekey": {
-                        "value": "[parameters('outsystemsEnvironmentPrivatekey')]"
                     }
                 }
             }
@@ -204,7 +197,7 @@
                         "value": "[reference(concat('Microsoft.Resources/deployments/',concat(parameters('virtualMachineName'), '.Outsystems.ProdEnvironment'))).outputs.virtualMachineName.value]"
                     },
                     "OSPrivateKey": {
-                        "value": "[parameters('outsystemsEnvironmentPrivatekey')]"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',concat(parameters('virtualMachineName'), '.Outsystems.ProdEnvironment'))).outputs.message.value]"
                     }
                 }
             }
