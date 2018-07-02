@@ -86,19 +86,18 @@ Remove-Module Outsystems.SetupTools -ErrorAction SilentlyContinue | Out-Null
 Install-Module Outsystems.SetupTools -Force | Out-Null
 Import-Module Outsystems.SetupTools | Out-Null
 
-# -- Log file
-New-Item -Path $OSLogPath -ItemType directory -Force | Out-Null
-$LogFile = "$OSLogPath\InstallLog-$(get-date -Format 'yyyyMMddHHmmss').log"
+# -- Start logging
+Set-OSInstallLog -Path $OSLogPath -File "InstallLog-$(get-date -Format 'yyyyMMddHHmmss').log"
 
 # -- Check HW and OS for compability
-Test-OSPlatformHardwareReqs -Verbose 4>$LogFile
-Test-OSPlatformSoftwareReqs -Verbose 4>$LogFile
+Test-OSPlatformHardwareReqs
+Test-OSPlatformSoftwareReqs
 
 # -- Install PreReqs
-Install-OSPlatformServerPreReqs -Verbose 4>$LogFile
+Install-OSPlatformServerPreReqs
 
 # -- Download and install OS Server and Dev environment from repo
-Install-OSPlatformServer -Version $OSPlatformVersion -InstallDir $OSInstallDir -Verbose 4>$LogFile
+Install-OSPlatformServer -Version $OSPlatformVersion -InstallDir $OSInstallDir
 
 # -- Configure environment
 $ConfigToolArgs = @{
@@ -127,31 +126,31 @@ $ConfigToolArgs = @{
     DBLogPass           = $OSDBLogPass
 }
 #Sleep here 10 seconds to avoid the error machine.config is being used by another process.
-Invoke-OSConfigurationTool -Verbose @ConfigToolArgs 4>$LogFile
+Invoke-OSConfigurationTool -Verbose @ConfigToolArgs
 
 # -- Configure windows firewall
-Set-OSPlatformWindowsFirewall -Verbose 4>$LogFile | Out-Null
+Set-OSPlatformWindowsFirewall
 
 # -- Install Service Center, SysComponents and license if not frontend
 If ($OSRole -ne "FE") {
-    Install-OSPlatformServiceCenter -Verbose 4>$LogFile
-    Install-OSPlatformSysComponents -Verbose 4>$LogFile
-    Install-OSPlatformLicense -Path $OSLicensePath -Verbose 4>$LogFile
+    Install-OSPlatformServiceCenter
+    Install-OSPlatformSysComponents
+    Install-OSPlatformLicense -Path $OSLicensePath
 }
 
 # -- Install Lifetime
 If ($OSRole -eq "LT") {
-    Install-OSPlatformLifetime -Verbose 4>$LogFile    
+    Install-OSPlatformLifetime
 }
 
 # -- Download and install dev environment
-Install-OSDevEnvironment -Version $OSDevEnvironmentVersion -InstallDir $OSInstallDir -Verbose 4>$LogFile
+Install-OSDevEnvironment -Version $OSDevEnvironmentVersion -InstallDir $OSInstallDir
 
 # -- System tunning
-Set-OSPlatformPerformanceTunning -Verbose 4>$LogFile
+Set-OSPlatformPerformanceTunning
 
 # -- Security settings
-Set-OSPlatformSecuritySettings -Verbose 4>$LogFile
+Set-OSPlatformSecuritySettings
 
-# -- Output the private key
+# -- Outputs the private key
 Get-OSPlatformServerPrivateKey
