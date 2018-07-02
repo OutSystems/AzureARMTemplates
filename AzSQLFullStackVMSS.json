@@ -14,19 +14,19 @@
         },
         "devEnvironmentVmSize": {
             "type": "string",
-            "defaultValue": "Standard_D2s_v3"
+            "defaultValue": "Standard_D4s_v3"
         },
         "testEnvironmentVmSize": {
             "type": "string",
-            "defaultValue": "Standard_D2s_v3"
+            "defaultValue": "Standard_D4s_v3"
         },
         "prodEnvironmentVmSize": {
             "type": "string",
-            "defaultValue": "Standard_D2s_v3"
+            "defaultValue": "Standard_D4s_v3"
         },
         "lifetimeEnvironmentVmSize": {
             "type": "string",
-            "defaultValue": "Standard_D2s_v3"
+            "defaultValue": "Standard_D4s_v3"
         },
         "virtualNetworkName": {
             "type": "string"
@@ -78,7 +78,7 @@
     },
     "variables": {
         "outsystemsEnvironmentPrivatekey": "0Ew2B7J6od4DKlL+rt8G2Q==",
-        "databaseSKU": "S0"
+        "databaseSKU": "S3"
     },
     "resources": [
         {
@@ -178,9 +178,6 @@
                     },
                     "databaseSession": {
                         "value": "[concat(parameters('solutionIdentifier'),'-dev-db-session')]"
-                    },
-                    "outsystemsEnvironmentPrivatekey": {
-                        "value": "[variables('outsystemsEnvironmentPrivatekey')]"
                     }
                 }
             }
@@ -233,9 +230,6 @@
                     },
                     "databaseSession": {
                         "value": "[concat(parameters('solutionIdentifier'),'-test-db-session')]"
-                    },
-                    "outsystemsEnvironmentPrivatekey": {
-                        "value": "[variables('outsystemsEnvironmentPrivatekey')]"
                     }
                 }
             }
@@ -340,9 +334,6 @@
                     },
                     "databaseSession": {
                         "value": "[concat(parameters('solutionIdentifier'),'-prod-db-session')]"
-                    },
-                    "outsystemsEnvironmentPrivatekey": {
-                        "value": "[variables('outsystemsEnvironmentPrivatekey')]"
                     },
                     "vmssName": {
                         "value": "[concat(parameters('solutionIdentifier'),'-vmss')]"
