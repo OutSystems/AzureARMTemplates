@@ -78,26 +78,27 @@ Param(
 )
 
 # -- Disable windows defender realtime scan
-Set-MpPreference -DisableRealtimeMonitoring $true
+Set-MpPreference -DisableRealtimeMonitoring $true | Out-Null
 
 # -- Import module from Powershell Gallery
-Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
-Remove-Module Outsystems.SetupTools -ErrorAction SilentlyContinue
-Install-Module Outsystems.SetupTools -Force
-Import-Module Outsystems.SetupTools
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force | Out-Null
+Remove-Module Outsystems.SetupTools -ErrorAction SilentlyContinue | Out-Null
+Install-Module Outsystems.SetupTools -Force | Out-Null
+Import-Module Outsystems.SetupTools | Out-Null
 
-# -- Start logging
-Start-Transcript -Path "$OSLogPath\InstallLog-$(get-date -Format 'yyyyMMddHHmmss').log" -Force
+# -- Log file
+New-Item -Path $OSLogPath -ItemType directory -Force | Out-Null
+$LogFile = "$OSLogPath\InstallLog-$(get-date -Format 'yyyyMMddHHmmss').log"
 
 # -- Check HW and OS for compability
-Test-OSPlatformHardwareReqs -Verbose
-Test-OSPlatformSoftwareReqs -Verbose
+Test-OSPlatformHardwareReqs -Verbose 4>$LogFile
+Test-OSPlatformSoftwareReqs -Verbose 4>$LogFile
 
 # -- Install PreReqs
-Install-OSPlatformServerPreReqs -Verbose
+Install-OSPlatformServerPreReqs -Verbose 4>$LogFile
 
 # -- Download and install OS Server and Dev environment from repo
-Install-OSPlatformServer -Version $OSPlatformVersion -InstallDir $OSInstallDir -Verbose
+Install-OSPlatformServer -Version $OSPlatformVersion -InstallDir $OSInstallDir -Verbose 4>$LogFile
 
 # -- Configure environment
 $ConfigToolArgs = @{
@@ -126,31 +127,31 @@ $ConfigToolArgs = @{
     DBLogPass           = $OSDBLogPass
 }
 #Sleep here 10 seconds to avoid the error machine.config is being used by another process.
-Invoke-OSConfigurationTool -Verbose @ConfigToolArgs
+Invoke-OSConfigurationTool -Verbose @ConfigToolArgs 4>$LogFile
 
 # -- Configure windows firewall
-Set-OSPlatformWindowsFirewall -Verbose
+Set-OSPlatformWindowsFirewall -Verbose 4>$LogFile | Out-Null
 
 # -- Install Service Center, SysComponents and license if not frontend
 If ($OSRole -ne "FE") {
-    Install-OSPlatformServiceCenter -Verbose
-    Install-OSPlatformSysComponents -Verbose
-    Install-OSPlatformLicense -Path $OSLicensePath -Verbose
+    Install-OSPlatformServiceCenter -Verbose 4>$LogFile
+    Install-OSPlatformSysComponents -Verbose 4>$LogFile
+    Install-OSPlatformLicense -Path $OSLicensePath -Verbose 4>$LogFile
 }
 
 # -- Install Lifetime
 If ($OSRole -eq "LT") {
-    Install-OSPlatformLifetime -Verbose    
+    Install-OSPlatformLifetime -Verbose 4>$LogFile    
 }
 
 # -- Download and install dev environment
-Install-OSDevEnvironment -Version $OSDevEnvironmentVersion -InstallDir $OSInstallDir -Verbose
+Install-OSDevEnvironment -Version $OSDevEnvironmentVersion -InstallDir $OSInstallDir -Verbose 4>$LogFile
 
 # -- System tunning
-Set-OSPlatformPerformanceTunning -Verbose
+Set-OSPlatformPerformanceTunning -Verbose 4>$LogFile
 
 # -- Security settings
-Set-OSPlatformSecuritySettings -Verbose
+Set-OSPlatformSecuritySettings -Verbose 4>$LogFile
 
-# -- Stop logging
-Stop-Transcript
+# -- Output the private key
+Get-OSPlatformServerPrivateKey
