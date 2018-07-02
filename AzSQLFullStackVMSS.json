@@ -78,7 +78,7 @@
     },
     "variables": {
         "outsystemsEnvironmentPrivatekey": "0Ew2B7J6od4DKlL+rt8G2Q==",
-        "databaseSKU": "S3"
+        "databaseSKU": "S0"
     },
     "resources": [
         {
@@ -131,13 +131,175 @@
             }
         },
         {
+            "name": "[concat(parameters('solutionIdentifier'), '.Outsystems.DevEnvironment')]",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/AzSQLController.json"
+                },
+                "parameters": {
+                    "virtualMachineName": {
+                        "value": "[concat(parameters('solutionIdentifier'),'-dev-vm')]"
+                    },
+                    "virtualMachineSize": {
+                        "value": "[parameters('devEnvironmentVmSize')]"
+                    },
+                    "adminUsername": {
+                        "value": "[parameters('adminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "virtualNetworkResourceGroup": {
+                        "value": "[resourceGroup().name]"
+                    },
+                    "virtualNetworkName": {
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('solutionIdentifier'),'.Outsystems.Network')).outputs.virtualNetworkName.value]"
+                    },
+                    "virtualNetworkSubnetName": {
+                        "value": "[parameters('devSubnetName')]"
+                    },
+                    "sqlServerName": {
+                        "value": "[concat(parameters('solutionIdentifier'),'-dev-srv', substring(uniqueString(resourceGroup().id),0,4))]"
+                    },
+                    "databaseSKU": {
+                        "value": "[variables('databaseSKU')]"
+                    },
+                    "databaseAdministratorLogin": {
+                        "value": "[concat(parameters('adminUsername'),'-sql')]"
+                    },
+                    "databaseAdministratorPass": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "databasePlatform": {
+                        "value": "[concat(parameters('solutionIdentifier'),'-dev-db-outsystems')]"
+                    },
+                    "databaseSession": {
+                        "value": "[concat(parameters('solutionIdentifier'),'-dev-db-session')]"
+                    },
+                    "outsystemsEnvironmentPrivatekey": {
+                        "value": "[variables('outsystemsEnvironmentPrivatekey')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[concat(parameters('solutionIdentifier'), '.Outsystems.TestEnvironment')]",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/AzSQLController.json"
+                },
+                "parameters": {
+                    "virtualMachineName": {
+                        "value": "[concat(parameters('solutionIdentifier'),'-test-vm')]"
+                    },
+                    "virtualMachineSize": {
+                        "value": "[parameters('testEnvironmentVmSize')]"
+                    },
+                    "adminUsername": {
+                        "value": "[parameters('adminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "virtualNetworkResourceGroup": {
+                        "value": "[resourceGroup().name]"
+                    },
+                    "virtualNetworkName": {
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('solutionIdentifier'),'.Outsystems.Network')).outputs.virtualNetworkName.value]"
+                    },
+                    "virtualNetworkSubnetName": {
+                        "value": "[parameters('testSubnetName')]"
+                    },
+                    "sqlServerName": {
+                        "value": "[concat(parameters('solutionIdentifier'),'-test-srv', substring(uniqueString(resourceGroup().id),0,4))]"
+                    },
+                    "databaseSKU": {
+                        "value": "[variables('databaseSKU')]"
+                    },
+                    "databaseAdministratorLogin": {
+                        "value": "[concat(parameters('adminUsername'),'-sql')]"
+                    },
+                    "databaseAdministratorPass": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "databasePlatform": {
+                        "value": "[concat(parameters('solutionIdentifier'),'-test-db-outsystems')]"
+                    },
+                    "databaseSession": {
+                        "value": "[concat(parameters('solutionIdentifier'),'-test-db-session')]"
+                    },
+                    "outsystemsEnvironmentPrivatekey": {
+                        "value": "[variables('outsystemsEnvironmentPrivatekey')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[concat(parameters('solutionIdentifier'), '.Outsystems.LifetimeEnvironment')]",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/AzSQLLifetime.json"
+                },
+                "parameters": {
+                    "virtualMachineName": {
+                        "value": "[concat(parameters('solutionIdentifier'),'-life-vm')]"
+                    },
+                    "virtualMachineSize": {
+                        "value": "[parameters('lifetimeEnvironmentVmSize')]"
+                    },
+                    "adminUsername": {
+                        "value": "[parameters('adminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "virtualNetworkResourceGroup": {
+                        "value": "[resourceGroup().name]"
+                    },
+                    "virtualNetworkName": {
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('solutionIdentifier'),'.Outsystems.Network')).outputs.virtualNetworkName.value]"
+                    },
+                    "virtualNetworkSubnetName": {
+                        "value": "[parameters('lifetimeSubnetName')]"
+                    },
+                    "sqlServerName": {
+                        "value": "[concat(parameters('solutionIdentifier'),'-life-srv', substring(uniqueString(resourceGroup().id),0,4))]"
+                    },
+                    "databaseSKU": {
+                        "value": "[variables('databaseSKU')]"
+                    },
+                    "databaseAdministratorLogin": {
+                        "value": "[concat(parameters('adminUsername'),'-sql')]"
+                    },
+                    "databaseAdministratorPass": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "databasePlatform": {
+                        "value": "[concat(parameters('solutionIdentifier'),'-life-db-outsystems')]"
+                    },
+                    "databaseSession": {
+                        "value": "[concat(parameters('solutionIdentifier'),'-life-db-session')]"
+                    }
+                }
+            }
+        },
+        {
             "name": "[concat(parameters('solutionIdentifier'), '.Outsystems.ProdEnvironment')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/ControllerAzSQL.json"
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/AzSQLController.json"
                 },
                 "parameters": {
                     "virtualMachineName": {

@@ -57,7 +57,7 @@ This set of templates are exactly like the ones in the previous section but an A
 
 ### 5. Controller ( Standalone Environment )
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FControllerAzSQL.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FAzSQLController.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
@@ -65,38 +65,30 @@ This set of templates are exactly like the ones in the previous section but an A
 
 This is the same as the previous template but installs Lifetime. The private key option is not available in this template.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FLifetimeAzSQL.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FAzSQLLifetime.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-### 7. Frontend server ( Single ) - UNDER DEV
+### 7. Production Environment with Controller and a Frontend in a VMSS cluster
 
-TThis template deploys and configures a VM as an Outsystems frontend server. A working environment is needed to connect this frontend. You will need to specify the same parameters as for the controller template plus the controller host.
+Same as the number 5 plus a frontend in a VMSS cluster load balanced by an Application Gateway. The trial license included in all this templates only allows two frontend servers. To scale to two frontends you need to remove the controller as a frontend server in Service Center.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FFrontendAzSQL.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FAzSQLProdVMSS.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-### 8. Frontend server ( Virtual Machine Scale Set cluster ) - UNDER DEV
+## Full stack on Azure SQL
 
-Same as the previous one but the frontends will be deployed in a Virtual Machine Scale Set behind an Application Gateway. The trial license included in this templates only allow two frontend servers. To scale to two you need to remove the controller as a frontend server in Service Center.
+Full stack environments with Dev, Test, Prod and Lifetime deployed on a new VNET with Azure SQL as the database engine.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FFrontendVMSSAzSQL.json" target="_blank">
+### 8. Full stack with AzureSQL, single frontend on the Prod environment
+
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FAzSQLFullStack.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-## Full stack on existing Database server - UNDER DEV
+### 9. Full stack with AzureSQL, Frontends of the Prod environment in a VMSS cluster
 
-Full stack environments with Dev, Test, Prod and Lifetime deployed on a new VNET.
-
-### 9. Full stack with AzureSQL, single frontend on the Prod environment - UNDER DEV
-
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FFullStack.json" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.png"/>
-</a>
-
-### 10. Full stack with AzureSQL, Frontends on the Prod environment in a VMSS cluster - UNDER DEV
-
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FFullStackVMSS.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FAzSQLFullStackVMSS.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
