@@ -197,7 +197,7 @@
                         "value": "[reference(concat('Microsoft.Resources/deployments/',concat(parameters('virtualMachineName'), '.Outsystems.ProdEnvironment'))).outputs.virtualMachineName.value]"
                     },
                     "OSPrivateKey": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',concat(parameters('virtualMachineName'), '.Outsystems.ProdEnvironment'))).outputs.message.value]"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',concat(parameters('virtualMachineName'), '.Outsystems.ProdEnvironment'))).outputs.privatekey.value]"
                     }
                 }
             }

@@ -241,6 +241,10 @@
         "sqlServerName" : {
             "type" : "string",
             "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLServer')).outputs.serverName.value]"
+        },
+        "privateKey" : {
+            "type" : "string",
+            "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.Controller')).outputs.message.value]"
         }
     }
 }
