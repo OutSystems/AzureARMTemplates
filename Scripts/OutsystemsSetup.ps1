@@ -94,10 +94,11 @@ Test-OSPlatformHardwareReqs
 Test-OSPlatformSoftwareReqs
 
 # -- Install PreReqs
-Install-OSPlatformServerPreReqs
+Install-OSPlatformPreReqs -MajorVersion "$(([System.Version]$OSPlatformVersion).Major).$(([System.Version]$OSPlatformVersion).Minor)"
 
 # -- Download and install OS Server and Dev environment from repo
 Install-OSPlatformServer -Version $OSPlatformVersion -InstallDir $OSInstallDir
+Install-OSDevEnvironment -Version $OSDevEnvironmentVersion -InstallDir $OSInstallDir
 
 # -- Configure windows firewall
 Set-OSPlatformWindowsFirewall
@@ -137,7 +138,7 @@ Invoke-OSConfigurationTool @ConfigToolArgs
 # -- Install Service Center, SysComponents and license if not frontend
 If ($OSRole -ne "FE") {
     Install-OSPlatformServiceCenter
-    Install-OSPlatformSysComponents
+    Install-OSPlatformSystemComponents
     Install-OSPlatformLicense -Path $OSLicensePath
 }
 
@@ -145,9 +146,6 @@ If ($OSRole -ne "FE") {
 If ($OSRole -eq "LT") {
     Install-OSPlatformLifetime
 }
-
-# -- Download and install dev environment
-Install-OSDevEnvironment -Version $OSDevEnvironmentVersion -InstallDir $OSInstallDir
 
 # -- System tunning
 Set-OSPlatformPerformanceTunning
