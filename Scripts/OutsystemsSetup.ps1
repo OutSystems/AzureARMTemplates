@@ -76,6 +76,7 @@ Param(
     [string]$OSDevEnvironmentVersion='10.0.825.0'
 
 )
+
 # -- Stop on any error
 $ErrorActionPreference = "Stop"
 
@@ -116,6 +117,33 @@ If ($OSRole -eq "FE"){
     }
 #   Write-Output "Controller $($ConfigToolArgs.Controller) available. Waiting more 15 seconds for full initialization"
     Start-Sleep -s 15
+}
+
+# -- Configure environment
+$ConfigToolArgs = @{
+
+    Controller          = $OSController
+    PrivateKey          = $OSPrivateKey
+
+    DBProvider          = $OSDBProvider
+    DBAuth              = $OSDBAuth
+
+    DBServer            = $OSDBServer
+    DBCatalog           = $OSDBCatalog
+    DBSAUser            = $OSDBSAUser
+    DBSAPass            = $OSDBSAPass
+
+    DBSessionServer     = $OSDBSessionServer
+    DBSessionCatalog    = $OSDBSessionCatalog
+    DBSessionUser       = $OSDBSessionUser
+    DBSessionPass       = $OSDBSessionPass
+
+    DBAdminUser         = $OSDBAdminUser
+    DBAdminPass         = $OSDBAdminPass
+    DBRuntimeUser       = $OSDBRuntimeUser
+    DBRuntimePass       = $OSDBRuntimePass
+    DBLogUser           = $OSDBLogUser
+    DBLogPass           = $OSDBLogPass
 }
 
 # -- Run config tool
