@@ -76,82 +76,80 @@ Param(
     [string]$OSDevEnvironmentVersion='10.0.825.0'
 
 )
+# -- Stop on any error
+$ErrorActionPreference = "Stop"
 
 # -- Disable windows defender realtime scan
 Set-MpPreference -DisableRealtimeMonitoring $true | Out-Null
 
 # -- Import module from Powershell Gallery
-Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force | Out-Null
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force  | Out-Null
 Remove-Module Outsystems.SetupTools -ErrorAction SilentlyContinue | Out-Null
 Install-Module Outsystems.SetupTools -Force | Out-Null
 Import-Module Outsystems.SetupTools | Out-Null
 
 # -- Start logging
-Set-OSInstallLog -Path $OSLogPath -File "InstallLog-$(get-date -Format 'yyyyMMddHHmmss').log"
+Set-OSInstallLog -Path $OSLogPath -File "InstallLog-$(get-date -Format 'yyyyMMddHHmmss').log" | Out-Null
 
 # -- Check HW and OS for compability
-Test-OSPlatformHardwareReqs
-Test-OSPlatformSoftwareReqs
+Test-OSPlatformHardwareReqs | Out-Null
+Test-OSPlatformSoftwareReqs | Out-Null
 
 # -- Install PreReqs
-Install-OSPlatformPreReqs -MajorVersion "$(([System.Version]$OSPlatformVersion).Major).$(([System.Version]$OSPlatformVersion).Minor)"
+Install-OSPlatformPreReqs -MajorVersion "$(([System.Version]$OSPlatformVersion).Major).$(([System.Version]$OSPlatformVersion).Minor)" | Out-Null
 
 # -- Download and install OS Server and Dev environment from repo
-Install-OSPlatformServer -Version $OSPlatformVersion -InstallDir $OSInstallDir
-Install-OSDevEnvironment -Version $OSDevEnvironmentVersion -InstallDir $OSInstallDir
+Install-OSPlatformServer -Version $OSPlatformVersion -InstallDir $OSInstallDir | Out-Null
+Install-OSDevEnvironment -Version $OSDevEnvironmentVersion -InstallDir $OSInstallDir | Out-Null
 
 # -- Configure windows firewall
-Set-OSPlatformWindowsFirewall
+Set-OSPlatformWindowsFirewall | Out-Null
 
 # -- Disable IPv6
-Disable-OSIPv6
+Disable-OSIPv6 | Out-Null
 
-# -- Configure environment
-$ConfigToolArgs = @{
-
-    Controller          = $OSController
-    PrivateKey          = $OSPrivateKey
-
-    DBProvider          = $OSDBProvider
-    DBAuth              = $OSDBAuth
-
-    DBServer            = $OSDBServer
-    DBCatalog           = $OSDBCatalog
-    DBSAUser            = $OSDBSAUser
-    DBSAPass            = $OSDBSAPass
-
-    DBSessionServer     = $OSDBSessionServer
-    DBSessionCatalog    = $OSDBSessionCatalog
-    DBSessionUser       = $OSDBSessionUser
-    DBSessionPass       = $OSDBSessionPass
-
-    DBAdminUser         = $OSDBAdminUser
-    DBAdminPass         = $OSDBAdminPass
-    DBRuntimeUser       = $OSDBRuntimeUser
-    DBRuntimePass       = $OSDBRuntimePass
-    DBLogUser           = $OSDBLogUser
-    DBLogPass           = $OSDBLogPass
-}
-#Sleep here 10 seconds to avoid the error machine.config is being used by another process.
-Invoke-OSConfigurationTool @ConfigToolArgs
-
-# -- Install Service Center, SysComponents and license if not frontend
-If ($OSRole -ne "FE") {
-    Install-OSPlatformServiceCenter
-    Install-OSPlatformSystemComponents
-    Install-OSPlatformLicense -Path $OSLicensePath
+# -- If this is a frontend, wait for the controller to become available
+If ($OSRole -eq "FE"){
+    While ( -not $(Get-OSPlatformVersion -Host $ConfigToolArgs.Controller -ErrorAction SilentlyContinue ) ) {
+#       Write-Output "Waiting for the controller $($ConfigToolArgs.Controller)"
+        Start-Sleep -s 15
+    }
+#   Write-Output "Controller $($ConfigToolArgs.Controller) available. Waiting more 15 seconds for full initialization"
+    Start-Sleep -s 15
 }
 
-# -- Install Lifetime
-If ($OSRole -eq "LT") {
-    Install-OSPlatformLifetime
+# -- Run config tool
+Invoke-OSConfigurationTool @ConfigToolArgs | Out-Null
+
+# -- If this is a frontend, disable the controller service and wait for the service center to be published by the controller before running the system tunning
+If ($OSRole -eq "FE"){
+
+    Get-Service -Name "OutSystems Deployment Controller Service" | Stop-Service -WarningAction SilentlyContinue | Out-Null
+    Set-Service -Name "OutSystems Deployment Controller Service" -StartupType "Disabled" | Out-Null
+
+    While ( -not $(Get-OSPlatformVersion -ErrorAction SilentlyContinue) ) {
+#        Write-Output "Waiting for service center to be published"
+        Start-Sleep -s 15
+    }
+#    Write-Output "Service Center available. Waiting more 15 seconds for full initialization"
+    Start-Sleep -s 15
+} Else {
+    # -- If not a frontend install Service Center, SysComponents and license
+    Install-OSPlatformServiceCenter | Out-Null
+    Install-OSPlatformSystemComponents | Out-Null
+    Install-OSPlatformLicense -Path $OSLicensePath | Out-Null
+}
+
+# -- Install Lifetime if role is LT
+If ($OSRole -eq "LT"){
+    Install-OSPlatformLifetime | Out-Null
 }
 
 # -- System tunning
-Set-OSPlatformPerformanceTunning
+Set-OSPlatformPerformanceTunning | Out-Null
 
 # -- Security settings
-Set-OSPlatformSecuritySettings
+Set-OSPlatformSecuritySettings | Out-Null
 
 # -- Outputs the private key
 Get-OSPlatformServerPrivateKey
