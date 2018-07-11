@@ -61,7 +61,7 @@ This is the same as the previous template but installs Lifetime. The private key
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-### 7. Production Environment a Frontend in a VMSS cluster
+### 7. Production Environment with frontends in a VMSS cluster
 
 Same as the number 5 plus a frontend in a VMSS cluster load balanced by an Application Gateway. The trial license included in all this templates only allows two frontend servers. To scale to two frontends you need to remove the controller as a frontend server in Service Center.
 
