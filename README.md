@@ -73,7 +73,7 @@ Same as the number 5 plus a frontend in a VMSS cluster load balanced by an Appli
 
 Full stack environments with Dev, Test, Prod and Lifetime deployed on a new VNET with Azure SQL as the database engine.
 
-### 8. Single frontend on the Prod environment - UNDER DEV
+### 8. Single servers on each environment
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FAzSQLFullStack.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
