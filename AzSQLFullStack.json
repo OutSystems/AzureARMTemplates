@@ -14,19 +14,19 @@
         },
         "devEnvironmentVmSize": {
             "type": "string",
-            "defaultValue": "Standard_D2s_v3"
+            "defaultValue": "Standard_D4s_v3"
         },
         "testEnvironmentVmSize": {
             "type": "string",
-            "defaultValue": "Standard_D2s_v3"
+            "defaultValue": "Standard_D4s_v3"
         },
         "prodEnvironmentVmSize": {
             "type": "string",
-            "defaultValue": "Standard_D2s_v3"
+            "defaultValue": "Standard_D4s_v3"
         },
         "lifetimeEnvironmentVmSize": {
             "type": "string",
-            "defaultValue": "Standard_D2s_v3"
+            "defaultValue": "Standard_D4s_v3"
         },
         "virtualNetworkName": {
             "type": "string"
@@ -66,19 +66,11 @@
         "lifetimeSubnetAddressSpace": {
             "type": "string",
             "defaultValue": "10.0.3.0/24"
-        },
-        "appgwSubnetName": {
-            "type": "string",
-            "defaultValue": "appgw-subnet"
-        },
-        "appgwSubnetAddressSpace": {
-            "type": "string",
-            "defaultValue": "10.0.4.0/24"
         }
     },
     "variables": {
         "outsystemsEnvironmentPrivatekey": "0Ew2B7J6od4DKlL+rt8G2Q==",
-        "databaseSKU": "S0"
+        "databaseSKU": "S3"
     },
     "resources": [
         {
@@ -120,12 +112,6 @@
                     },
                     "lifetimeSubnetAddressSpace": {
                         "value": "[parameters('lifetimeSubnetAddressSpace')]"
-                    },
-                    "appgwSubnetName": {
-                        "value": "[parameters('appgwSubnetName')]"
-                    },
-                    "appgwSubnetAddressSpace": {
-                        "value": "[parameters('appgwSubnetAddressSpace')]"
                     }
                 }
             }
@@ -178,9 +164,6 @@
                     },
                     "databaseSession": {
                         "value": "[concat(parameters('solutionIdentifier'),'-dev-db-session')]"
-                    },
-                    "outsystemsEnvironmentPrivatekey": {
-                        "value": "[variables('outsystemsEnvironmentPrivatekey')]"
                     }
                 }
             }
@@ -233,61 +216,6 @@
                     },
                     "databaseSession": {
                         "value": "[concat(parameters('solutionIdentifier'),'-test-db-session')]"
-                    },
-                    "outsystemsEnvironmentPrivatekey": {
-                        "value": "[variables('outsystemsEnvironmentPrivatekey')]"
-                    }
-                }
-            }
-        },
-        {
-            "name": "[concat(parameters('solutionIdentifier'), '.Outsystems.LifetimeEnvironment')]",
-            "apiVersion": "2015-01-01",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/AzSQLLifetime.json"
-                },
-                "parameters": {
-                    "virtualMachineName": {
-                        "value": "[concat(parameters('solutionIdentifier'),'-life-vm')]"
-                    },
-                    "virtualMachineSize": {
-                        "value": "[parameters('lifetimeEnvironmentVmSize')]"
-                    },
-                    "adminUsername": {
-                        "value": "[parameters('adminUsername')]"
-                    },
-                    "adminPassword": {
-                        "value": "[parameters('adminPassword')]"
-                    },
-                    "virtualNetworkResourceGroup": {
-                        "value": "[resourceGroup().name]"
-                    },
-                    "virtualNetworkName": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('solutionIdentifier'),'.Outsystems.Network')).outputs.virtualNetworkName.value]"
-                    },
-                    "virtualNetworkSubnetName": {
-                        "value": "[parameters('lifetimeSubnetName')]"
-                    },
-                    "sqlServerName": {
-                        "value": "[concat(parameters('solutionIdentifier'),'-life-srv', substring(uniqueString(resourceGroup().id),0,4))]"
-                    },
-                    "databaseSKU": {
-                        "value": "[variables('databaseSKU')]"
-                    },
-                    "databaseAdministratorLogin": {
-                        "value": "[concat(parameters('adminUsername'),'-sql')]"
-                    },
-                    "databaseAdministratorPass": {
-                        "value": "[parameters('adminPassword')]"
-                    },
-                    "databasePlatform": {
-                        "value": "[concat(parameters('solutionIdentifier'),'-life-db-outsystems')]"
-                    },
-                    "databaseSession": {
-                        "value": "[concat(parameters('solutionIdentifier'),'-life-db-session')]"
                     }
                 }
             }
@@ -340,28 +268,25 @@
                     },
                     "databaseSession": {
                         "value": "[concat(parameters('solutionIdentifier'),'-prod-db-session')]"
-                    },
-                    "outsystemsEnvironmentPrivatekey": {
-                        "value": "[variables('outsystemsEnvironmentPrivatekey')]"
                     }
                 }
             }
         },
         {
-            "name": "[concat(parameters('solutionIdentifier'), '.Outsystems.ProdEnvironmentFEVMSS')]",
+            "name": "[concat(parameters('solutionIdentifier'), '.Outsystems.LifetimeEnvironment')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Resources/virtualMachineScaleSets.json"
+                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/AzSQLLifetime.json"
                 },
                 "parameters": {
-                    "vmssName": {
-                        "value": "[concat(parameters('solutionIdentifier'),'-vmss')]"
+                    "virtualMachineName": {
+                        "value": "[concat(parameters('solutionIdentifier'),'-life-vm')]"
                     },
                     "virtualMachineSize": {
-                        "value": "[parameters('prodEnvironmentVmSize')]"
+                        "value": "[parameters('lifetimeEnvironmentVmSize')]"
                     },
                     "adminUsername": {
                         "value": "[parameters('adminUsername')]"
@@ -376,90 +301,25 @@
                         "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('solutionIdentifier'),'.Outsystems.Network')).outputs.virtualNetworkName.value]"
                     },
                     "virtualNetworkSubnetName": {
-                        "value": "[parameters('prodSubnetName')]"
+                        "value": "[parameters('lifetimeSubnetName')]"
                     },
-                    "applicationGatewayvirtualNetworkSubnetName": {
-                        "value": "[parameters('appgwSubnetName')]"
-                    }
-                }
-            }
-        },
-        {
-            "name": "[concat(parameters('solutionIdentifier'), '.Outsystems.ProdEnvironmentFE')]",
-            "apiVersion": "2015-01-01",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/CommonTemplates/outsystemsFrontendVMSS.json"
-                },
-                "parameters": {
-                    "resourceName": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',concat(parameters('solutionIdentifier'), '.Outsystems.ProdEnvironmentFEVMSS'))).outputs.vmssName.value]"
+                    "sqlServerName": {
+                        "value": "[concat(parameters('solutionIdentifier'),'-life-srv', substring(uniqueString(resourceGroup().id),0,4))]"
                     },
-                    "OSDBProvider": {
-                        "value": "AzureSQL"
+                    "databaseSKU": {
+                        "value": "[variables('databaseSKU')]"
                     },
-                    "OSDBAuth": {
-                        "value": "SQL"
-                    },
-                    "OSDBServer": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',concat(parameters('solutionIdentifier'), '.Outsystems.ProdEnvironment'))).outputs.sqlServerNameFQDN.value]"
-                    },
-                    "OSDBCatalog": {
-                        "value": "[concat(parameters('solutionIdentifier'),'-prod-db-outsystems')]"
-                    },
-                    "OSDBSAUser": {
+                    "databaseAdministratorLogin": {
                         "value": "[concat(parameters('adminUsername'),'-sql')]"
                     },
-                    "OSDBSAPass": {
+                    "databaseAdministratorPass": {
                         "value": "[parameters('adminPassword')]"
                     },
-                    "OSDBSessionServer": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',concat(parameters('solutionIdentifier'), '.Outsystems.ProdEnvironment'))).outputs.sqlServerNameFQDN.value]"
+                    "databasePlatform": {
+                        "value": "[concat(parameters('solutionIdentifier'),'-life-db-outsystems')]"
                     },
-                    "OSDBSessionCatalog": {
-                        "value": "[concat(parameters('solutionIdentifier'),'-prod-db-session')]"
-                    },
-                    "OSDBSessionPass": {
-                        "value": "[parameters('adminPassword')]"
-                    },
-                    "OSDBAdminPass": {
-                        "value": "[parameters('adminPassword')]"
-                    },
-                    "OSDBRuntimePass": {
-                        "value": "[parameters('adminPassword')]"
-                    },
-                    "OSDBLogPass": {
-                        "value": "[parameters('adminPassword')]"
-                    },
-                    "OSController": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',concat(parameters('solutionIdentifier'), '.Outsystems.ProdEnvironment'))).outputs.virtualMachineName.value]"
-                    },
-                    "OSPrivateKey": {
-                        "value": "[variables('outsystemsEnvironmentPrivatekey')]"
-                    }
-                }
-            }
-        },
-        {
-            "name": "[concat(parameters('solutionIdentifier'), '.Outsystems.AzureSQLServer.FirewallRule')]",
-            "apiVersion": "2015-01-01",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Resources/sqlServerFirewallRule.json"
-                },
-                "parameters": {
-                    "serverName": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('solutionIdentifier'),'.Outsystems.ProdEnvironment')).outputs.sqlServerName.value]"
-                    },
-                    "ruleName": {
-                        "value": "AllowLBPublicIP"
-                    },
-                    "ipAddress": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('solutionIdentifier'),'.Outsystems.ProdEnvironmentFEVMSS')).outputs.loadbalancerPIP.value]"
+                    "databaseSession": {
+                        "value": "[concat(parameters('solutionIdentifier'),'-life-db-session')]"
                     }
                 }
             }
