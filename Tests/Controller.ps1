@@ -97,7 +97,7 @@ Test-OSServerSoftwareReqs -Verbose
 Install-OSPlatformServerPreReqs -Verbose
 
 # -- Download and install OS Server and Dev environment from repo
-Install-OSPlatformServer -Version $OSPlatformVersion -InstallDir $OSInstallDir -Verbose
+Install-OSServer -Version $OSPlatformVersion -InstallDir $OSInstallDir -Verbose
 
 # -- Configure environment
 $ConfigToolArgs = @{
