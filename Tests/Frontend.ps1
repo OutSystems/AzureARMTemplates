@@ -135,7 +135,7 @@ Start-Sleep -Seconds 10
 Invoke-OSConfigurationTool -Verbose @ConfigToolArgs
 
 # -- Configure windows firewall
-Set-OSPlatformWindowsFirewall -Verbose
+Set-OSServerWindowsFirewall -Verbose
 
 # -- Install Service Center and SysComponents
 # Install-OSPlatformServiceCenter -Verbose

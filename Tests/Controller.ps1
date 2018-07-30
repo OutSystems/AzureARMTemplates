@@ -129,7 +129,7 @@ $ConfigToolArgs = @{
 Invoke-OSConfigurationTool -Verbose @ConfigToolArgs
 
 # -- Configure windows firewall
-Set-OSPlatformWindowsFirewall -Verbose
+Set-OSServerWindowsFirewall -Verbose
 
 # -- Install Service Center, SysComponents and license if not frontend
 If ($OSRole -ne "FE") {
