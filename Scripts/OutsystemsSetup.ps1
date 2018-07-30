@@ -170,7 +170,7 @@ If ($OSRole -eq "FE"){
 
 # -- Install Lifetime if role is LT
 If ($OSRole -eq "LT"){
-    Install-OSPlatformLifetime | Out-Null
+    Publish-OSPlatformLifetime | Out-Null
 }
 
 # -- System tunning

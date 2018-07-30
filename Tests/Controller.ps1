@@ -140,7 +140,7 @@ If ($OSRole -ne "FE") {
 
 # -- Install Lifetime
 If ($OSRole -eq "LT") {
-    Install-OSPlatformLifetime -Verbose    
+    Publish-OSPlatformLifetime -Verbose    
 }
 
 # -- Download and install dev environment
