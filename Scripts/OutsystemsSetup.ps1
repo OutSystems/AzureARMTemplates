@@ -120,7 +120,7 @@ Import-Module Outsystems.SetupTools | Out-Null
 Set-OSInstallLog -Path $OSLogPath -File "InstallLog-$(get-date -Format 'yyyyMMddHHmmss').log" | Out-Null
 
 # -- Check HW and OS for compability
-Test-OSPlatformHardwareReqs | Out-Null
+Test-OSServerHardwareReqs | Out-Null
 Test-OSServerSoftwareReqs | Out-Null
 
 # -- Install PreReqs

@@ -85,7 +85,7 @@ Import-Module Outsystems.SetupTools
 Start-Transcript -Path "$OSLogPath\InstallLog-$(get-date -Format 'yyyyMMddHHmmss').log" -Force
 
 # -- Check HW and OS for compability
-Test-OSPlatformHardwareReqs -Verbose
+Test-OSServerHardwareReqs -Verbose
 Test-OSServerSoftwareReqs -Verbose
 
 # -- Install PreReqs
