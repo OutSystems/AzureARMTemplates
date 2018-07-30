@@ -151,7 +151,7 @@ Set-OSServerWindowsFirewall -Verbose
 Set-OSPlatformPerformanceTunning -Verbose
 
 # -- Security settings
-Set-OSPlatformSecuritySettings -Verbose
+Set-OSServerSecuritySettings -Verbose
 
 # -- Stop logging
 Stop-Transcript

@@ -177,7 +177,7 @@ If ($OSRole -eq "LT"){
 Set-OSPlatformPerformanceTunning | Out-Null
 
 # -- Security settings
-Set-OSPlatformSecuritySettings | Out-Null
+Set-OSServerSecuritySettings | Out-Null
 
 # -- Outputs the private key
 Get-OSPlatformServerPrivateKey
