@@ -144,7 +144,7 @@ If ($OSRole -eq "LT") {
 }
 
 # -- Download and install dev environment
-Install-OSDevEnvironment -Version $OSDevEnvironmentVersion -InstallDir $OSInstallDir -Verbose
+Install-OSServiceStudio -Version $OSDevEnvironmentVersion -InstallDir $OSInstallDir -Verbose
 
 # -- System tunning
 Set-OSServerPerformanceTunning -Verbose

@@ -93,11 +93,11 @@ Install-OSPlatformServerPreReqs -Verbose
 
 # -- Download and install OS Server and Dev environment from repo
 Install-OSPlatformServer -Version $OSPlatformVersion -InstallDir $OSInstallDir -Verbose
-Install-OSDevEnvironment -Version $OSDevEnvironmentVersion -InstallDir $OSInstallDir -Verbose
+Install-OSServiceStudio -Version $OSDevEnvironmentVersion -InstallDir $OSInstallDir -Verbose
 
 # -- Download and install OS Server and Dev environment from a local source
 # Install-OSPlatformServer -SourcePath "$PSScriptRoot\Sources" -Version 10.0.816.0
-# Install-OSDevEnvironment -SourcePath "$PSScriptRoot\Sources" -Version 10.0.822.0
+# Install-OSServiceStudio -SourcePath "$PSScriptRoot\Sources" -Version 10.0.822.0
 
 # -- Configure environment
 $ConfigToolArgs = @{

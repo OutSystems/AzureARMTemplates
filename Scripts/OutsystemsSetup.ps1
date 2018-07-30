@@ -128,7 +128,7 @@ Install-OSServerPreReqs -MajorVersion "$(([System.Version]$OSPlatformVersion).Ma
 
 # -- Download and install OS Server and Dev environment from repo
 Install-OSPlatformServer -Version $OSPlatformVersion -InstallDir $OSInstallDir | Out-Null
-Install-OSDevEnvironment -Version $OSDevEnvironmentVersion -InstallDir $OSInstallDir | Out-Null
+Install-OSServiceStudio -Version $OSDevEnvironmentVersion -InstallDir $OSInstallDir | Out-Null
 
 # -- Configure windows firewall
 Set-OSServerWindowsFirewall | Out-Null
