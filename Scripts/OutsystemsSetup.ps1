@@ -134,7 +134,7 @@ Install-OSDevEnvironment -Version $OSDevEnvironmentVersion -InstallDir $OSInstal
 Set-OSServerWindowsFirewall | Out-Null
 
 # -- Disable IPv6
-Disable-OSIPv6 | Out-Null
+Disable-OSServerIPv6 | Out-Null
 
 # -- If this is a frontend, wait for the controller to become available
 If ($OSRole -eq "FE"){
