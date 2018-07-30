@@ -124,7 +124,7 @@ Test-OSPlatformHardwareReqs | Out-Null
 Test-OSPlatformSoftwareReqs | Out-Null
 
 # -- Install PreReqs
-Install-OSPlatformPreReqs -MajorVersion "$(([System.Version]$OSPlatformVersion).Major).$(([System.Version]$OSPlatformVersion).Minor)" | Out-Null
+Install-OSServerPreReqs -MajorVersion "$(([System.Version]$OSPlatformVersion).Major).$(([System.Version]$OSPlatformVersion).Minor)" | Out-Null
 
 # -- Download and install OS Server and Dev environment from repo
 Install-OSPlatformServer -Version $OSPlatformVersion -InstallDir $OSInstallDir | Out-Null
