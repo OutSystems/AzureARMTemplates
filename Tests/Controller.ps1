@@ -91,7 +91,7 @@ Start-Transcript -Path "$OSLogPath\InstallLog-$(get-date -Format 'yyyyMMddHHmmss
 
 # -- Check HW and OS for compability
 Test-OSPlatformHardwareReqs -Verbose
-Test-OSPlatformSoftwareReqs -Verbose
+Test-OSServerSoftwareReqs -Verbose
 
 # -- Install PreReqs
 Install-OSPlatformServerPreReqs -Verbose
