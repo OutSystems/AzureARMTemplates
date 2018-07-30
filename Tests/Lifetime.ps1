@@ -140,7 +140,7 @@ Install-OSPlatformLicense -Path $OSLicensePath -Verbose
 Publish-OSPlatformLifetime -Verbose
 
 # -- System tunning
-Set-OSPlatformPerformanceTunning -Verbose
+Set-OSServerPerformanceTunning -Verbose
 
 # -- Security settings
 Set-OSServerSecuritySettings -Verbose

@@ -147,7 +147,7 @@ If ($OSRole -eq "LT") {
 Install-OSDevEnvironment -Version $OSDevEnvironmentVersion -InstallDir $OSInstallDir -Verbose
 
 # -- System tunning
-Set-OSPlatformPerformanceTunning -Verbose
+Set-OSServerPerformanceTunning -Verbose
 
 # -- Security settings
 Set-OSServerSecuritySettings -Verbose

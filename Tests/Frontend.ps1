@@ -148,7 +148,7 @@ Set-OSServerWindowsFirewall -Verbose
 # Publish-OSPlatformLifetime -Verbose
 
 # -- System tunning
-Set-OSPlatformPerformanceTunning -Verbose
+Set-OSServerPerformanceTunning -Verbose
 
 # -- Security settings
 Set-OSServerSecuritySettings -Verbose

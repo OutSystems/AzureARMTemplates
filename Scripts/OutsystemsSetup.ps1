@@ -174,7 +174,7 @@ If ($OSRole -eq "LT"){
 }
 
 # -- System tunning
-Set-OSPlatformPerformanceTunning | Out-Null
+Set-OSServerPerformanceTunning | Out-Null
 
 # -- Security settings
 Set-OSServerSecuritySettings | Out-Null
