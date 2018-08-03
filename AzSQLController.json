@@ -234,6 +234,10 @@
             "type" : "string",
             "value": "[parameters('virtualMachineName')]"
         },
+        "virtualMachinePIP" : {
+            "type" : "string",
+            "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.VirtualMachine')).outputs.virtualMachinePIP.value]"
+        },
         "sqlServerNameFQDN" : {
             "type" : "string",
             "value": "[concat(reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLServer')).outputs.serverName.value, '.database.windows.net')]"
