@@ -48,6 +48,14 @@
         "outsystemsEnvironmentPrivatekey": {
             "type": "string",
             "defaultValue": " "
+        },
+        "outsystemsServerVersion": {
+            "type": "string",
+            "defaultValue": "10.0.823.0"
+        },
+        "outsystemsServiceStudioVersion": {
+            "type": "string",
+            "defaultValue": "10.0.825.0"
         }
     },
     "resources": [
@@ -224,6 +232,12 @@
                     },
                     "OSPrivateKey": {
                         "value": "[trim(parameters('outsystemsEnvironmentPrivatekey'))]"
+                    },
+                    "OSServerVersion": {
+                        "value": "[trim(parameters('outsystemsServerVersion'))]"
+                    },
+                    "OSServiceStudioVersion": {
+                        "value": "[trim(parameters('outsystemsServiceStudioVersion'))]"
                     }
                 }
             }
