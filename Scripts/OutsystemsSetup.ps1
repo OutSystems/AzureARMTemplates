@@ -103,6 +103,8 @@ $ConfigToolArgs = @{
     DBLogUser           = $OSDBLogUser
     DBLogPass           = $OSDBLogPass
 }
+# PS Logging
+Start-Transcript -Path "C:\windows\temp\transcript0.txt"
 
 # -- Stop on any error
 $ErrorActionPreference = "Stop"
