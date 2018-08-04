@@ -70,10 +70,10 @@ Param(
     [string]$OSLicensePath,
 
     [Parameter()]
-    [string]$OSPlatformVersion='10.0.823.0',
+    [string]$OSServerVersion='10.0.823.0',
 
     [Parameter()]
-    [string]$OSDevEnvironmentVersion='10.0.825.0'
+    [string]$OSServiceStudioVersion='10.0.825.0'
 
 )
 
@@ -124,11 +124,11 @@ Test-OSServerHardwareReqs | Out-Null
 Test-OSServerSoftwareReqs | Out-Null
 
 # -- Install PreReqs
-Install-OSServerPreReqs -MajorVersion "$(([System.Version]$OSPlatformVersion).Major).$(([System.Version]$OSPlatformVersion).Minor)" | Out-Null
+Install-OSServerPreReqs -MajorVersion "$(([System.Version]$OSServerVersion).Major).$(([System.Version]$OSServerVersion).Minor)" | Out-Null
 
 # -- Download and install OS Server and Dev environment from repo
-Install-OSServer -Version $OSPlatformVersion -InstallDir $OSInstallDir | Out-Null
-Install-OSServiceStudio -Version $OSDevEnvironmentVersion -InstallDir $OSInstallDir | Out-Null
+Install-OSServer -Version $OSServerVersion -InstallDir $OSInstallDir | Out-Null
+Install-OSServiceStudio -Version $OSServiceStudioVersion -InstallDir $OSInstallDir | Out-Null
 
 # -- Configure windows firewall
 Set-OSServerWindowsFirewall | Out-Null
@@ -138,7 +138,7 @@ Disable-OSServerIPv6 | Out-Null
 
 # -- If this is a frontend, wait for the controller to become available
 If ($OSRole -eq "FE"){
-    While ( -not $(Get-OSPlatformVersion -Host $ConfigToolArgs.Controller -ErrorAction SilentlyContinue ) ) {
+    While ( -not $(Get-OSServerVersion -Host $ConfigToolArgs.Controller -ErrorAction SilentlyContinue ) ) {
 #       Write-Output "Waiting for the controller $($ConfigToolArgs.Controller)"
         Start-Sleep -s 15
     }
@@ -155,7 +155,7 @@ If ($OSRole -eq "FE"){
     Get-Service -Name "OutSystems Deployment Controller Service" | Stop-Service -WarningAction SilentlyContinue | Out-Null
     Set-Service -Name "OutSystems Deployment Controller Service" -StartupType "Disabled" | Out-Null
 
-    While ( -not $(Get-OSPlatformVersion -ErrorAction SilentlyContinue) ) {
+    While ( -not $(Get-OSServerVersion -ErrorAction SilentlyContinue) ) {
 #        Write-Output "Waiting for service center to be published"
         Start-Sleep -s 15
     }
