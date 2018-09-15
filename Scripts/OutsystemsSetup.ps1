@@ -67,9 +67,6 @@ param(
     [string]$OSInstallDir="$Env:ProgramFiles\OutSystems",
 
     [Parameter()]
-    [string]$OSLicensePath,
-
-    [Parameter()]
     [string]$OSServerVersion='10.0.823.0',
 
     [Parameter()]
@@ -173,7 +170,6 @@ Invoke-OSConfigurationTool @ConfigToolArgs | Out-Null
 # -- If this is a frontend, disable the controller service and wait for the service center to be published by the controller before running the system tunning
 if ($OSRole -eq "FE")
 {
-
     Get-Service -Name "OutSystems Deployment Controller Service" | Stop-Service -WarningAction SilentlyContinue | Out-Null
     Set-Service -Name "OutSystems Deployment Controller Service" -StartupType "Disabled" | Out-Null
 
@@ -187,7 +183,7 @@ else
     # -- If not a frontend install Service Center, SysComponents and license
     Install-OSPlatformServiceCenter | Out-Null
     Publish-OSPlatformSystemComponents | Out-Null
-    Install-OSPlatformLicense -Path $OSLicensePath | Out-Null
+    Install-OSPlatformLicense | Out-Null
 }
 
 # -- Install Lifetime if role is LT
