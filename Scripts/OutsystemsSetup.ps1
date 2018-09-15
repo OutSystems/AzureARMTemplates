@@ -152,7 +152,7 @@ switch ($majorVersion) {
         Install-OSRabbitMQ | Out-Null
 
         # -- Configure windows firewall with rabbit
-        Set-OSServerWindowsFirewall -IncludeRabbitMQ | Out-Null
+        Set-OSServerWindowsFirewall -IncludeRabbitMQ:$true | Out-Null
     }
     '10.0'
     {
@@ -199,4 +199,4 @@ Set-OSServerPerformanceTunning | Out-Null
 Set-OSServerSecuritySettings | Out-Null
 
 # -- Outputs the private key
-Get-OSPlatformServerPrivateKey
+Get-OSServerPrivateKey
