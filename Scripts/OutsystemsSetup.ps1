@@ -152,7 +152,7 @@ switch ($majorVersion) {
         Install-OSRabbitMQ | Out-Null
 
         # -- Configure windows firewall with rabbit
-        Set-OSServerWindowsFirewall -IncludeRabbitMQ:$true | Out-Null
+        Set-OSServerWindowsFirewall -IncludeRabbitMQ | Out-Null
     }
     '10.0'
     {
