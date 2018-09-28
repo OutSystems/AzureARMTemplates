@@ -161,12 +161,25 @@
                         "version": "latest"
                     },
                     "osDisk": {
+                        "name": "[concat(parameters('virtualMachineName'), '-osDisk')]",
                         "createOption": "FromImage",
                         "managedDisk": {
                             "storageAccountType": "Premium_LRS"
-                        }
+                        },
+                        "caching": "ReadWrite"
                     },
-                    "dataDisks": []
+                    "dataDisks": [
+                        {
+                          "diskSizeGB": 256,
+                          "lun": 0,
+                          "createOption": "Empty",
+                          "name": "[concat(parameters('virtualMachineName'), '-dataDisk')]",
+                          "managedDisk": {
+                            "storageAccountType": "Premium_LRS"
+                          },
+                          "caching": "None"
+                        }
+                      ]
                 },
                 "networkProfile": {
                     "networkInterfaces": [
