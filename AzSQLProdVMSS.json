@@ -12,6 +12,10 @@
         "vmssName": {
             "type": "string"
         },
+        "vmssVirtualMachineSize": {
+            "type": "string",
+            "defaultValue": "Standard_D2s_v3"
+        },
         "adminUsername": {
             "type": "string"
         },
@@ -142,7 +146,7 @@
                         "value": "[parameters('vmssName')]"
                     },
                     "virtualMachineSize": {
-                        "value": "[parameters('virtualMachineSize')]"
+                        "value": "[parameters('vmssVirtualMachineSize')]"
                     },
                     "adminUsername": {
                         "value": "[parameters('adminUsername')]"
