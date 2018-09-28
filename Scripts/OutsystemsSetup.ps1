@@ -64,7 +64,7 @@ param(
     [string]$OSDBLogPass,
 
     [Parameter()]
-    [string]$OSInstallDir="E:\OutSystems",
+    [string]$OSInstallDir="F:\OutSystems",
 
     [Parameter()]
     [string]$OSServerVersion='10.0.823.0',
