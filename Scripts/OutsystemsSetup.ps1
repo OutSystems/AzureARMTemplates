@@ -124,6 +124,7 @@ Start-Transcript -Path "C:\windows\temp\transcript0.txt" -Append | Out-Null
 
 # Initialize and format the data disk
 Get-Disk 2 | Initialize-Disk -PartitionStyle MBR -PassThru | New-Partition -UseMaximumSize -MbrType IFS -driveletter F | Format-Volume -FileSystem NTFS -Confirm:$false | Out-Null
+$null = Get-PSDrive
 
 # -- Disable windows defender realtime scan
 Set-MpPreference -DisableRealtimeMonitoring $true | Out-Null
