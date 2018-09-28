@@ -116,13 +116,13 @@
                     "databaseSession": {
                         "value": "[parameters('databaseSession')]"
                     },
-                    "OSPrivateKey": {
+                    "outsystemsEnvironmentPrivatekey": {
                         "value": "[trim(parameters('outsystemsEnvironmentPrivatekey'))]"
                     },
-                    "OSServerVersion": {
+                    "outsystemsServerVersion": {
                         "value": "[trim(parameters('outsystemsServerVersion'))]"
                     },
-                    "OSServiceStudioVersion": {
+                    "outsystemsServiceStudioVersion": {
                         "value": "[trim(parameters('outsystemsServiceStudioVersion'))]"
                     }
                 }
