@@ -44,6 +44,18 @@
         "databaseSession": {
             "type": "string",
             "defaultValue": "osSession"
+        },
+        "outsystemsEnvironmentPrivatekey": {
+            "type": "string",
+            "defaultValue": " "
+        },
+        "outsystemsServerVersion": {
+            "type": "string",
+            "defaultValue": "10.0.904.0"
+        },
+        "outsystemsServiceStudioVersion": {
+            "type": "string",
+            "defaultValue": "10.0.903.0"
         }
     },
     "resources": [
@@ -217,6 +229,15 @@
                     },
                     "OSDBLogPass": {
                         "value": "[parameters('databaseAdministratorPass')]"
+                    },
+                    "OSPrivateKey": {
+                        "value": "[trim(parameters('outsystemsEnvironmentPrivatekey'))]"
+                    },
+                    "OSServerVersion": {
+                        "value": "[trim(parameters('outsystemsServerVersion'))]"
+                    },
+                    "OSServiceStudioVersion": {
+                        "value": "[trim(parameters('outsystemsServiceStudioVersion'))]"
                     }
                 }
             }
