@@ -6,10 +6,12 @@
             "type": "string"
         },
         "OSController": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": " "
         },
         "OSPrivateKey": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": " "
         },
         "OSDBProvider": {
             "type": "string",
@@ -112,5 +114,10 @@
             }
         }
     ],
-    "outputs": {}
+    "outputs": {
+        "message": {
+            "type": "string",
+            "value": "[reference(concat('Microsoft.Resources/deployments/', parameters('resourceName'), '.Outsystems.CustomScriptExtension')).outputs.message.value]"
+        }
+    }
 }
