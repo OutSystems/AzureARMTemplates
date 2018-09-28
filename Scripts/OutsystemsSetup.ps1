@@ -64,7 +64,7 @@ param(
     [string]$OSDBLogPass,
 
     [Parameter()]
-    [string]$OSInstallDir="$Env:ProgramFiles\OutSystems",
+    [string]$OSInstallDir="E:\OutSystems",
 
     [Parameter()]
     [string]$OSServerVersion='10.0.823.0',
@@ -121,6 +121,9 @@ switch ($majorVersion) {
 
 # PS Logging
 Start-Transcript -Path "C:\windows\temp\transcript0.txt" -Append | Out-Null
+
+# Initialize and format the data disk
+Get-Disk 2 | Initialize-Disk -PartitionStyle MBR -PassThru | New-Partition -UseMaximumSize -MbrType IFS -driveletter F | Format-Volume -FileSystem NTFS -Confirm:$false | Out-Null
 
 # -- Disable windows defender realtime scan
 Set-MpPreference -DisableRealtimeMonitoring $true | Out-Null
