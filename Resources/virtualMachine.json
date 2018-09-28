@@ -38,6 +38,19 @@
     },
     "resources": [
         {
+            "apiVersion": "2018-05-01",
+            "name": "pid-d6afbe29-a6dc-4149-863a-c2f7d985c159",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": []
+                }
+            }
+        },
+        {
             "name": "[variables('nicName')]",
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2017-06-01",
