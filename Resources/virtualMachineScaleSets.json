@@ -103,7 +103,17 @@
                             "caching": "ReadWrite",
                             "createOption": "FromImage"
                         },
-                        "dataDisks": [],
+                        "dataDisks": [
+                            {
+                              "diskSizeGB": 256,
+                              "lun": 0,
+                              "createOption": "Empty",
+                              "managedDisk": {
+                                "storageAccountType": "Premium_LRS"
+                              },
+                              "caching": "None"
+                            }
+                        ],
                         "imageReference": {
                             "publisher": "MicrosoftWindowsServer",
                             "offer": "WindowsServer",
