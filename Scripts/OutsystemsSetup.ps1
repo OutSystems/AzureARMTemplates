@@ -102,7 +102,7 @@ $ConfigToolArgs = @{
 }
 # -- If controller or private key is specified, add them to the config tool parameters 
 if ($OSController) { $ConfigToolArgs.Add('Controller',$OSController) }
-if ($PrivateKey) { $ConfigToolArgs.Add('PrivateKey',$OSPrivateKey) }
+if ($OSPrivateKey) { $ConfigToolArgs.Add('PrivateKey',$OSPrivateKey) }
 
 # -- Version specific config tool parameters
 switch ($majorVersion) {
