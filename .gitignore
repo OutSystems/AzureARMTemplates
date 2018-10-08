@@ -1,5 +1,1 @@
-Tests/AzureOS.json
-Tests/ControllerAzSQL_1.json
-Tests/EnvSingleNoSQL.json
-Tests/vmss-appgw.1.json
-Tests/_virtualMachineScaleSets.json
+.trash/
