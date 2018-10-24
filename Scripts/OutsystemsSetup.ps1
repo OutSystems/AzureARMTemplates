@@ -196,11 +196,14 @@ if ($OSRole -eq "LT")
     Publish-OSPlatformLifetime | Out-Null
 }
 
-# -- System tunning
-Set-OSServerPerformanceTunning | Out-Null
+if ($OSRole -ne "FE")
+{
+    # -- System tunning
+    Set-OSServerPerformanceTunning | Out-Null
 
-# -- Security settings
-Set-OSServerSecuritySettings | Out-Null
+    # -- Security settings
+    Set-OSServerSecuritySettings | Out-Null
+}
 
 # -- Outputs the private key
 Get-OSServerPrivateKey
