@@ -65,9 +65,7 @@
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Resources/sqlServer.json"
-                },
+                "templateLink": "[uri(deployment().properties.templateLink.uri, 'Resources/sqlServer.json')]",
                 "parameters": {
                     "serverName": {
                         "value": "[parameters('sqlServerName')]"
@@ -87,9 +85,7 @@
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Resources/sqlServerDatabase.json"
-                },
+                "templateLink": "[uri(deployment().properties.templateLink.uri, 'Resources/sqlServerDatabase.json')]",
                 "parameters": {
                     "serverName": {
                         "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLServer')).outputs.serverName.value]"
@@ -109,9 +105,7 @@
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Resources/sqlServerDatabase.json"
-                },
+                "templateLink": "[uri(deployment().properties.templateLink.uri, 'Resources/sqlServerDatabase.json')]",
                 "parameters": {
                     "serverName": {
                         "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLServer')).outputs.serverName.value]"
@@ -131,9 +125,7 @@
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Resources/sqlServerFirewallRule.json"
-                },
+                "templateLink": "[uri(deployment().properties.templateLink.uri, 'Resources/sqlServerFirewallRule.json')]",
                 "parameters": {
                     "serverName": {
                         "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLServer')).outputs.serverName.value]"
@@ -153,9 +145,7 @@
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Resources/virtualMachine.json"
-                },
+                "templateLink": "[uri(deployment().properties.templateLink.uri, 'Resources/virtualMachine.json')]",
                 "parameters": {
                     "virtualMachineName": {
                         "value": "[parameters('virtualMachineName')]"
@@ -187,9 +177,7 @@
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/CommonTemplates/outsystemsController.json"
-                },
+                "templateLink": "[uri(deployment().properties.templateLink.uri, 'CommonTemplates/outsystemsController.json')]",
                 "parameters": {
                     "resourceName": {
                         "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.VirtualMachine')).outputs.virtualMachineName.value]"
