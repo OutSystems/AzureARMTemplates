@@ -102,9 +102,7 @@
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Resources/virtualMachine.json"
-                },
+                "templateLink": "[uri(deployment().properties.templateLink.uri, 'Resources/virtualMachine.json')]",
                 "parameters": {
                     "virtualMachineName": {
                         "value": "[parameters('virtualMachineName')]"
@@ -136,9 +134,7 @@
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/CommonTemplates/outsystemsController.json"
-                },
+                "templateLink": "[uri(deployment().properties.templateLink.uri, 'CommonTemplates/outsystemsController.json')]",
                 "parameters": {
                     "resourceName": {
                         "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.VirtualMachine')).outputs.virtualMachineName.value]"
