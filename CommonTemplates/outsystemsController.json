@@ -13,77 +13,106 @@
             "type": "string",
             "defaultValue": " "
         },
-        "OSDBProvider": {
-            "type": "string",
-            "allowedValues": [
-                "SQL",
-                "SQLExpress",
-                "AzureSQL"
-            ]
-        },
-        "OSDBAuth": {
-            "type": "string",
-            "allowedValues": [
-                "SQL",
-                "Windows"
-            ]
-        },
         "OSDBServer": {
             "type": "string"
         },
-        "OSDBCatalog": {
+        "OSDBLogServer": {
             "type": "string",
-            "defaultValue": "outsystems"
+            "defaultValue": " "
+        },
+        "OSDBSessionServer": {
+            "type": "string",
+            "defaultValue": " "
         },
         "OSDBSAUser": {
-            "type": "string",
-            "defaultValue": "sa"
+            "type": "string"
         },
         "OSDBSAPass": {
             "type": "securestring"
         },
-        "OSDBSessionServer": {
-            "type": "string"
+        "OSDBSALogUser": {
+            "type": "string",
+            "defaultValue": " "
+        },
+        "OSDBSALogPass": {
+            "type": "securestring",
+            "defaultValue": " "
+        },
+        "OSDBSASessionUser": {
+            "type": "string",
+            "defaultValue": " "
+        },
+        "OSDBSASessionPass": {
+            "type": "securestring",
+            "defaultValue": " "
+        },
+        "OSDBCatalog": {
+            "type": "string",
+            "defaultValue": " "
+        },
+        "OSDBLogCatalog": {
+            "type": "string",
+            "defaultValue": " "
         },
         "OSDBSessionCatalog": {
             "type": "string",
-            "defaultValue": "osSession"
-        },
-        "OSDBSessionUser": {
-            "type": "string",
-            "defaultValue": "OSSTATE"
-        },
-        "OSDBSessionPass": {
-            "type": "securestring"
+            "defaultValue": " "
         },
         "OSDBAdminUser": {
             "type": "string",
-            "defaultValue": "OSADMIN"
+            "defaultValue": " "
         },
         "OSDBAdminPass": {
-            "type": "securestring"
+            "type": "securestring",
+            "defaultValue": " "
         },
         "OSDBRuntimeUser": {
             "type": "string",
-            "defaultValue": "OSRUNTIME"
+            "defaultValue": " "
         },
         "OSDBRuntimePass": {
-            "type": "securestring"
+            "type": "securestring",
+            "defaultValue": " "
         },
         "OSDBLogUser": {
             "type": "string",
-            "defaultValue": "OSLOG"
+            "defaultValue": " "
         },
         "OSDBLogPass": {
-            "type": "securestring"
+            "type": "securestring",
+            "defaultValue": " "
+        },
+        "OSDBSessionUser": {
+            "type": "string",
+            "defaultValue": " "
+        },
+        "OSDBSessionPass": {
+            "type": "securestring",
+            "defaultValue": " "
+        },
+        "OSRabbitMQHost": {
+            "type": "string",
+            "defaultValue": " "
+        },
+        "OSRabbitMQUser": {
+            "type": "string",
+            "defaultValue": " "
+        },
+        "OSRabbitMQPass": {
+            "type": "securestring",
+            "defaultValue": " "
+        },
+        "OSRabbitMQVHost": {
+            "type": "string",
+            "defaultValue": " "
         },
         "OSServerVersion": {
             "type": "string",
-            "defaultValue": "10.0.823.0"
+            "defaultValue": " "
         },
         "OSServiceStudioVersion": {
             "type": "string",
-            "defaultValue": "10.0.825.0"
+            "defaultValue": " "
         }
     },
     "variables": {},
@@ -95,7 +124,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Resources/customScriptExtension.json"
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'Resources/customScriptExtension.json')]"
                 },
                 "parameters": {
                     "resourceName": {
@@ -105,10 +134,10 @@
                         "value": "[resourceGroup().location]"
                     },
                     "fileUris": {
-                        "value": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Scripts/OutsystemsSetup.ps1"
+                        "value": "[uri(deployment().properties.templateLink.uri, 'Scripts/OutsystemsSetup.ps1')]"
                     },
                     "arguments": {
-                        "value": "[concat(' -OSServerVersion \"', trim(parameters('OSServerVersion')), '\" -OSServiceStudioVersion \"', trim(parameters('OSServiceStudioVersion')), '\" -OSPrivateKey \"', trim(parameters('OSPrivateKey')), '\" -OSController \"', trim(parameters('OSController')), '\" -OSDBProvider ', parameters('OSDBProvider'), ' -OSDBAuth ', parameters('OSDBAuth'), ' -OSDBServer ', parameters('OSDBServer'), ' -OSDBCatalog ', parameters('OSDBCatalog'), ' -OSDBSAUser ', parameters('OSDBSAUser'), ' -OSDBSAPass ', parameters('OSDBSAPass'), ' -OSDBSessionServer ', parameters('OSDBSessionServer'), ' -OSDBSessionCatalog ', parameters('OSDBSessionCatalog'), ' -OSDBSessionUser ', parameters('OSDBSessionUser'), ' -OSDBSessionPass ', parameters('OSDBSessionPass'), ' -OSDBAdminUser ', parameters('OSDBAdminUser'), ' -OSDBAdminPass ', parameters('OSDBAdminPass'), ' -OSDBRuntimeUser ', parameters('OSDBRuntimeUser'), ' -OSDBRuntimePass ', parameters('OSDBRuntimePass'), ' -OSDBLogUser ', parameters('OSDBLogUser'), ' -OSDBLogPass ', parameters('OSDBLogPass'))]"
+                        "value": "[[concat(' -OSController \"', trim(parameters('OSController')), '\" -OSPrivateKey \"', trim(parameters('OSPrivateKey')), '\" -OSDBServer \"', trim(parameters('OSDBServer')), '\" -OSDBLogServer \"', trim(parameters('OSDBLogServer')), '\" -OSDBSessionServer \"', trim(parameters('OSDBSessionServer')), '\" -OSDBSAUser \"', trim(parameters('OSDBSAUser')), '\" -OSDBSAPass \"', trim(parameters('OSDBSAPass')), '\" -OSDBSALogUser \"', trim(parameters('OSDBSALogUser')), '\" -OSDBSALogPass \"', trim(parameters('OSDBSALogPass')), '\" -OSDBSASessionUser \"', trim(parameters('OSDBSASessionUser')), '\" -OSDBSASessionPass \"', trim(parameters('OSDBSASessionPass')), '\" -OSDBCatalog \"', trim(parameters('OSDBCatalog')), '\" -OSDBLogCatalog \"', trim(parameters('OSDBLogCatalog')), '\" -OSDBSessionCatalog \"', trim(parameters('OSDBSessionCatalog')), '\" -OSDBAdminUser \"', trim(parameters('OSDBAdminUser')), '\" -OSDBAdminPass \"', trim(parameters('OSDBAdminPass')), '\" -OSDBRuntimeUser \"', trim(parameters('OSDBRuntimeUser')), '\" -OSDBRuntimePass \"', trim(parameters('OSDBRuntimePass')), '\" -OSDBLogUser \"', trim(parameters('OSDBLogUser')), '\" -OSDBLogPass \"', trim(parameters('OSDBLogPass')), '\" -OSDBSessionUser \"', trim(parameters('OSDBSessionUser')), '\" -OSDBSessionPass \"', trim(parameters('OSDBSessionPass')), '\" -OSRabbitMQHost \"', trim(parameters('OSRabbitMQHost')), '\" -OSRabbitMQUser \"', trim(parameters('OSRabbitMQUser')), '\" -OSRabbitMQPass \"', trim(parameters('OSRabbitMQPass')), '\" -OSRabbitMQVHost \"', trim(parameters('OSRabbitMQVHost')), '\" -OSServerVersion \"', trim(parameters('OSServerVersion')), '\" -OSServiceStudioVersion \"', trim(parameters('OSServiceStudioVersion')))]"
                     }
                 }
             }
