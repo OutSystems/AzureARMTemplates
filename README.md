@@ -10,7 +10,7 @@ The goal is to enable our customers to deploy OutSystems on Microsoft Azure with
 
 - All templates will install OutSystems with a 30 days trial license. Please make sure you upload your own license before starting the real development of your apps.
 
-## Existing Virtual Network (VNET) and Database Server
+## Existing Virtual Network (VNET) and existing Database Server
 
 Use this group of templates if you want to deploy OutSystems on an existing virtual network (VNET) and existing database server.
 
@@ -22,7 +22,7 @@ This template deploys an OutSystems environment on a single virtual machine.
 
 Template settings:
 
-![SingleEnv](/media/Controller.png)
+![SingleEnv](https://raw.githubusercontent.com/OutSystems/AzureARMTemplates/dev/media/Controller.PNG)
 
 [![SingleEnv](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fdev%2FController.json)
 
@@ -59,7 +59,7 @@ Same as the previous template but this time, the frontend server will be deploye
 
 [![FrontendVMSS](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fdev%2FFrontendVMSS.json)
 
-## On Azure SQL in existing VNET
+## Existing Virtual Network (VNET) on Azure SQL
 
 Use this group of templates if you want to deploy OutSystems on an existing virtual network (VNET) and use Azure SQL as the database server.
 
