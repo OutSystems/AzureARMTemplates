@@ -45,10 +45,6 @@
             "type": "string",
             "defaultValue": "osSession"
         },
-        "outsystemsEnvironmentPrivatekey": {
-            "type": "string",
-            "defaultValue": " "
-        },
         "outsystemsServerVersion": {
             "type": "string",
             "defaultValue": "10.0.904.0"
@@ -229,9 +225,6 @@
                     },
                     "OSDBLogPass": {
                         "value": "[parameters('databaseAdministratorPass')]"
-                    },
-                    "OSPrivateKey": {
-                        "value": "[trim(parameters('outsystemsEnvironmentPrivatekey'))]"
                     },
                     "OSServerVersion": {
                         "value": "[trim(parameters('outsystemsServerVersion'))]"
