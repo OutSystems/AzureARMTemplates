@@ -1,17 +1,26 @@
 # Outsystems Azure ARM templates
-This is collection of quick start templates to deploy the Outsystems platform to Microsoft Azure.
 
-## Existing VNET and Database Server
+This is collection of quick start templates for deploying OutSystems on Microsoft Azure.
 
-For this set of templates you need a VNET already deployed and a database server reachable from the VMs.
+The goal is to enable customers to deploy OutSystems on Microsoft Azure with extended customization options not available in the Azure Marketplace ofer.
 
-### 1. Controller ( Standalone Environment )
+#### Notes:
 
-This template deploys and configures a VM as an Outsystems controller/frontend. The template will ask you for a database server to connect ( needs to be reachable to the VM ) and for a virtual network where the VM will be placed.
+- Only Microsoft SQL Server and Azure SQL with database authentication is available.
 
-You have an optional parameter for the environment private key. Usefull if you want to join the VM to an existing Outsystems database.
+- All templates will install OutSystems with a 30 days trial license. Please make sure you upload your own license before starting to develop real apps.
 
-Example:
+## Existing Virtual Network (VNET) and Database Server
+
+Use this group of templates if you want to deploy OutSystems on an existing virtual network (VNET) and existing database server.
+
+Please make sure that the virtual network has network connectivity to the database server before starting the deployment.
+
+### 1. Single Environment
+
+This template deploys an OutSystems environment on a single virtual machine.
+
+Template settings:
 
 <img src="https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Docs/Controller.PNG"/>
 
@@ -19,25 +28,40 @@ Example:
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
+#### Notes:
+
+- You have an optional parameter for the OutSystems environment private key. This can be usefull if you want to connect the VM to an existing OutSystems environment database (environment clone).
+
 ### 2. Lifetime Environment
 
-This is the same as the previous template but installs Lifetime. The private key option is not available in this template.
+Same as the previous template but this time for the Lifetime environment.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FLifetime.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-### 3. Frontend server ( Single )
+### 3. Frontend Server
 
-This template deploys and configures a VM as an Outsystems frontend server. A working environment is needed to connect this frontend. You will need to specify the same parameters as for the controller template plus the controller host.
+Deploys a single OutSystems frontend server on an existing environment.
+
+#### Notes:
+
+- To to connect this frontend server, a working OutSystems environment must be already deployed.
+- The template requires the same parameters as the single environment template plus the controller hostname/IP and the environment private key.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FFrontend.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-### 4. Frontend server ( Virtual Machine Scale Set cluster )
+### 4. Frontend Server in a Virtual Machine Scale Set
 
-Same as the previous one but the frontends will be deployed in a Virtual Machine Scale Set behind an Application Gateway. The trial license included in this templates only allow two frontend servers. To scale to two you need to remove the controller as a frontend server in Service Center.
+Same as the previous template but this time, the frontend server will be deployed in a Virtual Machine Scale Set. This enables the scaling or the auto-scaling of the frontends.
+
+#### Notes:
+
+- The trial license included in all templates only allow two frontend servers.
+- To be able to scale to two frontends using the trial license, you need to go to Service Center -> Frontends, and disable the frontend role in the deployment controller server.
+- To scale to more than two frontends, you need to install your own OutSystems license.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FFrontendVMSS.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
@@ -45,9 +69,15 @@ Same as the previous one but the frontends will be deployed in a Virtual Machine
 
 ## On Azure SQL in existing VNET
 
-This set of templates are exactly like the ones in the previous section but an Azure SQL Server is deployed for the Controller and Lifetime templates. The Azure SQL Server admin username and password will be asked and cannot be the equal to the VM admin username or the deployment will fail.
+Use this group of templates if you want to deploy OutSystems on an existing virtual network (VNET) and use Azure SQL as the database server.
 
-### 5. Controller ( Standalone Environment )
+#### Notes:
+
+- The Azure SQL Server admin username must NOT be the identical to the VM admin username or the deployment will fail.
+
+### 5. Single Environment
+
+This template deploys an OutSystems environment on a single virtual machine and two Azure SQL databases for the platform database and session database.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fdev%2FAzSQLController.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
@@ -55,15 +85,21 @@ This set of templates are exactly like the ones in the previous section but an A
 
 ### 6. Lifetime Environment
 
-This is the same as the previous template but installs Lifetime. The private key option is not available in this template.
+Same as the previous template but this time for the Lifetime environment.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FAzSQLLifetime.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-### 7. Production Environment with frontends in a VMSS cluster
+### 7. Single Environment + Frontend Server in a Virtual Machine Scale Set
 
-Same as the number 5 plus a frontend in a VMSS cluster load balanced by an Application Gateway. The trial license included in all this templates only allows two frontend servers. To scale to two frontends you need to remove the controller as a frontend server in Service Center.
+Same as template number five plus a frontend server deployed in a VMSS cluster. This enables the scaling and the auto-scaling of the frontends  (ideal for production environments).
+
+#### Notes:
+
+- The trial license included in all templates only allow two frontend servers.
+- To be able to scale to two frontends using the trial license, you need to go to Service Center -> Frontends, and disable the frontend role in the deployment controller server.
+- To scale to more than two frontends, you need to install your own OutSystems license.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fdev%2FAzSQLVMSS.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
@@ -71,4 +107,8 @@ Same as the number 5 plus a frontend in a VMSS cluster load balanced by an Appli
 
 ## Full stack on Azure SQL
 
-For a full stack environments with Dev, Test, Prod and Lifetime deployed on a new VNET with Azure SQL as the database engine use our [Azure Marketplace template](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/outsystems.outsystems_platform?tab=Overview).
+For a full stack with Dev, Test, Prod and Lifetime environments deployed on a new VNET with Azure SQL as the database engine, use our [Azure Marketplace template](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/outsystems.outsystems_platform?tab=Overview).
+
+To deploy a full stack on an existing VNET you can also use this templates but you will need to deploy each environment one at the time.
+
+Use template number five for the Dev, Test and Prod environments and the number six for Lifetime. If you want to have a Prod environment with scalling and HA capabilities, use the template number seven.
