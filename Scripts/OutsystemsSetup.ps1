@@ -1,126 +1,59 @@
 ﻿[CmdletBinding()]
 param(
-
     [Parameter()]
+    [ValidateSet('DC', 'FE', 'LT')]
     [string]$OSRole,
 
     [Parameter()]
-    [string]$OSController,
+    [ValidateSet('Database Authentication', 'Windows Authentication')]
+    [string]$OSDBAuth = 'Database Authentication',
 
     [Parameter()]
+    [string]$OSController = '127.0.0.1',
     [string]$OSPrivateKey,
-
-    [Parameter()]
-    [string]$OSLogPath="$Env:Windir\Temp\OutsystemsInstall",
-
-    [Parameter()]
-    [ValidateSet('SQL','SQLExpress','AzureSQL')]
-    [string]$OSDBProvider='SQL',
-
-    [Parameter()]
-    [ValidateSet('SQL','Windows')]
-    [string]$OSDBAuth='SQL',
-
-    [Parameter(Mandatory=$true)]
-    [string]$OSDBServer,
-
-    [Parameter()]
-    [string]$OSDBCatalog='outsystems',
-
-    [Parameter(Mandatory=$true)]
+    [string]$OSDBServer = '127.0.0.1',
+    [string]$OSDBLogServer = $OSDBServer,
+    [string]$OSDBSessionServer = $OSDBServer,
     [string]$OSDBSAUser,
-
-    [Parameter(Mandatory=$true)]
     [string]$OSDBSAPass,
-
-    [Parameter(Mandatory=$true)]
-    [string]$OSDBSessionServer,
-
-    [Parameter()]
-    [string]$OSDBSessionCatalog='osSession',
-
-    [Parameter()]
-    [string]$OSDBSessionUser='OSSTATE',
-
-    [Parameter(Mandatory=$true)]
-    [string]$OSDBSessionPass,
-
-    [Parameter()]
-    [string]$OSDBAdminUser='OSADMIN',
-
-    [Parameter()]
+    [string]$OSDBSALogUser = $OSDBSAUser,
+    [string]$OSDBSALogPass = $OSDBSAPass,
+    [string]$OSDBSASessionUser = $OSDBSAUser,
+    [string]$OSDBSASessionPass = $OSDBSAPass,
+    [string]$OSDBCatalog = 'outsystems',
+    [string]$OSDBLogCatalog = 'outsystems',
+    [string]$OSDBSessionCatalog = 'outsystems',
+    [string]$OSDBAdminUser = 'OSADMIN',
     [string]$OSDBAdminPass,
-
-    [Parameter()]
-    [string]$OSDBRuntimeUser='OSRUNTIME',
-
-    [Parameter(Mandatory=$true)]
+    [string]$OSDBRuntimeUser = 'OSRUNTIME',
     [string]$OSDBRuntimePass,
-
-    [Parameter()]
-    [string]$OSDBLogUser='OSLOG',
-
-    [Parameter(Mandatory=$true)]
+    [string]$OSDBLogUser = 'OSLOG',
     [string]$OSDBLogPass,
-
-    [Parameter()]
-    [string]$OSInstallDir="F:\OutSystems",
-
-    [Parameter()]
-    [string]$OSServerVersion='10.0.823.0',
-
-    [Parameter()]
-    [string]$OSServiceStudioVersion='10.0.825.0'
-
+    [string]$OSDBSessionUser = 'OSSTATE',
+    [string]$OSDBSessionPass,
+    [string]$OSRabbitMQHost = $OSController,
+    [string]$OSRabbitMQUser = 'Admin',
+    [string]$OSRabbitMQPass,
+    [string]$OSRabbitMQVHost = '/OutSystems',
+    [string]$OSInstallDir = "F:\OutSystems",
+    [string]$OSServerVersion = '10.0.823.0',
+    [string]$OSServiceStudioVersion = '10.0.825.0'
 )
+
 # -- Preference variables
-$global:ErrorActionPreference = 'Stop'
+$ErrorActionPreference = 'Stop'
+
+# Start PS Logging
+Start-Transcript -Path "$Env:Windir\temp\OutSystemsSetupScript.log" -Append | Out-Null
+
+# -- Import module from Powershell Gallery
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force | Out-Null
+Install-Module -Name Outsystems.SetupTools -Force | Out-Null
+Import-Module -Name Outsystems.SetupTools -ArgumentList $true, 'AzureRM' | Out-Null
 
 # -- Script variables
 $rebootNeeded = $false
 $majorVersion = "$(([System.Version]$OSServerVersion).Major).$(([System.Version]$OSServerVersion).Minor)"
-
-# -- Configuration tool base settings
-$ConfigToolArgs = @{
-    DBProvider          = $OSDBProvider
-    DBAuth              = $OSDBAuth
-
-    DBServer            = $OSDBServer
-    DBCatalog           = $OSDBCatalog
-    DBSAUser            = $OSDBSAUser
-    DBSAPass            = $OSDBSAPass
-
-    DBSessionServer     = $OSDBSessionServer
-    DBSessionCatalog    = $OSDBSessionCatalog
-
-    DBSessionUser       = $OSDBSessionUser
-    DBSessionPass       = $OSDBSessionPass
-    DBAdminUser         = $OSDBAdminUser
-    DBAdminPass         = $OSDBAdminPass
-    DBRuntimeUser       = $OSDBRuntimeUser
-    DBRuntimePass       = $OSDBRuntimePass
-}
-# -- If controller or private key is specified, add them to the config tool parameters 
-if ($OSController) { $ConfigToolArgs.Add('Controller',$OSController) }
-if ($OSPrivateKey) { $ConfigToolArgs.Add('PrivateKey',$OSPrivateKey) }
-
-# -- Version specific config tool parameters
-switch ($majorVersion) {
-    '10.0' 
-    {
-        # -- If its OS10, add the log db user
-        $ConfigToolArgs.Add('DBLogUser',$OSDBLogUser)
-        $ConfigToolArgs.Add('DBLogPass',$OSDBLogPass)
-    }
-    '11.0' 
-    {
-        # -- If its OS11 we can add the logging database settings. If not specified, the log DB will default to the platform database
-        # -- Also, we can set rabbit settings. Going with the defaults for now
-    }
-}
-
-# PS Logging
-Start-Transcript -Path "C:\windows\temp\transcript0.txt" -Append | Out-Null
 
 # Initialize and format the data disk
 Get-Disk 2 | Initialize-Disk -PartitionStyle MBR -PassThru | New-Partition -UseMaximumSize -MbrType IFS -driveletter F | Format-Volume -FileSystem NTFS -Confirm:$false | Out-Null
@@ -129,47 +62,83 @@ $null = Get-PSDrive
 # -- Disable windows defender realtime scan
 Set-MpPreference -DisableRealtimeMonitoring $true | Out-Null
 
-# -- Import module from Powershell Gallery
-Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force  | Out-Null
-Install-Module -Name Outsystems.SetupTools -Force | Out-Null
-Import-Module -Name Outsystems.SetupTools -ArgumentList $true, 'AzureRM' | Out-Null
-
-# -- Start logging
-Set-OSInstallLog -Path $OSLogPath -File "InstallLog-$(get-date -Format 'yyyyMMddHHmmss').log" | Out-Null
-
 # -- Check HW and OS for compability. Will throw if VM is not compatible
-Test-OSServerHardwareReqs -MajorVersion $majorVersion | Out-Null
-Test-OSServerSoftwareReqs -MajorVersion $majorVersion | Out-Null
+Test-OSServerHardwareReqs -MajorVersion $majorVersion -ErrorAction Stop | Out-Null
+Test-OSServerSoftwareReqs -MajorVersion $majorVersion -ErrorAction Stop | Out-Null
 
 # -- Install PreReqs
-Install-OSServerPreReqs -MajorVersion "$(([System.Version]$OSServerVersion).Major).$(([System.Version]$OSServerVersion).Minor)" | Out-Null
+Install-OSServerPreReqs -MajorVersion "$(([System.Version]$OSServerVersion).Major).$(([System.Version]$OSServerVersion).Minor)" -ErrorAction Stop | Out-Null
 
 # -- Download and install OS Server and Dev environment from repo
-Install-OSServer -Version $OSServerVersion -InstallDir $OSInstallDir | Out-Null
-Install-OSServiceStudio -Version $OSServiceStudioVersion -InstallDir $OSInstallDir | Out-Null
+Install-OSServer -Version $OSServerVersion -InstallDir $OSInstallDir -ErrorAction Stop | Out-Null
+Install-OSServiceStudio -Version $OSServiceStudioVersion -InstallDir $OSInstallDir -ErrorAction Stop | Out-Null
 
-# -- If its OS11 we need to install RabbitMQ
-switch ($majorVersion) {
-    '11.0' 
+# -- Disable IPv6
+Disable-OSServerIPv6 -ErrorAction Stop | Out-Null
+
+# -- Start a new config
+if ($OSPrivateKey)
+{
+    New-OSServerConfig -DatabaseProvider 'SQL' -PrivateKey $OSPrivateKey -ErrorAction Stop | Out-Null
+}
+else
+{
+    New-OSServerConfig -DatabaseProvider 'SQL' -ErrorAction Stop | Out-Null
+}
+
+# -- Configure common settings to both versions
+# **** Platform Database ****
+Set-OSServerConfig -SettingSection 'PlatformDatabaseConfiguration' -Setting 'UsedAuthenticationMode' -Value $OSDBAuth -ErrorAction Stop | Out-Null #!!!
+Set-OSServerConfig -SettingSection 'PlatformDatabaseConfiguration' -Setting 'Server' -Value $OSDBServer -ErrorAction Stop | Out-Null
+Set-OSServerConfig -SettingSection 'PlatformDatabaseConfiguration' -Setting 'Catalog' -Value $OSDBCatalog -ErrorAction Stop | Out-Null
+Set-OSServerConfig -SettingSection 'PlatformDatabaseConfiguration' -Setting 'AdminUser' -Value $OSDBAdminUser -ErrorAction Stop | Out-Null
+Set-OSServerConfig -SettingSection 'PlatformDatabaseConfiguration' -Setting 'AdminPassword' -Value $OSDBAdminPass -ErrorAction Stop | Out-Null
+Set-OSServerConfig -SettingSection 'PlatformDatabaseConfiguration' -Setting 'RuntimeUser' -Value $OSDBRuntimeUser -ErrorAction Stop | Out-Null
+Set-OSServerConfig -SettingSection 'PlatformDatabaseConfiguration' -Setting 'RuntimePassword' -Value $OSDBRuntimePass -ErrorAction Stop | Out-Null
+# **** Session Database ****
+Set-OSServerConfig -SettingSection 'SessionDatabaseConfiguration' -Setting 'UsedAuthenticationMode' -Value $OSDBAuth -ErrorAction Stop | Out-Null #!!!
+Set-OSServerConfig -SettingSection 'SessionDatabaseConfiguration' -Setting 'Server' -Value $OSDBSessionServer -ErrorAction Stop | Out-Null
+Set-OSServerConfig -SettingSection 'SessionDatabaseConfiguration' -Setting 'Catalog' -Value $OSDBSessionCatalog -ErrorAction Stop | Out-Null
+Set-OSServerConfig -SettingSection 'SessionDatabaseConfiguration' -Setting 'SessionUser' -Value $OSDBSessionUser -ErrorAction Stop | Out-Null
+Set-OSServerConfig -SettingSection 'SessionDatabaseConfiguration' -Setting 'SessionPassword' -Value $OSDBSessionPass -ErrorAction Stop | Out-Null
+# **** Service config ****
+Set-OSServerConfig -SettingSection 'ServiceConfiguration' -Setting 'CompilerServerHostname' -Value $OSController -ErrorAction Stop | Out-Null
+
+# -- Configure platform according to major version
+switch ($majorVersion)
+{
+    '11.0'
     {
-        # -- Install RabbitMQ if its OS11
-        Install-OSRabbitMQ | Out-Null
+        # -- Configure version specific platform settings
+        # **** Cache invalidation service config ****
+        Set-OSServerConfig -SettingSection 'CacheInvalidationConfiguration' -Setting 'ServiceHost' -Value $OSRabbitMQHost -ErrorAction Stop | Out-Null
+        Set-OSServerConfig -SettingSection 'CacheInvalidationConfiguration' -Setting 'ServiceUsername' -Value $OSRabbitMQUser -ErrorAction Stop | Out-Null
+        Set-OSServerConfig -SettingSection 'CacheInvalidationConfiguration' -Setting 'ServicePassword' -Value $OSRabbitMQPass -ErrorAction Stop | Out-Null
+        Set-OSServerConfig -SettingSection 'CacheInvalidationConfiguration' -Setting 'VirtualHost' -Value $OSRabbitMQVHost -ErrorAction Stop | Out-Null
+
+        # **** Logging database ****
+        Set-OSServerConfig -SettingSection 'LoggingDatabaseConfiguration' -Setting 'UsedAuthenticationMode' -Value $OSDBAuth -ErrorAction Stop | Out-Null #!!!
+        Set-OSServerConfig -SettingSection 'LoggingDatabaseConfiguration' -Setting 'Server' -Value $OSDBLogServer -ErrorAction Stop | Out-Null
+        Set-OSServerConfig -SettingSection 'LoggingDatabaseConfiguration' -Setting 'Catalog' -Value $OSDBLogCatalog -ErrorAction Stop | Out-Null
+        Set-OSServerConfig -SettingSection 'LoggingDatabaseConfiguration' -Setting 'AdminUser' -Value $OSDBAdminUser -ErrorAction Stop | Out-Null
+        Set-OSServerConfig -SettingSection 'LoggingDatabaseConfiguration' -Setting 'AdminPassword' -Value $OSDBAdminPass -ErrorAction Stop | Out-Null
+        Set-OSServerConfig -SettingSection 'LoggingDatabaseConfiguration' -Setting 'RuntimeUser' -Value $OSDBRuntimeUser -ErrorAction Stop | Out-Null
+        Set-OSServerConfig -SettingSection 'LoggingDatabaseConfiguration' -Setting 'RuntimePassword' -Value $OSDBRuntimePass -ErrorAction Stop | Out-Null
 
         # -- Configure windows firewall with rabbit
-        Set-OSServerWindowsFirewall -IncludeRabbitMQ | Out-Null
+        Set-OSServerWindowsFirewall -IncludeRabbitMQ -ErrorAction Stop | Out-Null
     }
     '10.0'
     {
+        # -- Configure version specific platform settings
+        # **** Logging database ****
+        Set-OSServerConfig -SettingSection 'PlatformDatabaseConfiguration' -Setting 'LogUser' -Value $OSDBLogUser -ErrorAction Stop | Out-Null
+        Set-OSServerConfig -SettingSection 'PlatformDatabaseConfiguration' -Setting 'LogPassword' -Value $OSDBLogPass -ErrorAction Stop | Out-Null
+
         # -- Configure windows firewall without rabbit
-        Set-OSServerWindowsFirewall | Out-Null
+        Set-OSServerWindowsFirewall -ErrorAction Stop | Out-Null
     }
 }
-
-# -- Disable IPv6
-Disable-OSServerIPv6 | Out-Null
-
-# -- Run config tool
-Invoke-OSConfigurationTool @ConfigToolArgs | Out-Null
 
 # -- If this is a frontend, disable the controller service and wait for the service center to be published by the controller before running the system tunning
 if ($OSRole -eq "FE")
@@ -177,12 +146,13 @@ if ($OSRole -eq "FE")
     Get-Service -Name "OutSystems Deployment Controller Service" | Stop-Service -WarningAction SilentlyContinue | Out-Null
     Set-Service -Name "OutSystems Deployment Controller Service" -StartupType "Disabled" | Out-Null
 
-    while (-not $(Get-OSServerVersion -ErrorAction SilentlyContinue)) {
+    while (-not $(Get-OSServerVersion -ErrorAction SilentlyContinue))
+    {
         Start-Sleep -s 15
     }
     Start-Sleep -s 15
-} 
-else 
+}
+else
 {
     # -- If not a frontend install Service Center, SysComponents and license
     Install-OSPlatformServiceCenter | Out-Null
