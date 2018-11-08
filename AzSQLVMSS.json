@@ -5,69 +5,69 @@
         "virtualMachineName": {
             "type": "string",
             "metadata": {
-                "description": "Deployment controller virtual machine name."
+                "description": "Name of the deployment controller virtual machine."
             }
         },
         "virtualMachineSize": {
             "type": "string",
             "metadata": {
-                "description": "The size of the virtual machine."
+                "description": "Size of the deployment controller virtual machine."
             },
             "defaultValue": "Standard_D2s_v3"
         },
         "vmssName": {
             "type": "string",
             "metadata": {
-                "description": "The name of the virtual machine scale-set."
+                "description": "Name of the Virtual Machine Scale Set."
             }
         },
         "vmssVirtualMachineSize": {
             "type": "string",
             "metadata": {
-                "description": "The size of the virtual machine scale-set."
+                "description": "Size of the virtual machines of the Virtual Machine Scale Set."
             },
             "defaultValue": "Standard_D2s_v3"
         },
         "adminUsername": {
             "type": "string",
             "metadata": {
-                "description": "The windows admin username."
+                "description": "Admin username of all Windows VMs."
             }
         },
         "adminPassword": {
             "type": "securestring",
             "metadata": {
-                "description": "The windows admin password."
+                "description": "Admin password of all Windows VMs."
             }
         },
         "virtualNetworkResourceGroup": {
             "type": "string",
             "metadata": {
-                "description": "The name of the resource group where the existing virtual network (VNET) is located."
+                "description": "The Resource Group where the existing virtual network (VNET) is located."
             }
         },
         "virtualNetworkName": {
             "type": "string",
             "metadata": {
-                "description": "The name of existing virtual network (VNET)."
+                "description": "The name of the existing virtual network (VNET)."
             }
         },
         "virtualNetworkSubnetName": {
             "type": "string",
             "metadata": {
-                "description": "The name of the existing subnet where you want to deploy the virtual machine."
+                "description": "The subnet where you want to deploy the deployment controller virtual machine."
             }
         },
         "applicationGatewayVirtualNetworkSubnetName": {
             "type": "string",
             "metadata": {
-                "description": "The name of the existing subnet for the Application Gateway. This subnet must only contain Application Gateways."
+                "description": "The subnet for the Application Gateway. This subnet must be dedicated to Application Gateways and cannot contain any other resources."
             }
         },
         "sqlServerName": {
             "type": "string",
             "metadata": {
-                "description": "The name of Azure SQL server. CAUTION: This name must be unique within the Azure region. The deployment will fail if the name already exists."
+                "description": "The Azure SQL Server name. CAUTION: This name must be unique within the Azure region. The deployment will fail if the name already exists."
             }
         },
         "databaseSKU": {
@@ -80,13 +80,13 @@
         "databaseAdministratorLogin": {
             "type": "string",
             "metadata": {
-                "description": "Admin username of the Azure SQL server. CAUTION: This username cannot be identical to the virtual machine windows admin username."
+                "description": "The Azure SQL administrator login. CAUTION: This login cannot be identical to the login of the deployment controller virtual machine."
             }
         },
         "databaseAdministratorPass": {
             "type": "securestring",
             "metadata": {
-                "description": "The Azure SQL admin password."
+                "description": "The Azure SQL administrator login password."
             }
         },
         "databasePlatform": {
@@ -100,7 +100,7 @@
             "type": "string",
             "defaultValue": "osSession",
             "metadata": {
-                "description": "The session database name."
+                "description": "The OutSystems session database name."
             }
         },
         "outsystemsServerVersion": {
