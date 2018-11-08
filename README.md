@@ -1,14 +1,14 @@
 # Outsystems Azure ARM templates
 
-This is collection of quick start templates for deploying OutSystems on Microsoft Azure.
+This is a collection of quick start templates for deploying OutSystems on Microsoft Azure.
 
-The goal is to enable customers to deploy OutSystems on Microsoft Azure with extended customization options not available in the Azure Marketplace ofer.
+The goal is to enable our customers to deploy OutSystems on Microsoft Azure with extended customization options not available in the Azure Marketplace ofer.
 
 #### Notes:
 
 - Only Microsoft SQL Server and Azure SQL with database authentication is available.
 
-- All templates will install OutSystems with a 30 days trial license. Please make sure you upload your own license before starting to develop real apps.
+- All templates will install OutSystems with a 30 days trial license. Please make sure you upload your own license before starting the real development of your apps.
 
 ## Existing Virtual Network (VNET) and Database Server
 
@@ -22,11 +22,9 @@ This template deploys an OutSystems environment on a single virtual machine.
 
 Template settings:
 
-<img src="https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Docs/Controller.PNG"/>
+![Controller](/media/Controller.png)
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FController.json" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.png"/>
-</a>
+[![SingleEnv](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FController.json)
 
 #### Notes:
 
@@ -42,11 +40,11 @@ Same as the previous template but this time for the Lifetime environment.
 
 ### 3. Frontend Server
 
-Deploys a single OutSystems frontend server on an existing environment.
+Deploys a single OutSystems frontend server for an existing environment.
 
 #### Notes:
 
-- To to connect this frontend server, a working OutSystems environment must be already deployed.
+- To use this template, you will need a working OutSystems environment already deployed and a virtual network with network connectivity to the existing environment and to the database.
 - The template requires the same parameters as the single environment template plus the controller hostname/IP and the environment private key.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FFrontend.json" target="_blank">
@@ -55,7 +53,7 @@ Deploys a single OutSystems frontend server on an existing environment.
 
 ### 4. Frontend Server in a Virtual Machine Scale Set
 
-Same as the previous template but this time, the frontend server will be deployed in a Virtual Machine Scale Set. This enables the scaling or the auto-scaling of the frontends.
+Same as the previous template but this time, the frontend server will be deployed in a Virtual Machine Scale Set. This enables scaling/auto-scaling of the frontends.
 
 #### Notes:
 
