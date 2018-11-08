@@ -71,8 +71,4 @@ Same as the number 5 plus a frontend in a VMSS cluster load balanced by an Appli
 
 ## Full stack on Azure SQL
 
-For a full stack environments with Dev, Test, Prod and Lifetime deployed on a new VNET with Azure SQL as the database engine use our Azure Marketplace template.
-
-<a href="https://azuremarketplace.microsoft.com/en-us/marketplace/apps/outsystems.outsystems_platform?tab=Overview" target="_blank">
-    <img src="https://106c4.wpc.azureedge.net/80106C4/Gallery-Prod/cdn/2015-02-24/prod20161101-microsoft-windowsazure-gallery/outsystems.outsystems_platformoutsystems-infrastructure.1.0.2/Icons/Large.png"/>
-</a>
+For a full stack environments with Dev, Test, Prod and Lifetime deployed on a new VNET with Azure SQL as the database engine use our [Azure Marketplace template](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/outsystems.outsystems_platform?tab=Overview).
