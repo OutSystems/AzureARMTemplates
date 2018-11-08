@@ -65,7 +65,7 @@ Use this group of templates if you want to deploy OutSystems on an existing virt
 
 #### Notes:
 
-- The Azure SQL Server admin username must NOT be the identical to the VM admin username or the deployment will fail.
+- The Azure SQL Server admin username MUST BE different from the VM admin username or the deployment will fail.
 
 ### 5. Single Environment
 
