@@ -3,55 +3,100 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "virtualMachineName": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "Deployment controller virtual machine name."
+            }
         },
         "virtualMachineSize": {
             "type": "string",
+            "metadata": {
+                "description": "The size of the virtual machine."
+            },
             "defaultValue": "Standard_D2s_v3"
         },
         "adminUsername": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "The windows admin username."
+            }
         },
         "adminPassword": {
-            "type": "securestring"
+            "type": "securestring",
+            "metadata": {
+                "description": "The windows admin password."
+            }
         },
         "virtualNetworkResourceGroup": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "The name of the resource group where the existing virtual network (VNET) is located."
+            }
         },
         "virtualNetworkName": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "The name of existing virtual network (VNET)."
+            }
         },
         "virtualNetworkSubnetName": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "The name of existing subnet where you want to deploy the virtual machine."
+            }
         },
         "sqlServerName": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "The name of Azure SQL server. CAUTION: This name must be unique within the Azure region. The deployment will fail if the name already exists."
+            }
         },
         "databaseSKU": {
             "type": "string",
-            "defaultValue": "S3"
+            "defaultValue": "S3",
+            "metadata": {
+                "description": "The size of the Azure SQL databases."
+            }
         },
         "databaseAdministratorLogin": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "Admin username of the Azure SQL server. CAUTION: This username cannot be identical to the virtual machine windows admin username."
+            }
         },
         "databaseAdministratorPass": {
-            "type": "securestring"
+            "type": "securestring",
+            "metadata": {
+                "description": "The Azure SQL admin password."
+            }
         },
         "databasePlatform": {
             "type": "string",
-            "defaultValue": "outsystems"
+            "defaultValue": "outsystems",
+            "metadata": {
+                "description": "The OutSystems platform database name."
+            }
         },
         "databaseSession": {
             "type": "string",
-            "defaultValue": "osSession"
+            "defaultValue": "osSession",
+            "metadata": {
+                "description": "The session database name."
+            }
         },
         "outsystemsServerVersion": {
             "type": "string",
-            "defaultValue": "10.0.904.0"
+            "defaultValue": "10.0.904.0",
+            "metadata": {
+                "description": "The version of the OutSystems platform server you want to install."
+            }
         },
         "outsystemsServiceStudioVersion": {
             "type": "string",
-            "defaultValue": "10.0.903.0"
+            "defaultValue": "10.0.903.0",
+            "metadata": {
+                "description": "The version of the OutSystems service studio you want to install."
+            }
         }
     },
     "resources": [
