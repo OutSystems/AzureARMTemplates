@@ -58,7 +58,7 @@
                 "description": "The name of the existing subnet where you want to deploy the virtual machine."
             }
         },
-        "applicationGatewayvirtualNetworkSubnetName": {
+        "applicationGatewayVirtualNetworkSubnetName": {
             "type": "string",
             "metadata": {
                 "description": "The name of the existing subnet for the Application Gateway. This subnet must only contain Application Gateways."
@@ -229,8 +229,8 @@
                     "virtualNetworkSubnetName": {
                         "value": "[parameters('virtualNetworkSubnetName')]"
                     },
-                    "applicationGatewayvirtualNetworkSubnetName": {
-                        "value": "[parameters('applicationGatewayvirtualNetworkSubnetName')]"
+                    "applicationGatewayVirtualNetworkSubnetName": {
+                        "value": "[parameters('applicationGatewayVirtualNetworkSubnetName')]"
                     }
                 }
             }
