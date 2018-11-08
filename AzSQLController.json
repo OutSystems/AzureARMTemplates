@@ -88,12 +88,12 @@
             "type": "string",
             "defaultValue": "10.0.904.0",
             "allowedValues": [
+                "11.0.108.0",
                 "10.0.904.0",
                 "10.0.900.0",
                 "10.0.828.0",
                 "10.0.823.0",
-                "10.0.816.0",
-                "11.0.108.0"
+                "10.0.816.0"
             ],
             "metadata": {
                 "description": "The version of the OutSystems platform server you want to install."
@@ -103,14 +103,14 @@
             "type": "string",
             "defaultValue": "10.0.906.0",
             "allowedValues": [
+                "11.0.109.0",
                 "10.0.906.0",
                 "10.0.903.0",
                 "10.0.902.0",
                 "10.0.830.0",
                 "10.0.827.0",
                 "10.0.825.0",
-                "10.0.822.0",
-                "11.0.109.0"
+                "10.0.822.0"
             ],
             "metadata": {
                 "description": "The version of the OutSystems service studio you want to install."
