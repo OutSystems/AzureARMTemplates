@@ -253,12 +253,6 @@
                     "resourceName": {
                         "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.VirtualMachine')).outputs.virtualMachineName.value]"
                     },
-                    "OSDBProvider": {
-                        "value": "AzureSQL"
-                    },
-                    "OSDBAuth": {
-                        "value": "SQL"
-                    },
                     "OSDBServer": {
                         "value": "[concat(reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLServer')).outputs.serverName.value, '.database.windows.net')]"
                     },
