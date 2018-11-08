@@ -65,7 +65,7 @@ This is the same as the previous template but installs Lifetime. The private key
 
 Same as the number 5 plus a frontend in a VMSS cluster load balanced by an Application Gateway. The trial license included in all this templates only allows two frontend servers. To scale to two frontends you need to remove the controller as a frontend server in Service Center.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpintonunes%2FOutsystems-AzureARMTemplates%2Fmaster%2FAzSQLProdVMSS.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fdev%2FAzSQLVMSS.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
