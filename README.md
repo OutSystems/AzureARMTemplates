@@ -40,24 +40,24 @@ Same as the previous template but this time for the Lifetime environment.
 
 Deploys a single OutSystems frontend server for an existing environment.
 
+[![Frontend](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fdev%2FFrontend.json)
+
 **Notes:**
 
 - To use this template, you will need a working OutSystems environment already deployed and a virtual network with network connectivity to the existing environment and to the database.
 - The template requires the same parameters as the single environment template plus the controller hostname/IP and the environment private key.
 
-[![Frontend](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fdev%2FFrontend.json)
-
 ### 4. Frontend Server in a Virtual Machine Scale Set
 
 Same as the previous template but this time, the frontend server will be deployed in a Virtual Machine Scale Set. This enables scaling/auto-scaling of the frontends.
+
+[![FrontendVMSS](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fdev%2FFrontendVMSS.json)
 
 **Notes:**
 
 - The trial license included in all templates only allow two frontend servers.
 - To be able to scale to two frontends using the trial license, you need to go to Service Center -> Frontends, and disable the frontend role in the deployment controller server.
 - To scale to more than two frontends, you need to install your own OutSystems license.
-
-[![FrontendVMSS](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fdev%2FFrontendVMSS.json)
 
 ## Existing Virtual Network (VNET) on Azure SQL
 
@@ -83,13 +83,13 @@ Same as the previous template but this time for the Lifetime environment.
 
 Same as template number five plus a frontend server deployed in a VMSS cluster. This enables scaling/auto-scaling of the frontends (ideal for production environments).
 
+[![AzSQLFrontendVMSS](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fdev%2FAzSQLFrontendVMSS.json)
+
 **Notes:**
 
 - The trial license included in all templates only allow two frontend servers.
 - To be able to scale to two frontends using the trial license, you need to go to Service Center -> Frontends, and disable the frontend role in the deployment controller server.
 - To scale to more than two frontends, you need to install your own OutSystems license.
-
-[![AzSQLFrontendVMSS](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fdev%2FAzSQLFrontendVMSS.json)
 
 ## Full stack on Azure SQL
 
