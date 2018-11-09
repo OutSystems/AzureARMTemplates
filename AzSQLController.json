@@ -88,7 +88,7 @@
             "type": "string",
             "defaultValue": " ",
             "metadata": {
-                "description": "The OutSystems log database name. If not specified, defaults to the database platform. This is only appliable to OutSystems 11."
+                "description": "The OutSystems log database name. If not specified, defaults to the database platform. This is only appliable to OutSystems 11. Leave this setting empty if deploying OutSystems 10."
             }
         },
         "outsystemsServerVersion": {
@@ -123,6 +123,10 @@
                 "description": "The version of the OutSystems service studio you want to install."
             }
         }
+    },
+    "variables": {
+        "logCatalogDepName": "[if(empty(trim(parameters('databaseLog'))), '.Outsystems.AzureSQLDatabase.Platform', '.Outsystems.AzureSQLDatabase.Session')]",
+        "sessionCatalogDepName": "[if(empty(trim(parameters('databaseSession'))), '.Outsystems.AzureSQLDatabase.Platform', '.Outsystems.AzureSQLDatabase.Log')]"
     },
     "resources": [
         {
@@ -291,7 +295,10 @@
                         "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLDatabase.Platform')).outputs.databaseName.value]"
                     },
                     "OSDBSessionCatalog": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLDatabase.Session')).outputs.databaseName.value]"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'), variables('sessionCatalogDepName'))).outputs.databaseName.value]"
+                    },
+                    "OSDBLogCatalog": {
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'), variables('logCatalogDepName'))).outputs.databaseName.value]"
                     },
                     "OSDBSAUser": {
                         "value": "[parameters('databaseAdministratorLogin')]"
