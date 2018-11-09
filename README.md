@@ -20,6 +20,8 @@ The goal is to enable our customers to deploy OutSystems on Microsoft Azure with
 
 - For performance reasons its highly recommended that you create a separate session database and a log database (OutSystems 11 only).
 
+- When must chose the same major version for the Platform Server and Service Studio.
+
 - All templates will install OutSystems with a 30 days trial license. Please make sure you upload your own license before starting the real development of your apps.
 
 ## Existing Database Server
