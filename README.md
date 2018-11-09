@@ -6,7 +6,7 @@ The goal is to enable our customers to deploy OutSystems on Microsoft Azure with
 
 **Features:**
 
-- Supports both OutSystems 10 and 11. You can select witch version to install.
+- Supports both OutSystems 10 and 11. You can select which version to install.
 
 - Optional databases. You can chose if you want to create a session database (OutSystems 10 and 11) and/or a log database (OutSystems 11).
 
