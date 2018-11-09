@@ -20,7 +20,7 @@ The goal is to enable our customers to deploy OutSystems on Microsoft Azure with
 
 ## Existing Database Server
 
-Use this group of templates if you want to deploy OutSystems on an existing virtual network (VNET) and existing database server.
+Use this group of templates if you want to deploy OutSystems with an existing database server.
 
 Please make sure that the virtual network has network connectivity to the database server before starting the deployment.
 
@@ -70,7 +70,7 @@ Same as the previous template but this time, the frontend server will be deploye
 
 ## On Azure SQL
 
-Use this group of templates if you want to deploy OutSystems on an existing virtual network (VNET) and use Azure SQL as the database server.
+Use this group of templates if you want to deploy OutSystems using Azure SQL as the database server.
 
 **Notes:**
 
