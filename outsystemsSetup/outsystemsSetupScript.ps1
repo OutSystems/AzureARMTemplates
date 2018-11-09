@@ -103,6 +103,8 @@ Set-OSServerConfig -SettingSection 'SessionDatabaseConfiguration' -Setting 'Sess
 Set-OSServerConfig -SettingSection 'SessionDatabaseConfiguration' -Setting 'SessionPassword' -Value $OSDBSessionPass -ErrorAction Stop | Out-Null
 # **** Service config ****
 Set-OSServerConfig -SettingSection 'ServiceConfiguration' -Setting 'CompilerServerHostname' -Value $OSController -ErrorAction Stop | Out-Null
+# **** Other config ****
+Set-OSServerConfig -SettingSection 'OtherConfigurations' -Setting 'DBTimeout' -Value '60' -ErrorAction Stop | Out-Null
 
 # -- Configure platform according to major version
 switch ($majorVersion)
