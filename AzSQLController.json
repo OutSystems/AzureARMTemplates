@@ -79,7 +79,7 @@
         },
         "databaseSession": {
             "type": "string",
-            "defaultValue": " ",
+            "defaultValue": "osSession",
             "metadata": {
                 "description": "The OutSystems session database name. If not specified, defaults to the database platform."
             }
@@ -88,7 +88,7 @@
             "type": "string",
             "defaultValue": " ",
             "metadata": {
-                "description": "The OutSystems log database name. If not specified, defaults to the database platform. This is only appliable to OutSystems 11. Leave this setting empty if deploying OutSystems 10."
+                "description": "The OutSystems log database name. If not specified, defaults to the database platform. This is only appliable to OutSystems 11. Leave this setting empty when deploying OutSystems 10."
             }
         },
         "outsystemsServerVersion": {
