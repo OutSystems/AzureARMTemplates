@@ -247,7 +247,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(deployment().properties.templateLink.uri, 'CommonTemplates/outsystemsController.json')]"
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'outsystemsSetup/outsystemsController.json')]"
                 },
                 "parameters": {
                     "resourceName": {
