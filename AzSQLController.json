@@ -161,7 +161,7 @@
                         "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLServer')).outputs.serverName.value]"
                     },
                     "databaseName": {
-                        "value": "[parameters('databasePlatform')]"
+                        "value": "[trim(parameters('databasePlatform'))]"
                     },
                     "databaseSKU": {
                         "value": "[parameters('databaseSKU')]"
@@ -184,7 +184,7 @@
                         "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLServer')).outputs.serverName.value]"
                     },
                     "databaseName": {
-                        "value": "[parameters('databaseSession')]"
+                        "value": "[trim(parameters('databaseSession'))]"
                     },
                     "databaseSKU": {
                         "value": "[parameters('databaseSKU')]"
@@ -207,7 +207,7 @@
                         "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLServer')).outputs.serverName.value]"
                     },
                     "databaseName": {
-                        "value": "[parameters('databaseLog')]"
+                        "value": "[trim(parameters('databaseLog'))]"
                     },
                     "databaseSKU": {
                         "value": "[parameters('databaseSKU')]"
