@@ -79,16 +79,16 @@
         },
         "databaseSession": {
             "type": "string",
-            "defaultValue": "osSession",
+            "defaultValue": " ",
             "metadata": {
-                "description": "The OutSystems session database name."
+                "description": "The OutSystems session database name. If not specified, defaults to the database platform."
             }
         },
         "databaseLog": {
             "type": "string",
             "defaultValue": " ",
             "metadata": {
-                "description": "The OutSystems log database name. This is only appliable to OutSystems 11. If this value is empty the log database will be the platform database."
+                "description": "The OutSystems log database name. If not specified, defaults to the database platform. This is only appliable to OutSystems 11."
             }
         },
         "outsystemsServerVersion": {
@@ -172,6 +172,7 @@
         {
             "name": "[concat(parameters('virtualMachineName'), '.Outsystems.AzureSQLDatabase.Session')]",
             "apiVersion": "2015-01-01",
+            "condition": "[not(empty(trim(parameters('databaseSession'))))]",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
