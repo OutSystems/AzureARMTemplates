@@ -1,14 +1,28 @@
-# Outsystems Azure ARM templates
+# OutSystems Azure ARM templates
 
 This is a collection of quick start templates for deploying OutSystems on Microsoft Azure.
 
 The goal is to enable our customers to deploy OutSystems on Microsoft Azure with extended customization options not available in the Azure Marketplace ofer.
 
+**Features:**
+
+- Supports both OutSystems 10 and 11. You can select witch version to install.
+
+- Optional databases. You can chose if you want to create a session database (OutSystems 10 and 11) and/or a log database (OutSystems 11).
+
+- Frontends auto-scalling when using a Virtual Machine Scale Set.
+
 **Notes:**
+
+- All templates assume that you already have a VNET created. Before using this templates, create a Virtual Network first.
 
 - Only Microsoft SQL Server and Azure SQL with database authentication is available.
 
+- For performance reasons its highly recommended that you create a separate session database and a log database (OutSystems 11 only)
+
 - All templates will install OutSystems with a 30 days trial license. Please make sure you upload your own license before starting the real development of your apps.
+
+- 
 
 ## Existing Virtual Network (VNET) and existing Database Server
 
