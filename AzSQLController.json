@@ -256,22 +256,19 @@
                     "OSDBServer": {
                         "value": "[concat(reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLServer')).outputs.serverName.value, '.database.windows.net')]"
                     },
+                    "OSDBSessionServer": {
+                        "value": "[concat(reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLServer')).outputs.serverName.value, '.database.windows.net')]"
+                    },
                     "OSDBCatalog": {
                         "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLDatabase.Platform')).outputs.databaseName.value]"
+                    },
+                    "OSDBSessionCatalog": {
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLDatabase.Session')).outputs.databaseName.value]"
                     },
                     "OSDBSAUser": {
                         "value": "[parameters('databaseAdministratorLogin')]"
                     },
                     "OSDBSAPass": {
-                        "value": "[parameters('databaseAdministratorPass')]"
-                    },
-                    "OSDBSessionServer": {
-                        "value": "[concat(reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLServer')).outputs.serverName.value, '.database.windows.net')]"
-                    },
-                    "OSDBSessionCatalog": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLDatabase.Session')).outputs.databaseName.value]"
-                    },
-                    "OSDBSessionPass": {
                         "value": "[parameters('databaseAdministratorPass')]"
                     },
                     "OSDBAdminPass": {
@@ -283,11 +280,20 @@
                     "OSDBLogPass": {
                         "value": "[parameters('databaseAdministratorPass')]"
                     },
+                    "OSDBSessionPass": {
+                        "value": "[parameters('databaseAdministratorPass')]"
+                    },
+                    "OSRabbitMQUser": {
+                        "value": "[parameters('adminUsername')]"
+                    },
+                    "OSRabbitMQPass": {
+                        "value": "[parameters('adminPassword')]"
+                    },
                     "OSServerVersion": {
-                        "value": "[trim(parameters('outsystemsServerVersion'))]"
+                        "value": "[parameters('outsystemsServerVersion')]"
                     },
                     "OSServiceStudioVersion": {
-                        "value": "[trim(parameters('outsystemsServiceStudioVersion'))]"
+                        "value": "[parameters('outsystemsServiceStudioVersion')]"
                     },
                     "_artifactsLocation": {
                         "value": "[deployment().properties.templateLink.uri]"
