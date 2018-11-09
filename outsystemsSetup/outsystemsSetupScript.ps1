@@ -3,41 +3,38 @@ param(
     [Parameter()]
     [ValidateSet('DC', 'FE', 'LT')]
     [string]$OSRole,
-
+    
     [Parameter()]
-    [ValidateSet('Database Authentication', 'Windows Authentication')]
     [string]$OSDBAuth = 'Database Authentication',
-
-    [Parameter()]
-    [string]$OSController = '127.0.0.1',
+    [string]$OSController,
     [string]$OSPrivateKey,
-    [string]$OSDBServer = '127.0.0.1',
-    [string]$OSDBLogServer = $OSDBServer,
-    [string]$OSDBSessionServer = $OSDBServer,
+    [string]$OSDBServer,
+    [string]$OSDBLogServer,
+    [string]$OSDBSessionServer,
     [string]$OSDBSAUser,
     [string]$OSDBSAPass,
-    [string]$OSDBSALogUser = $OSDBSAUser,
-    [string]$OSDBSALogPass = $OSDBSAPass,
-    [string]$OSDBSASessionUser = $OSDBSAUser,
-    [string]$OSDBSASessionPass = $OSDBSAPass,
-    [string]$OSDBCatalog = 'outsystems',
-    [string]$OSDBLogCatalog = 'outsystems',
-    [string]$OSDBSessionCatalog = 'outsystems',
-    [string]$OSDBAdminUser = 'OSADMIN',
+    [string]$OSDBSALogUser,
+    [string]$OSDBSALogPass,
+    [string]$OSDBSASessionUser,
+    [string]$OSDBSASessionPass,
+    [string]$OSDBCatalog,
+    [string]$OSDBLogCatalog,
+    [string]$OSDBSessionCatalog,
+    [string]$OSDBAdminUser,
     [string]$OSDBAdminPass,
-    [string]$OSDBRuntimeUser = 'OSRUNTIME',
+    [string]$OSDBRuntimeUser,
     [string]$OSDBRuntimePass,
-    [string]$OSDBLogUser = 'OSLOG',
+    [string]$OSDBLogUser,
     [string]$OSDBLogPass,
-    [string]$OSDBSessionUser = 'OSSTATE',
+    [string]$OSDBSessionUser,
     [string]$OSDBSessionPass,
-    [string]$OSRabbitMQHost = $OSController,
-    [string]$OSRabbitMQUser = 'Admin',
+    [string]$OSRabbitMQHost,
+    [string]$OSRabbitMQUser,
     [string]$OSRabbitMQPass,
-    [string]$OSRabbitMQVHost = '/OutSystems',
-    [string]$OSInstallDir = "F:\OutSystems",
-    [string]$OSServerVersion = '10.0.823.0',
-    [string]$OSServiceStudioVersion = '10.0.825.0'
+    [string]$OSRabbitMQVHost,
+    [string]$OSInstallDir,
+    [string]$OSServerVersion,
+    [string]$OSServiceStudioVersion
 )
 
 # -- Preference variables
