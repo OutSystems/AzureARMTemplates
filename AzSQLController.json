@@ -93,7 +93,7 @@
         },
         "outsystemsServerVersion": {
             "type": "string",
-            "defaultValue": "10.0.904.0",
+            "defaultValue": "11.0.108.0",
             "allowedValues": [
                 "11.0.108.0",
                 "10.0.904.0",
@@ -108,7 +108,7 @@
         },
         "outsystemsServiceStudioVersion": {
             "type": "string",
-            "defaultValue": "10.0.906.0",
+            "defaultValue": "11.0.109.0",
             "allowedValues": [
                 "11.0.109.0",
                 "10.0.906.0",
