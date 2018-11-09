@@ -18,13 +18,11 @@ The goal is to enable our customers to deploy OutSystems on Microsoft Azure with
 
 - Only Microsoft SQL Server and Azure SQL with database authentication is available.
 
-- For performance reasons its highly recommended that you create a separate session database and a log database (OutSystems 11 only)
+- For performance reasons its highly recommended that you create a separate session database and a log database (OutSystems 11 only).
 
 - All templates will install OutSystems with a 30 days trial license. Please make sure you upload your own license before starting the real development of your apps.
 
-- 
-
-## Existing Virtual Network (VNET) and existing Database Server
+## Existing Database Server
 
 Use this group of templates if you want to deploy OutSystems on an existing virtual network (VNET) and existing database server.
 
@@ -73,7 +71,7 @@ Same as the previous template but this time, the frontend server will be deploye
 - To be able to scale to two frontends using the trial license, you need to go to Service Center -> Frontends, and disable the frontend role in the deployment controller server.
 - To scale to more than two frontends, you need to install your own OutSystems license.
 
-## Existing Virtual Network (VNET) on Azure SQL
+## On Azure SQL
 
 Use this group of templates if you want to deploy OutSystems on an existing virtual network (VNET) and use Azure SQL as the database server.
 
