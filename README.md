@@ -14,7 +14,7 @@ The goal is to enable our customers to deploy OutSystems on Microsoft Azure with
 
 **Notes:**
 
-- All templates assume that you already have a VNET created. Before using this templates, create a Virtual Network first.
+- All templates assume that you already have a VNET created. You must create a Virtual Network before using this templates.
 
 - Only Microsoft SQL Server and Azure SQL with database authentication is available.
 
