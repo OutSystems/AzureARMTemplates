@@ -125,7 +125,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(deployment().properties.templateLink.uri, 'Resources/sqlServer.json')]"
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'resources/sqlServer.json')]"
                 },
                 "parameters": {
                     "serverName": {
@@ -147,7 +147,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(deployment().properties.templateLink.uri, 'Resources/sqlServerDatabase.json')]"
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'resources/sqlServerDatabase.json')]"
                 },
                 "parameters": {
                     "serverName": {
@@ -169,7 +169,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(deployment().properties.templateLink.uri, 'Resources/sqlServerDatabase.json')]"
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'resources/sqlServerDatabase.json')]"
                 },
                 "parameters": {
                     "serverName": {
@@ -191,7 +191,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(deployment().properties.templateLink.uri, 'Resources/sqlServerFirewallRule.json')]"
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'resources/sqlServerFirewallRule.json')]"
                 },
                 "parameters": {
                     "serverName": {
@@ -213,7 +213,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(deployment().properties.templateLink.uri, 'Resources/virtualMachine.json')]"
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'resources/virtualMachine.json')]"
                 },
                 "parameters": {
                     "virtualMachineName": {
