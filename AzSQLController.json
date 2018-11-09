@@ -288,6 +288,9 @@
                     },
                     "OSServiceStudioVersion": {
                         "value": "[trim(parameters('outsystemsServiceStudioVersion'))]"
+                    },
+                    "_artifactsLocation": {
+                        "value": "[deployment().properties.templateLink.uri]"
                     }
                 }
             }
