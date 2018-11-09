@@ -69,6 +69,7 @@ Same as the previous template but this time, the frontend server will be deploye
 
 **Notes:**
 
+- The virtual network that you will use must contain at least two subnets. One for the VMs and another for the Azure Application Gateway. The subnet for the Application Gateway must not contain any other resources.
 - The trial license included in all templates only allow two frontend servers.
 - To be able to scale to two frontends using the trial license, you need to go to Service Center -> Frontends, and disable the frontend role in the deployment controller server.
 - To scale to more than two frontends, you need to install your own OutSystems license.
@@ -80,12 +81,11 @@ Use this group of templates if you want to deploy OutSystems on an existing virt
 **Notes:**
 
 - The Azure SQL Server admin username MUST BE different from the VM admin username or the deployment will fail.
-
 - When installing OutSystems 10 leave the Database Log parameter empty.
 
 ### 5. Single Environment
 
-This template deploys an OutSystems environment on a single virtual machine and two Azure SQL databases for the platform database and session database.
+This template deploys an OutSystems environment on a single virtual machine and the platform databases on Azure SQL.
 
 [![AzSQLController](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fdev%2FAzSQLController.json)
 
@@ -103,6 +103,7 @@ Same as template number five plus a frontend server deployed in a VMSS cluster. 
 
 **Notes:**
 
+- The virtual network that you will use must contain at least two subnets. One for the VMs and another for the Azure Application Gateway. The subnet for the Application Gateway must not contain any other resources.
 - The trial license included in all templates only allow two frontend servers.
 - To be able to scale to two frontends using the trial license, you need to go to Service Center -> Frontends, and disable the frontend role in the deployment controller server.
 - To scale to more than two frontends, you need to install your own OutSystems license.
