@@ -32,13 +32,16 @@ param(
     [string]$OSRabbitMQUser,
     [string]$OSRabbitMQPass,
     [string]$OSRabbitMQVHost,
-    [string]$OSInstallDir,
+    [string]$OSInstallDir = 'F:\OutSystems',
     [string]$OSServerVersion,
     [string]$OSServiceStudioVersion
 )
 
-# -- Preference variables
+# -- Script variables
 $ErrorActionPreference = 'Stop'
+$OSDBSACred = New-Object System.Management.Automation.PSCredential ($OSDBSAUser, $(ConvertTo-SecureString $OSDBSAPass -AsPlainText -Force))
+$OSDBLogCred = New-Object System.Management.Automation.PSCredential ($OSDBSALogUser, $(ConvertTo-SecureString $OSDBSALogPass -AsPlainText -Force)) 
+$OSDBSessionCred = New-Object System.Management.Automation.PSCredential ($OSDBSASessionUser, $(ConvertTo-SecureString $OSDBSASessionPass -AsPlainText -Force)) 
 
 # Start PS Logging
 Start-Transcript -Path "$Env:Windir\temp\OutSystemsSetupScript.log" -Append | Out-Null
@@ -122,6 +125,9 @@ switch ($majorVersion)
         Set-OSServerConfig -SettingSection 'LoggingDatabaseConfiguration' -Setting 'RuntimeUser' -Value $OSDBRuntimeUser -ErrorAction Stop | Out-Null
         Set-OSServerConfig -SettingSection 'LoggingDatabaseConfiguration' -Setting 'RuntimePassword' -Value $OSDBRuntimePass -ErrorAction Stop | Out-Null
 
+        # -- Apply the configuration
+        Set-OSServerConfig -Apply -PlatformDBCredential $OSDBSACred -SessionDBCredential $OSDBSessionCred -LogDBCredential $OSDBLogCred -ConfigureCacheInvalidationService -ErrorAction Stop | Out-Null
+
         # -- Configure windows firewall with rabbit
         Set-OSServerWindowsFirewall -IncludeRabbitMQ -ErrorAction Stop | Out-Null
     }
@@ -131,6 +137,9 @@ switch ($majorVersion)
         # **** Logging database ****
         Set-OSServerConfig -SettingSection 'PlatformDatabaseConfiguration' -Setting 'LogUser' -Value $OSDBLogUser -ErrorAction Stop | Out-Null
         Set-OSServerConfig -SettingSection 'PlatformDatabaseConfiguration' -Setting 'LogPassword' -Value $OSDBLogPass -ErrorAction Stop | Out-Null
+
+        # -- Apply the configuration
+        Set-OSServerConfig -Apply -PlatformDBCredential $OSDBSACred -SessionDBCredential $OSDBSessionCred
 
         # -- Configure windows firewall without rabbit
         Set-OSServerWindowsFirewall -ErrorAction Stop | Out-Null
