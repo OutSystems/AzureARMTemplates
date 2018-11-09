@@ -79,6 +79,8 @@ Use this group of templates if you want to deploy OutSystems on an existing virt
 
 - The Azure SQL Server admin username MUST BE different from the VM admin username or the deployment will fail.
 
+- When installing OutSystems 10 leave the Database Log parameter empty.
+
 ### 5. Single Environment
 
 This template deploys an OutSystems environment on a single virtual machine and two Azure SQL databases for the platform database and session database.
