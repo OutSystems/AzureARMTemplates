@@ -7,21 +7,15 @@ The goal is to enable our customers to deploy OutSystems on Microsoft Azure with
 **Features:**
 
 - Supports both OutSystems 10 and 11. You can select which version to install.
-
 - Optional databases. You can chose if you want to create a session database (OutSystems 10 and 11) and/or a log database (OutSystems 11).
-
 - Frontends auto-scalling when using a Virtual Machine Scale Set.
 
 **Notes:**
 
 - All templates assume that you already have a VNET created. You must create a Virtual Network before using this templates.
-
 - Only Microsoft SQL Server and Azure SQL with database authentication is available.
-
 - For performance reasons its highly recommended that you create a separate session database and a log database (OutSystems 11 only).
-
 - When must chose the same major version for the Platform Server and Service Studio.
-
 - All templates will install OutSystems with a 30 days trial license. Please make sure you upload your own license before starting the real development of your apps.
 
 ## Existing Database Server
@@ -69,7 +63,7 @@ Same as the previous template but this time, the frontend server will be deploye
 
 **Notes:**
 
-- The virtual network that you will use must contain at least two subnets. One for the VMs and another for the Azure Application Gateway. The subnet for the Application Gateway must not contain any other resources.
+- The virtual network that you will use for this deployment must contain at least two subnets. One for the VMs and another for the Azure Application Gateway. The subnet for the Application Gateway must not contain any other resources.
 - The trial license included in all templates only allow two frontend servers.
 - To be able to scale to two frontends using the trial license, you need to go to Service Center -> Frontends, and disable the frontend role in the deployment controller server.
 - To scale to more than two frontends, you need to install your own OutSystems license.
@@ -103,7 +97,7 @@ Same as template number five plus a frontend server deployed in a VMSS cluster. 
 
 **Notes:**
 
-- The virtual network that you will use must contain at least two subnets. One for the VMs and another for the Azure Application Gateway. The subnet for the Application Gateway must not contain any other resources.
+- The virtual network that you will use for this deployment must contain at least two subnets. One for the VMs and another for the Azure Application Gateway. The subnet for the Application Gateway must not contain any other resources.
 - The trial license included in all templates only allow two frontend servers.
 - To be able to scale to two frontends using the trial license, you need to go to Service Center -> Frontends, and disable the frontend role in the deployment controller server.
 - To scale to more than two frontends, you need to install your own OutSystems license.
