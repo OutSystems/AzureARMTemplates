@@ -84,6 +84,13 @@
                 "description": "The OutSystems session database name."
             }
         },
+        "databaseLog": {
+            "type": "string",
+            "defaultValue": " ",
+            "metadata": {
+                "description": "The OutSystems log database name. This is only appliable to OutSystems 11. If this value is empty the log database will be the platform database."
+            }
+        },
         "outsystemsServerVersion": {
             "type": "string",
             "defaultValue": "10.0.904.0",
@@ -185,6 +192,29 @@
             }
         },
         {
+            "name": "[concat(parameters('virtualMachineName'), '.Outsystems.AzureSQLDatabase.Log')]",
+            "apiVersion": "2015-01-01",
+            "condition": "[not(empty(trim(parameters('databaseLog'))))]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'resources/sqlServerDatabase.json')]"
+                },
+                "parameters": {
+                    "serverName": {
+                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLServer')).outputs.serverName.value]"
+                    },
+                    "databaseName": {
+                        "value": "[parameters('databaseLog')]"
+                    },
+                    "databaseSKU": {
+                        "value": "[parameters('databaseSKU')]"
+                    }
+                }
+            }
+        },
+        {
             "name": "[concat(parameters('virtualMachineName'), '.Outsystems.AzureSQLServer.FirewallRule')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
@@ -254,9 +284,6 @@
                         "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.VirtualMachine')).outputs.virtualMachineName.value]"
                     },
                     "OSDBServer": {
-                        "value": "[concat(reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLServer')).outputs.serverName.value, '.database.windows.net')]"
-                    },
-                    "OSDBSessionServer": {
                         "value": "[concat(reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.AzureSQLServer')).outputs.serverName.value, '.database.windows.net')]"
                     },
                     "OSDBCatalog": {
