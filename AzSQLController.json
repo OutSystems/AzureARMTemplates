@@ -125,8 +125,8 @@
         }
     },
     "variables": {
-        "logCatalogDepName": "[if(empty(trim(parameters('databaseLog'))), '.Outsystems.AzureSQLDatabase.Platform', '.Outsystems.AzureSQLDatabase.Session')]",
-        "sessionCatalogDepName": "[if(empty(trim(parameters('databaseSession'))), '.Outsystems.AzureSQLDatabase.Platform', '.Outsystems.AzureSQLDatabase.Log')]"
+        "logCatalogDepName": "[if(empty(trim(parameters('databaseLog'))), '.Outsystems.AzureSQLDatabase.Platform', '.Outsystems.AzureSQLDatabase.Log')]",
+        "sessionCatalogDepName": "[if(empty(trim(parameters('databaseSession'))), '.Outsystems.AzureSQLDatabase.Platform', '.Outsystems.AzureSQLDatabase.Session')]"
     },
     "resources": [
         {
