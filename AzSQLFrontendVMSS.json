@@ -100,12 +100,19 @@
             "type": "string",
             "defaultValue": "osSession",
             "metadata": {
-                "description": "The OutSystems session database name."
+                "description": "The OutSystems session database name. If not specified, defaults to the database platform."
+            }
+        },
+        "databaseLog": {
+            "type": "string",
+            "defaultValue": " ",
+            "metadata": {
+                "description": "The OutSystems log database name. If not specified, defaults to the database platform. This is only appliable to OutSystems 11. Leave this setting empty when deploying OutSystems 10."
             }
         },
         "outsystemsServerVersion": {
             "type": "string",
-            "defaultValue": "10.0.904.0",
+            "defaultValue": "11.0.108.0",
             "allowedValues": [
                 "11.0.108.0",
                 "10.0.904.0",
@@ -120,7 +127,7 @@
         },
         "outsystemsServiceStudioVersion": {
             "type": "string",
-            "defaultValue": "10.0.906.0",
+            "defaultValue": "11.0.109.0",
             "allowedValues": [
                 "11.0.109.0",
                 "10.0.906.0",
@@ -137,10 +144,12 @@
         }
     },
     "variables": {
+        "databaseLog": "[if(empty(trim(parameters('databaseLog'))), parameters('databasePlatform'), parameters('databaseLog'))]",
+        "databaseSession": "[if(empty(trim(parameters('databaseSession'))), parameters('databasePlatform'), parameters('databaseSession'))]"
     },
     "resources": [
         {
-            "name": "[concat(parameters('virtualMachineName'), '.Outsystems.ProdEnvironment')]",
+            "name": "[concat('OutSystems.DC.', parameters('virtualMachineName'))]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -186,7 +195,10 @@
                         "value": "[parameters('databasePlatform')]"
                     },
                     "databaseSession": {
-                        "value": "[parameters('databaseSession')]"
+                        "value": "[variables('databaseSession')]"
+                    },
+                    "databaseLog": {
+                        "value": "[variables('databaseLog')]"
                     },
                     "outsystemsServerVersion": {
                         "value": "[trim(parameters('outsystemsServerVersion'))]"
@@ -198,13 +210,13 @@
             }
         },
         {
-            "name": "[concat(parameters('vmssName'), '.Outsystems.ProdEnvironmentFEVMSS')]",
+            "name": "[concat('OutSystems.FEVMSS.', parameters('vmssName'), '.VirtualMachineScaleSet')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(deployment().properties.templateLink.uri, 'Resources/virtualMachineScaleSets.json')]"
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'resources/virtualMachineScaleSets.json')]"
                     
                 },
                 "parameters": {
@@ -236,7 +248,7 @@
             }
         },
         {
-            "name": "[concat(parameters('vmssName'), '.Outsystems.ProdEnvironmentFE')]",
+            "name": "[concat('OutSystems.FEVMSS.', parameters('vmssName'), '.FrontendRole')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -246,31 +258,25 @@
                 },
                 "parameters": {
                     "resourceName": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',concat(parameters('vmssName'), '.Outsystems.ProdEnvironmentFEVMSS'))).outputs.vmssName.value]"
-                    },
-                    "OSDBProvider": {
-                        "value": "AzureSQL"
-                    },
-                    "OSDBAuth": {
-                        "value": "SQL"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.FEVMSS.', concat(parameters('vmssName'), '.VirtualMachineScaleSet'))).outputs.vmssName.value]"
                     },
                     "OSDBServer": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',concat(parameters('virtualMachineName'), '.Outsystems.ProdEnvironment'))).outputs.sqlServerNameFQDN.value]"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', concat(parameters('virtualMachineName')))).outputs.sqlServerNameFQDN.value]"
                     },
                     "OSDBCatalog": {
                         "value": "[parameters('databasePlatform')]"
+                    },
+                    "OSDBSessionCatalog": {
+                        "value": "[variables('databaseSession')]"
+                    },
+                    "OSDBLogCatalog": {
+                        "value": "[variables('databaseLog')]"
                     },
                     "OSDBSAUser": {
                         "value": "[parameters('databaseAdministratorLogin')]"
                     },
                     "OSDBSAPass": {
                         "value": "[parameters('databaseAdministratorPass')]"
-                    },
-                    "OSDBSessionServer": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',concat(parameters('virtualMachineName'), '.Outsystems.ProdEnvironment'))).outputs.sqlServerNameFQDN.value]"
-                    },
-                    "OSDBSessionCatalog": {
-                        "value": "[parameters('databaseSession')]"
                     },
                     "OSDBSessionPass": {
                         "value": "[parameters('adminPassword')]"
@@ -285,38 +291,47 @@
                         "value": "[parameters('adminPassword')]"
                     },
                     "OSController": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',concat(parameters('virtualMachineName'), '.Outsystems.ProdEnvironment'))).outputs.virtualMachineName.value]"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', concat(parameters('virtualMachineName')))).outputs.virtualMachineName.value]"
                     },
                     "OSPrivateKey": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',concat(parameters('virtualMachineName'), '.Outsystems.ProdEnvironment'))).outputs.privatekey.value]"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', concat(parameters('virtualMachineName')))).outputs.privatekey.value]"
+                    },
+                    "OSRabbitMQUser": {
+                        "value": "[parameters('adminUsername')]"
+                    },
+                    "OSRabbitMQPass": {
+                        "value": "[parameters('adminPassword')]"
                     },
                     "OSServerVersion": {
                         "value": "[trim(parameters('outsystemsServerVersion'))]"
                     },
                     "OSServiceStudioVersion": {
                         "value": "[trim(parameters('outsystemsServiceStudioVersion'))]"
+                    },
+                    "_artifactsLocation": {
+                        "value": "[deployment().properties.templateLink.uri]"
                     }
                 }
             }
         },
         {
-            "name": "[concat(parameters('virtualMachineName'), '.Outsystems.AzureSQLServer.FirewallRule')]",
+            "name": "[concat('OutSystems.FEVMSS.', parameters('vmssName'), '.AzureSQLServer.FirewallRule')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(deployment().properties.templateLink.uri, 'Resources/sqlServerFirewallRule.json')]"
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'resources/sqlServerFirewallRule.json')]"
                 },
                 "parameters": {
                     "serverName": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('virtualMachineName'),'.Outsystems.ProdEnvironment')).outputs.sqlServerName.value]"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('virtualMachineName'))).outputs.sqlServerName.value]"
                     },
                     "ruleName": {
                         "value": "AllowLBPublicIP"
                     },
                     "ipAddress": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('vmssName'),'.Outsystems.ProdEnvironmentFEVMSS')).outputs.loadbalancerPIP.value]"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.FEVMSS.', parameters('vmssName'),'.VirtualMachineScaleSet')).outputs.loadbalancerPIP.value]"
                     }
                 }
             }
