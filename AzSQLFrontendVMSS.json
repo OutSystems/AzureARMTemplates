@@ -254,7 +254,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(deployment().properties.templateLink.uri, 'CommonTemplates/outsystemsFrontendVMSS.json')]"
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'outsystemsSetup/outsystemsFrontendVMSS.json')]"
                 },
                 "parameters": {
                     "resourceName": {
