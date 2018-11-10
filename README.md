@@ -6,14 +6,14 @@ The goal is to enable our customers to deploy OutSystems on Microsoft Azure with
 
 **Features:**
 
-- Supports both OutSystems 10 and 11. You can select which version to install.
-- Optional databases. You can chose if you want to create a session database (OutSystems 10 and 11) and/or a log database (OutSystems 11).
-- Frontends auto-scalling when using a Virtual Machine Scale Set.
+- Support for OutSystems 10 and 11.
+- Optional catalogs. You can chose if you want to create a session database (OutSystems 10 and 11) and/or a log database (OutSystems 11).
+- Frontends manual and auto-scalling when using a Virtual Machine Scale Set.
 
 **Notes:**
 
 - All templates assume that you already have a VNET created. You must create a Virtual Network before using this templates.
-- Only Microsoft SQL Server and Azure SQL with database authentication is available.
+- Only Microsoft SQL Server and Azure SQL with database authentication is supported.
 - For performance reasons its highly recommended that you create a separate session database and a log database (OutSystems 11 only).
 - When must chose the same major version for the Platform Server and Service Studio.
 - All templates will install OutSystems with a 30 days trial license. Please make sure you upload your own license before starting the real development of your apps.
