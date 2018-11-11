@@ -7,7 +7,7 @@ The goal is to enable our customers to deploy OutSystems on Microsoft Azure with
 **Features:**
 
 - Support for OutSystems 10 and 11.
-- Optional catalogs. You may chose to create a separate session (OutSystems 10 and 11) and/or log catalogs (OutSystems 11 only). For performance reasons its highly recommended to create separate session and log catalogs.
+- Catalogs configuration. You can configure the session catalog (OutSystems 10 and 11) and the log catalog (OutSystems 11 only). For performance reasons its highly recommended to create separate session and log catalogs.
 - Frontends in a Virtual Machine Scale Set for manual and auto-scale.
 - Deploy OutSystems on your own Virtual Network.
 
@@ -16,11 +16,11 @@ The goal is to enable our customers to deploy OutSystems on Microsoft Azure with
 - 
 - Only Microsoft SQL Server and Azure SQL with database authentication is supported.
 - You must chose the same major version for the Platform Server and Service Studio.
-- 30 days trial license to test OutSystems on Azure. Make sure you upload your own license before starting to develop real apps.
+- A 30 days trial license to test OutSystems on Azure. Make sure you upload your own license before starting to develop real apps.
 
 ## Existing Database Server
 
-Use this group of templates to deploy OutSystems on an existing database server.
+Use this group of templates to deploy OutSystems in an existing database server.
 
 Check if the virtual network has network connectivity to the database server before starting the deployment.
 
