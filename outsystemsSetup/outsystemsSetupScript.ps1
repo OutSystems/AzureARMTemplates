@@ -70,7 +70,33 @@ Test-OSServerSoftwareReqs -MajorVersion $majorVersion -ErrorAction Stop | Out-Nu
 Install-OSServerPreReqs -MajorVersion "$(([System.Version]$OSServerVersion).Major).$(([System.Version]$OSServerVersion).Minor)" -ErrorAction Stop | Out-Null
 
 # -- Download and install OS Server and Dev environment from repo
-Install-OSServer -Version $OSServerVersion -InstallDir $OSInstallDir -ErrorAction Stop | Out-Null
+switch ($OSRole)
+{
+    'DC'
+    {
+        Install-OSServer -Version $OSServerVersion -InstallDir $OSInstallDir -ErrorAction Stop | Out-Null
+    }
+    'FE'
+    {
+        switch ($majorVersion)
+        {
+            '11.0'
+            {
+                Install-OSServer -Version $OSServerVersion -InstallDir $OSInstallDir -SkipRabbitMQ -ErrorAction Stop | Out-Null
+            }
+            '10.0'
+            {
+                Install-OSServer -Version $OSServerVersion -InstallDir $OSInstallDir -ErrorAction Stop | Out-Null
+            }
+        }
+        Get-Service -Name "OutSystems Deployment Controller Service" | Stop-Service -WarningAction SilentlyContinue | Out-Null
+        Set-Service -Name "OutSystems Deployment Controller Service" -StartupType "Disabled" | Out-Null
+    }
+    'LT'
+    {
+        # TODO: Install the lifetime installer
+    }
+}
 Install-OSServiceStudio -Version $OSServiceStudioVersion -InstallDir $OSInstallDir -ErrorAction Stop | Out-Null
 
 # -- Disable IPv6
@@ -149,18 +175,7 @@ switch ($majorVersion)
 }
 
 # -- If this is a frontend, disable the controller service and wait for the service center to be published by the controller before running the system tunning
-if ($OSRole -eq "FE")
-{
-    Get-Service -Name "OutSystems Deployment Controller Service" | Stop-Service -WarningAction SilentlyContinue | Out-Null
-    Set-Service -Name "OutSystems Deployment Controller Service" -StartupType "Disabled" | Out-Null
-
-    while (-not $(Get-OSServerVersion -ErrorAction SilentlyContinue))
-    {
-        Start-Sleep -s 15
-    }
-    Start-Sleep -s 15
-}
-else
+if ($OSRole -ne "FE")
 {
     # -- If not a frontend install Service Center, SysComponents and license
     Install-OSPlatformServiceCenter | Out-Null
