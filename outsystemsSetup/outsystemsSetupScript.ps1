@@ -154,8 +154,17 @@ switch ($majorVersion)
         Set-OSServerConfig -SettingSection 'LoggingDatabaseConfiguration' -Setting 'RuntimePassword' -Value $OSDBRuntimePass -ErrorAction Stop | Out-Null
 
         # -- Apply the configuration
-        Set-OSServerConfig -Apply -PlatformDBCredential $OSDBSACred -SessionDBCredential $OSDBSessionCred -LogDBCredential $OSDBLogCred -ConfigureCacheInvalidationService -ErrorAction Stop | Out-Null
-
+        switch ($OSRole)
+        {
+            {$_ -in 'DC','LT'}
+            {
+                Set-OSServerConfig -Apply -PlatformDBCredential $OSDBSACred -SessionDBCredential $OSDBSessionCred -LogDBCredential $OSDBLogCred -ConfigureCacheInvalidationService -ErrorAction Stop | Out-Null
+            }
+            'FE'
+            {
+                Set-OSServerConfig -Apply -PlatformDBCredential $OSDBSACred -SessionDBCredential $OSDBSessionCred -LogDBCredential $OSDBLogCred -ErrorAction Stop | Out-Null
+            }
+        }
         # -- Configure windows firewall with rabbit
         Set-OSServerWindowsFirewall -IncludeRabbitMQ -ErrorAction Stop | Out-Null
     }
