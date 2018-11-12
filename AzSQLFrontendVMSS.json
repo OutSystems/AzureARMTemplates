@@ -143,10 +143,6 @@
             }
         }
     },
-    "variables": {
-        "databaseLog": "[if(empty(trim(parameters('databaseLog'))), parameters('databasePlatform'), parameters('databaseLog'))]",
-        "databaseSession": "[if(empty(trim(parameters('databaseSession'))), parameters('databasePlatform'), parameters('databaseSession'))]"
-    },
     "resources": [
         {
             "name": "[concat('OutSystems.DC.', parameters('virtualMachineName'))]",
@@ -267,10 +263,10 @@
                         "value": "[parameters('databasePlatform')]"
                     },
                     "OSDBSessionCatalog": {
-                        "value": "[variables('databaseSession')]"
+                        "value": "[parameters('databaseSession')]"
                     },
                     "OSDBLogCatalog": {
-                        "value": "[variables('databaseLog')]"
+                        "value": "[parameters('databaseLog')]"
                     },
                     "OSDBSAUser": {
                         "value": "[parameters('databaseAdministratorLogin')]"
