@@ -195,10 +195,10 @@
                         "value": "[parameters('databasePlatform')]"
                     },
                     "databaseSession": {
-                        "value": "[variables('databaseSession')]"
+                        "value": "[parameters('databaseSession')]"
                     },
                     "databaseLog": {
-                        "value": "[variables('databaseLog')]"
+                        "value": "[parameters('databaseLog')]"
                     },
                     "outsystemsServerVersion": {
                         "value": "[trim(parameters('outsystemsServerVersion'))]"
