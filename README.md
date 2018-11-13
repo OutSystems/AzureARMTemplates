@@ -16,6 +16,7 @@ The goal is to enable our customers to deploy OutSystems on Microsoft Azure with
 
 - Only Microsoft SQL Server and Azure SQL with database authentication is supported.
 - You must chose the same major version for the Platform Server and Service Studio.
+- On OutSystems 11, the RabbitMQ user and password is the virtual machine admin user and password.
 
 ## Existing Database Server
 
