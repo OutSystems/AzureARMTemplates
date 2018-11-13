@@ -48,7 +48,7 @@ Start-Transcript -Path "$Env:Windir\temp\OutSystemsSetupScript.log" -Append | Ou
 
 # -- Import module from Powershell Gallery
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force | Out-Null
-Install-Module -Name Outsystems.SetupTools -Force | Out-Null
+Install-Module -Name Outsystems.SetupTools -RequiredVersion 2.3.0.0 -Force | Out-Null
 Import-Module -Name Outsystems.SetupTools -ArgumentList $true, 'AzureRM' | Out-Null
 
 # -- Script variables
