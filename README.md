@@ -10,19 +10,18 @@ The goal is to enable our customers to deploy OutSystems on Microsoft Azure with
 - Catalogs configuration. You can configure the session catalog (OutSystems 10 and 11) and the log catalog (OutSystems 11 only). For performance reasons its highly recommended to create separate session and log catalogs.
 - Frontends in a Virtual Machine Scale Set for manual and auto-scale.
 - Deploy OutSystems on your own Virtual Network.
+- A 30 days trial license to test OutSystems on Azure. Make sure you upload your own license before starting to develop real apps.
 
 **Notes:**
 
-- 
 - Only Microsoft SQL Server and Azure SQL with database authentication is supported.
 - You must chose the same major version for the Platform Server and Service Studio.
-- A 30 days trial license to test OutSystems on Azure. Make sure you upload your own license before starting to develop real apps.
 
 ## Existing Database Server
 
 Use this group of templates to deploy OutSystems in an existing database server.
 
-Check if the virtual network has network connectivity to the database server before starting the deployment.
+You should check if the virtual network has network connectivity to the database server before starting the deployment.
 
 ### 1. Single Environment
 
@@ -64,8 +63,13 @@ Same as the previous template but this time, the frontend server will be deploye
 **Notes:**
 
 - The virtual network for this deployment must contain at least two subnets. One for the VMs and another for the Azure Application Gateway. The subnet for the Application Gateway must not contain any other resources.
-- The trial license included in the templates only allow two frontend servers. But to scale to two frontends you need to go to Service Center -> Frontends, and disable the frontend role in the deployment controller server.
+- The trial license included in the templates only allows two frontend servers including the deployment controller. To scale to two frontends using the Virtual Machine Scale Set you need to go to Service Center -> Frontends, and disable the frontend role of the deployment controller server.
 - To scale to more than two frontends you need to install your own OutSystems license.
+- IMPORTANT: When the Virtual Machine Scale Set is scalling up, it needs access to the "outsystemsSetup\OutSystemsSetupScript.ps1" file in this repository. So you should not block internet access to the VMSS.
+- Since we are always adding new features to this templates and we don't guarantee backward compatibility the safest way is to:
+  - Fork this repository.
+  - Copy the script to a location that you control. Example: Azure Storage Account, your own github repository, etc etc ...
+  - Edit the outsystemsFrontendVMSS.json template and specify the new file http location by editing the "fileUris" parameter "value".
 
 ## Azure SQL
 
@@ -96,10 +100,18 @@ Single environment with a frontend server deployed in a VMSS cluster. This enabl
 
 **Notes:**
 
-- The virtual network used for this deployment must contain at least two subnets. One for the VMs and another for the Azure Application Gateway. The subnet for the Application Gateway must not contain any other resources.
-- The trial license included in all templates only allow two frontend servers.
-- To be able to scale to two frontends using the trial license, you need to go to Service Center -> Frontends, and disable the frontend role in the deployment controller server.
-- To scale to more than two frontends, you need to install your own OutSystems license.
+- The virtual network for this deployment must contain at least two subnets. One for the VMs and another for the Azure Application Gateway. The subnet for the Application Gateway must not contain any other resources.
+- The trial license included in the templates only allows two frontend servers including the deployment controller. To scale to two frontends using the Virtual Machine Scale Set you need to go to Service Center -> Frontends, and disable the frontend role of the deployment controller server.
+- To scale to more than two frontends you need to install your own OutSystems license.
+- IMPORTANT: When the Virtual Machine Scale Set is scalling up, it needs access to the "outsystemsSetup\OutSystemsSetupScript.ps1" file in this repository. So you should not block internet access to the VMSS.
+- Since we are always adding new features to this templates and we don't guarantee backward compatibility the safest way is to:
+  - Fork this repository.
+  - Copy the script to a location that you control. Example: Azure Storage Account, your own github repository, etc etc ...
+  - Edit the outsystemsFrontendVMSS.json template and specify the new file http location by editing the "fileUris" parameter "value".
+
+### 7. Single Environment + Containers
+
+For a single environment on Azure Container Service with Kubernetes checkout [this](https://github.com/OutSystems/Containers-ACS-AzDevOps) repo.
 
 ## Full stack on Azure SQL
 
