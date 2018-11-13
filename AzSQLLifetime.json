@@ -264,13 +264,13 @@
             }
         },
         {
-            "name": "[concat('OutSystems.DC.', parameters('virtualMachineName'), '.ControllerRole')]",
+            "name": "[concat('OutSystems.DC.', parameters('virtualMachineName'), '.LifetimeRole')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(deployment().properties.templateLink.uri, 'outsystemsSetup/outsystemsController.json')]"
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'outsystemsSetup/outsystemsLifetime.json')]"
                 },
                 "parameters": {
                     "resourceName": {
@@ -344,7 +344,7 @@
         },
         "privateKey": {
             "type": "string",
-            "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('virtualMachineName'), '.ControllerRole')).outputs.message.value]"
+            "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('virtualMachineName'), '.LifetimeRole')).outputs.message.value]"
         }
     }
 }
