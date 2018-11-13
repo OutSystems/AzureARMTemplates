@@ -3,85 +3,157 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "virtualMachineName": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "Name of the deployment controller virtual machine."
+            }
         },
         "virtualMachineSize": {
             "type": "string",
+            "metadata": {
+                "description": "Size of the deployment controller virtual machine."
+            },
             "defaultValue": "Standard_D2s_v3"
         },
         "adminUsername": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "Admin username of all Windows VMs."
+            }
         },
         "adminPassword": {
-            "type": "securestring"
+            "type": "securestring",
+            "metadata": {
+                "description": "Admin password of all Windows VMs."
+            }
         },
         "virtualNetworkResourceGroup": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "The Resource Group where the existing virtual network (VNET) is located."
+            }
         },
         "virtualNetworkName": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "The name of the existing virtual network (VNET)."
+            }
         },
         "virtualNetworkSubnetName": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "The subnet where you want to deploy the deployment controller virtual machine."
+            }
+        },
+        "databasePlatformServer": {
+            "type": "string",
+            "metadata": {
+                "description": "The SQL Server hostname/IP for the platform database."
+            }
+        },
+        "databaseSessionServer": {
+            "type": "string",
+            "metadata": {
+                "description": "The SQL Server hostname/IP for the session database. If not specified, defaults to the SQL Server of the platform database."
+            }
+        },
+        "databaseLogServer": {
+            "type": "string",
+            "metadata": {
+                "description": "The SQL Server hostname/IP for the session database. If not specified, defaults to the SQL Server of the platform database. This is only appliable to OutSystems 11."
+            }
         },
         "databaseAdministratorLogin": {
             "type": "string",
+            "metadata": {
+                "description": "The SQL Server administrator login."
+            },
             "defaultValue": "sa"
         },
         "databaseAdministratorPass": {
-            "type": "securestring"
-        },
-        "databasePlatformServer": {
-            "type": "string"
-        },
-        "databaseSessionServer": {
-            "type": "string"
-        },
-        "databaseLogServer": {
-            "type": "string"
+            "type": "securestring",
+            "metadata": {
+                "description": "The SQL Server administrator login password."
+            }
         },
         "databasePlatformCatalog": {
             "type": "string",
-            "defaultValue": "outsystems"
+            "defaultValue": "outsystems",
+            "metadata": {
+                "description": "Name of the platform catalog."
+            }
         },
         "databaseSessionCatalog": {
             "type": "string",
-            "defaultValue": "osSession"
+            "defaultValue": "osSession",
+            "metadata": {
+                "description": "Name of the session catalog. Is not specified, default to the platform catalog."
+            }
         },
         "databaseLogCatalog": {
             "type": "string",
-            "defaultValue": " "
+            "defaultValue": " ",
+            "metadata": {
+                "description": "Name of the log catalog. Is not specified, default to the platform catalog. This is only appliable to OutSystems 11."
+            }
         },
         "outsystemsDatabaseAdminUser": {
             "type": "string",
-            "defaultValue": "OSADMIN"
+            "defaultValue": "OSADMIN",
+            "metadata": {
+                "description": "Name of the user that is the owner of OutSystems metamodel tables."
+            }
         },
         "outsystemsDatabaseAdminPass": {
-            "type": "securestring"
+            "type": "securestring",
+            "metadata": {
+                "description": "Password of the user that is the owner of OutSystems metamodel tables."
+            }
         },
         "outsystemsDatabaseRuntimeUser": {
             "type": "string",
-            "defaultValue": "OSRUNTIME"
+            "defaultValue": "OSRUNTIME",
+            "metadata": {
+                "description": "Name of the user that is the owner of tables created in the development environment."
+            }
         },
         "outsystemsDatabaseRuntimePass": {
-            "type": "securestring"
+            "type": "securestring",
+            "metadata": {
+                "description": "Password of the user that is the owner of tables created in the development environment."
+            }
         },
         "outsystemsDatabaseLogUser": {
             "type": "string",
-            "defaultValue": "OSLOG"
+            "defaultValue": "OSLOG",
+            "metadata": {
+                "description": "Name of the user that is the owner of logging tables."
+            }
         },
         "outsystemsDatabaseLogPass": {
-            "type": "securestring"
+            "type": "securestring",
+            "metadata": {
+                "description": "Password of the user that is the owner of logging tables."
+            }
         },
         "outsystemsDatabaseSessionUser": {
             "type": "string",
-            "defaultValue": "OSSTATE"
+            "defaultValue": "OSSTATE",
+            "metadata": {
+                "description": "Name of the user that is the owner of OutSystems session tables."
+            }
         },
         "outsystemsDatabaseSessionPass": {
-            "type": "securestring"
+            "type": "securestring",
+            "metadata": {
+                "description": "Password of the user that is the owner of OutSystems session tables."
+            }
         },
         "outsystemsEnvironmentPrivatekey": {
             "type": "string",
+            "metadata": {
+                "description": "Environment private key. If not specified a random one will be generated."
+            },
             "defaultValue": " "
         },
         "outsystemsServerVersion": {
