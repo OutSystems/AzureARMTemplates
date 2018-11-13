@@ -30,8 +30,6 @@ This template deploys a single OutSystems environment on a virtual machine.
 
 Template settings:
 
-![SingleEnv](https://raw.githubusercontent.com/OutSystems/AzureARMTemplates/master/media/Controller.PNG)
-
 [![SingleEnv](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fmaster%2FController.json)
 
 **Notes:**
