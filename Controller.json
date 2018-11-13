@@ -53,12 +53,14 @@
         },
         "databaseSessionServer": {
             "type": "string",
+            "defaultValue": " ",
             "metadata": {
                 "description": "The SQL Server hostname/IP for the session database. If not specified, defaults to the SQL Server of the platform database."
             }
         },
         "databaseLogServer": {
             "type": "string",
+            "defaultValue": " ",
             "metadata": {
                 "description": "The SQL Server hostname/IP for the session database. If not specified, defaults to the SQL Server of the platform database. This is only appliable to OutSystems 11."
             }
