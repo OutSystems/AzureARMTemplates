@@ -30,9 +30,9 @@ This template deploys a single OutSystems environment on a virtual machine.
 
 Template settings:
 
-![SingleEnv](https://raw.githubusercontent.com/OutSystems/AzureARMTemplates/dev/media/Controller.PNG)
+![SingleEnv](https://raw.githubusercontent.com/OutSystems/AzureARMTemplates/master/media/Controller.PNG)
 
-[![SingleEnv](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fdev%2FController.json)
+[![SingleEnv](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fmaster%2FController.json)
 
 **Notes:**
 
@@ -42,13 +42,13 @@ Template settings:
 
 Same as the previous template but for a Lifetime environment.
 
-[![Lifetime](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fdev%2FLifetime.json)
+[![Lifetime](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fmaster%2FLifetime.json)
 
 ### 3. Frontend Server
 
 Deploys a single OutSystems frontend server for an existing environment.
 
-[![Frontend](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fdev%2FFrontend.json)
+[![Frontend](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fmaster%2FFrontend.json)
 
 **Notes:**
 
@@ -59,7 +59,7 @@ Deploys a single OutSystems frontend server for an existing environment.
 
 Same as the previous template but this time, the frontend server will be deployed in a Virtual Machine Scale Set. This enables scaling/auto-scaling of the frontends.
 
-[![FrontendVMSS](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fdev%2FFrontendVMSS.json)
+[![FrontendVMSS](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fmaster%2FFrontendVMSS.json)
 
 **Notes:**
 
@@ -85,20 +85,20 @@ Use this group of templates to deploy OutSystems on Azure SQL.
 
 This template deploys an OutSystems environment on a virtual machine on Azure SQL.
 
-[![AzSQLController](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fdev%2FAzSQLController.json)
+[![AzSQLController](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fmaster%2FAzSQLController.json)
 
 ### 6. Lifetime Environment
 
 Same as the previous template but for the Lifetime environment.
 
-[![AzSQLLifetime](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fdev%2FAzSQLLifetime.json)
+[![AzSQLLifetime](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fmaster%2FAzSQLLifetime.json)
 
 ### 7. Single Environment + Frontend Server in a Virtual Machine Scale Set
 
 Single environment with a frontend server deployed in a VMSS cluster. This enables scaling/auto-scaling of the frontends (ideal for production environments).
 
-![AzSQLVMSS](https://raw.githubusercontent.com/OutSystems/AzureARMTemplates/dev/media/AzSQLVMSS1.PNG)
-[![AzSQLFrontendVMSS](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fdev%2FAzSQLFrontendVMSS.json)
+![AzSQLVMSS](https://raw.githubusercontent.com/OutSystems/AzureARMTemplates/master/media/AzSQLVMSS1.PNG)
+[![AzSQLFrontendVMSS](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fmaster%2FAzSQLFrontendVMSS.json)
 
 **Notes:**
 
@@ -115,7 +115,7 @@ Single environment with a frontend server deployed in a VMSS cluster. This enabl
 
 For environments with OutSystems 11 on Azure Container Service (ACS) with Kubernetes checkout [our github](https://github.com/OutSystems/Containers-ACS-AzDevOps) repo.
 
-![ACS](https://raw.githubusercontent.com/OutSystems/AzureARMTemplates/dev/media/ACS.PNG)
+![ACS](https://raw.githubusercontent.com/OutSystems/AzureARMTemplates/master/media/ACS.PNG)
 
 ## Full stack on Azure SQL
 
