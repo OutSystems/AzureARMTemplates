@@ -114,6 +114,8 @@ Single environment with a frontend server deployed in a VMSS cluster. This enabl
 
 For environments with OutSystems 11 on Azure Container Service (ACS) with Kubernetes checkout [our github](https://github.com/OutSystems/Containers-ACS-AzDevOps) repo.
 
+![ACS](https://raw.githubusercontent.com/OutSystems/AzureARMTemplates/dev/media/ACS.PNG)
+
 ## Full stack on Azure SQL
 
 For a full stack with Dev, Test, Prod and Lifetime environments deployed on a new VNET with Azure SQL as the database engine, use our [Azure Marketplace template](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/outsystems.outsystems_platform?tab=Overview).
