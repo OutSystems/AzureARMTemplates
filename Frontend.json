@@ -199,7 +199,7 @@
     "variables": {},
     "resources": [
         {
-            "name": "[concat('OutSystems.DC.', parameters('virtualMachineName'), '.VirtualMachine')]",
+            "name": "[concat('OutSystems.FE.', parameters('virtualMachineName'), '.VirtualMachine')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -233,17 +233,17 @@
             }
         },
         {
-            "name": "[concat('OutSystems.DC.', parameters('virtualMachineName'), '.FrontendRole')]",
+            "name": "[concat('OutSystems.FE.', parameters('virtualMachineName'), '.FrontendRole')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(deployment().properties.templateLink.uri, 'outsystemsSetup/outsystemsController.json')]"
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'outsystemsSetup/outsystemsFrontend.json')]"
                 },
                 "parameters": {
                     "resourceName": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('virtualMachineName'), '.VirtualMachine')).outputs.virtualMachineName.value]"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.FE.', parameters('virtualMachineName'), '.VirtualMachine')).outputs.virtualMachineName.value]"
                     },
                     "OSDBServer": {
                         "value": "[parameters('databasePlatformServer')]"
