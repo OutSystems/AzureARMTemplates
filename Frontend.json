@@ -233,7 +233,7 @@
             }
         },
         {
-            "name": "[concat('OutSystems.DC.', parameters('virtualMachineName'), '.ControllerRole')]",
+            "name": "[concat('OutSystems.DC.', parameters('virtualMachineName'), '.FrontendRole')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {

@@ -3,131 +3,224 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "vmssName": {
-            "type": "string"
-        },
-        "virtualMachineSize": {
             "type": "string",
+            "metadata": {
+                "description": "Name of the Virtual Machine Scale Set."
+            }
+        },
+        "vmssVirtualMachineSize": {
+            "type": "string",
+            "metadata": {
+                "description": "Size of the virtual machines of the Virtual Machine Scale Set."
+            },
             "defaultValue": "Standard_D2s_v3"
         },
-        "instanceCount": {
-            "type": "int",
-            "defaultValue": 1
-        },
         "adminUsername": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "Admin username of all Windows VMs."
+            }
         },
         "adminPassword": {
-            "type": "securestring"
+            "type": "securestring",
+            "metadata": {
+                "description": "Admin password of all Windows VMs."
+            }
         },
         "virtualNetworkResourceGroup": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "The Resource Group where the existing virtual network (VNET) is located."
+            }
         },
         "virtualNetworkName": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "The name of the existing virtual network (VNET)."
+            }
         },
         "virtualNetworkSubnetName": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "The subnet where you want to deploy the deployment controller virtual machine."
+            }
         },
         "applicationGatewayVirtualNetworkSubnetName": {
-            "type": "string"
-        },
-        "databaseProvider": {
             "type": "string",
-            "allowedValues": [
-                "SQL",
-                "SQLExpress",
-                "AzureSQL"
-            ]
+            "metadata": {
+                "description": "The subnet for the Application Gateway. This subnet must be dedicated to Application Gateways and cannot contain any other resources."
+            }
         },
-        "databaseServer": {
-            "type": "string"
-        },
-        "databaseCatalog": {
+        "databasePlatformServer": {
             "type": "string",
-            "defaultValue": "outsystems"
-        },
-        "databaseAuthenticationType": {
-            "type": "string",
-            "allowedValues": [
-                "SQL",
-                "Windows"
-            ]
-        },
-        "databaseAdminUser": {
-            "type": "string",
-            "defaultValue": "sa"
-        },
-        "databaseAdminPass": {
-            "type": "securestring"
-        },
-        "OutsystemsDatabaseAdminUser": {
-            "type": "string",
-            "defaultValue": "OSADMIN"
-        },
-        "OutsystemsDatabaseAdminPass": {
-            "type": "securestring"
-        },
-        "OutsystemsDatabaseRuntimeUser": {
-            "type": "string",
-            "defaultValue": "OSRUNTIME"
-        },
-        "OutsystemsDatabaseRuntimePass": {
-            "type": "securestring"
-        },
-        "OutsystemsDatabaseLogUser": {
-            "type": "string",
-            "defaultValue": "OSLOG"
-        },
-        "OutsystemsDatabaseLogPass": {
-            "type": "securestring"
+            "metadata": {
+                "description": "The SQL Server hostname/IP for the platform database."
+            }
         },
         "databaseSessionServer": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": " ",
+            "metadata": {
+                "description": "The SQL Server hostname/IP for the session database. If not specified, defaults to the SQL Server of the platform database."
+            }
+        },
+        "databaseLogServer": {
+            "type": "string",
+            "defaultValue": " ",
+            "metadata": {
+                "description": "The SQL Server hostname/IP for the session database. If not specified, defaults to the SQL Server of the platform database. This is only appliable to OutSystems 11."
+            }
+        },
+        "databaseAdministratorLogin": {
+            "type": "string",
+            "metadata": {
+                "description": "The SQL Server administrator login."
+            },
+            "defaultValue": "sa"
+        },
+        "databaseAdministratorPass": {
+            "type": "securestring",
+            "metadata": {
+                "description": "The SQL Server administrator login password."
+            }
+        },
+        "databasePlatformCatalog": {
+            "type": "string",
+            "defaultValue": "outsystems",
+            "metadata": {
+                "description": "Name of the platform catalog."
+            }
         },
         "databaseSessionCatalog": {
             "type": "string",
-            "defaultValue": "osSession"
+            "defaultValue": "osSession",
+            "metadata": {
+                "description": "Name of the session catalog. Is not specified, default to the platform catalog."
+            }
         },
-        "databaseSessionUser": {
+        "databaseLogCatalog": {
             "type": "string",
-            "defaultValue": "OSSTATE"
+            "defaultValue": " ",
+            "metadata": {
+                "description": "Name of the log catalog. Is not specified, default to the platform catalog. This is only appliable to OutSystems 11."
+            }
         },
-        "databaseSessionPass": {
-            "type": "securestring"
-        },
-        "outsystemsEnvironmentController": {
+        "outsystemsDatabaseAdminUser": {
             "type": "string",
-            "defaultValue": " "
+            "defaultValue": "OSADMIN",
+            "metadata": {
+                "description": "Name of the user that is the owner of OutSystems metamodel tables."
+            }
+        },
+        "outsystemsDatabaseAdminPass": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Password of the user that is the owner of OutSystems metamodel tables."
+            }
+        },
+        "outsystemsDatabaseRuntimeUser": {
+            "type": "string",
+            "defaultValue": "OSRUNTIME",
+            "metadata": {
+                "description": "Name of the user that is the owner of tables created in the development environment."
+            }
+        },
+        "outsystemsDatabaseRuntimePass": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Password of the user that is the owner of tables created in the development environment."
+            }
+        },
+        "outsystemsDatabaseLogUser": {
+            "type": "string",
+            "defaultValue": "OSLOG",
+            "metadata": {
+                "description": "Name of the user that is the owner of logging tables."
+            }
+        },
+        "outsystemsDatabaseLogPass": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Password of the user that is the owner of logging tables."
+            }
+        },
+        "outsystemsDatabaseSessionUser": {
+            "type": "string",
+            "defaultValue": "OSSTATE",
+            "metadata": {
+                "description": "Name of the user that is the owner of OutSystems session tables."
+            }
+        },
+        "outsystemsDatabaseSessionPass": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Password of the user that is the owner of OutSystems session tables."
+            }
         },
         "outsystemsEnvironmentPrivatekey": {
             "type": "string",
-            "defaultValue": " "
+            "metadata": {
+                "description": "Environment private key."
+            }
+        },
+        "outsystemsEnvironmentController": {
+            "type": "string",
+            "metadata": {
+                "description": "Environment controller hostname/IP."
+            }
+        },
+        "outsystemsServerVersion": {
+            "type": "string",
+            "defaultValue": "11.0.108.0",
+            "allowedValues": [
+                "11.0.108.0",
+                "10.0.904.0",
+                "10.0.900.0",
+                "10.0.828.0",
+                "10.0.823.0",
+                "10.0.816.0"
+            ],
+            "metadata": {
+                "description": "The version of the OutSystems platform server you want to install."
+            }
+        },
+        "outsystemsServiceStudioVersion": {
+            "type": "string",
+            "defaultValue": "11.0.109.0",
+            "allowedValues": [
+                "11.0.109.0",
+                "10.0.906.0",
+                "10.0.903.0",
+                "10.0.902.0",
+                "10.0.830.0",
+                "10.0.827.0",
+                "10.0.825.0",
+                "10.0.822.0"
+            ],
+            "metadata": {
+                "description": "The version of the OutSystems service studio you want to install."
+            }
         }
     },
     "variables": {
     },
     "resources": [
         {
-            "name": "[concat(parameters('vmssName'), '.Outsystems.VirtualMachineScaleSet')]",
+            "name": "[concat('OutSystems.FEVMSS.', parameters('vmssName'), '.VirtualMachineScaleSet')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/Resources/virtualMachineScaleSets.json"
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'resources/virtualMachineScaleSets.json')]"
+                    
                 },
                 "parameters": {
                     "vmssName": {
                         "value": "[parameters('vmssName')]"
                     },
                     "virtualMachineSize": {
-                        "value": "[parameters('virtualMachineSize')]"
-                    },
-                    "virtualMachineSku": {
-                        "value": "2016-Datacenter"
-                    },
-                    "instanceCount": {
-                        "value": "[parameters('instanceCount')]"
+                        "value": "[parameters('vmssVirtualMachineSize')]"
                     },
                     "adminUsername": {
                         "value": "[parameters('adminUsername')]"
@@ -144,78 +237,93 @@
                     "virtualNetworkSubnetName": {
                         "value": "[parameters('virtualNetworkSubnetName')]"
                     },
-                    "applicationGatewayvirtualNetworkSubnetName": {
-                        "value": "[parameters('applicationGatewayvirtualNetworkSubnetName')]"
+                    "applicationGatewayVirtualNetworkSubnetName": {
+                        "value": "[parameters('applicationGatewayVirtualNetworkSubnetName')]"
                     }
                 }
             }
         },
         {
-            "name": "[concat(parameters('vmssName'), '.Outsystems.FrontendVMSS')]",
+            "name": "[concat('OutSystems.FEVMSS.', parameters('vmssName'), '.FrontendRole')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/pintonunes/Outsystems-AzureARMTemplates/master/CommonTemplates/outsystemsFrontendVMSS.json"
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'outsystemsSetup/outsystemsController.json')]"
                 },
                 "parameters": {
                     "resourceName": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/',parameters('vmssName'),'.Outsystems.VirtualMachineScaleSet')).outputs.vmssName.value]"
-                    },
-                    "OSDBProvider": {
-                        "value": "[parameters('databaseProvider')]"
-                    },
-                    "OSDBAuth": {
-                        "value": "[parameters('databaseAuthenticationType')]"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.FEVMSS.', concat(parameters('vmssName'), '.VirtualMachineScaleSet'))).outputs.vmssName.value]"
                     },
                     "OSDBServer": {
-                        "value": "[parameters('databaseServer')]"
-                    },
-                    "OSDBCatalog": {
-                        "value": "[parameters('databaseCatalog')]"
-                    },
-                    "OSDBSAUser": {
-                        "value": "[parameters('databaseAdminUser')]"
-                    },
-                    "OSDBSAPass": {
-                        "value": "[parameters('databaseAdminPass')]"
+                        "value": "[parameters('databasePlatformServer')]"
                     },
                     "OSDBSessionServer": {
                         "value": "[parameters('databaseSessionServer')]"
                     },
+                    "OSDBLogServer": {
+                        "value": "[parameters('databaseLogServer')]"
+                    },
+                    "OSDBCatalog": {
+                        "value": "[parameters('databasePlatformCatalog')]"
+                    },
                     "OSDBSessionCatalog": {
                         "value": "[parameters('databaseSessionCatalog')]"
                     },
-                    "OSDBSessionUser": {
-                        "value": "[parameters('databaseSessionUser')]"
+                    "OSDBLogCatalog": {
+                        "value": "[parameters('databaseLogCatalog')]"
                     },
-                    "OSDBSessionPass": {
-                        "value": "[parameters('databaseSessionPass')]"
+                    "OSDBSAUser": {
+                        "value": "[parameters('databaseAdministratorLogin')]"
+                    },
+                    "OSDBSAPass": {
+                        "value": "[parameters('databaseAdministratorPass')]"
                     },
                     "OSDBAdminUser": {
-                        "value": "[parameters('OutsystemsDatabaseAdminUser')]"
+                        "value": "[parameters('outsystemsDatabaseAdminUser')]"
                     },
                     "OSDBAdminPass": {
-                        "value": "[parameters('OutsystemsDatabaseAdminPass')]"
+                        "value": "[parameters('outsystemsDatabaseAdminPass')]"
                     },
                     "OSDBRuntimeUser": {
-                        "value": "[parameters('OutsystemsDatabaseRuntimeUser')]"
+                        "value": "[parameters('outsystemsDatabaseRuntimeUser')]"
                     },
                     "OSDBRuntimePass": {
-                        "value": "[parameters('OutsystemsDatabaseRuntimePass')]"
+                        "value": "[parameters('outsystemsDatabaseRuntimePass')]"
                     },
                     "OSDBLogUser": {
-                        "value": "[parameters('OutsystemsDatabaseLogUser')]"
+                        "value": "[parameters('outsystemsDatabaseLogUser')]"
                     },
                     "OSDBLogPass": {
-                        "value": "[parameters('OutsystemsDatabaseLogPass')]"
+                        "value": "[parameters('outsystemsDatabaseLogPass')]"
                     },
-                    "OSController": {
-                        "value": "[trim(parameters('outsystemsEnvironmentController'))]"
+                    "OSDBSessionUser": {
+                        "value": "[parameters('outsystemsDatabaseSessionUser')]"
+                    },
+                    "OSDBSessionPass": {
+                        "value": "[parameters('outsystemsDatabaseSessionPass')]"
+                    },
+                    "OSRabbitMQUser": {
+                        "value": "[parameters('adminUsername')]"
+                    },
+                    "OSRabbitMQPass": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "OSServerVersion": {
+                        "value": "[parameters('outsystemsServerVersion')]"
+                    },
+                    "OSServiceStudioVersion": {
+                        "value": "[parameters('outsystemsServiceStudioVersion')]"
                     },
                     "OSPrivateKey": {
-                        "value": "[trim(parameters('outsystemsEnvironmentPrivatekey'))]"
+                        "value": "[parameters('outsystemsEnvironmentPrivatekey')]"
+                    },
+                    "OSController": {
+                        "value": "[parameters('outsystemsEnvironmentController')]"
+                    },
+                    "_artifactsLocation": {
+                        "value": "[deployment().properties.templateLink.uri]"
                     }
                 }
             }
