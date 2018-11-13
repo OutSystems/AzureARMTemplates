@@ -109,9 +109,9 @@ Single environment with a frontend server deployed in a VMSS cluster. This enabl
   - Copy the script to a location that you control. Example: Azure Storage Account, your own github repository, etc etc ...
   - Edit the outsystemsFrontendVMSS.json template and specify the new file http location by editing the "fileUris" parameter "value".
 
-### 7. Single Environment + Containers
+## Azure SQL + Containers
 
-For a single environment on Azure Container Service with Kubernetes checkout [this](https://github.com/OutSystems/Containers-ACS-AzDevOps) repo.
+For environments with OutSystems 11 on Azure Container Service (ACS) with Kubernetes checkout [our github](https://github.com/OutSystems/Containers-ACS-AzDevOps) repo.
 
 ## Full stack on Azure SQL
 
