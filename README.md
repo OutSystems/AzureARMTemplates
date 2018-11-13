@@ -96,6 +96,7 @@ Same as the previous template but for the Lifetime environment.
 
 Single environment with a frontend server deployed in a VMSS cluster. This enables scaling/auto-scaling of the frontends (ideal for production environments).
 
+![AzSQLVMSS](https://raw.githubusercontent.com/OutSystems/AzureARMTemplates/dev/media/AzSQLVMSS.PNG)
 [![AzSQLFrontendVMSS](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fdev%2FAzSQLFrontendVMSS.json)
 
 **Notes:**
