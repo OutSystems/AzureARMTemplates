@@ -359,9 +359,9 @@
             "type": "string",
             "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('virtualMachineName'), '.VirtualMachine')).outputs.virtualMachinePIP.value]"
         },
-        "virtualMachineNIC": {
+        "virtualMachineIP": {
             "type": "string",
-            "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('virtualMachineName'), '.VirtualMachine')).outputs.virtualMachineNIC.value]"
+            "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('virtualMachineName'), '.VirtualMachine')).outputs.virtualMachineIP.value]"
         },
         "sqlServerNameFQDN": {
             "type": "string",

@@ -54,7 +54,7 @@
                             "subnet": {
                                 "id": "[variables('subnetId')]"
                             },
-                            "privateIPAllocationMethod": "Dynamic",
+                            "privateIPAllocationMethod": "Static",
                             "publicIpAddress": {
                                 "id": "[resourceId(resourceGroup().name,'Microsoft.Network/publicIpAddresses', variables('pipName'))]"
                             }
@@ -201,9 +201,9 @@
             "type" : "string",
             "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses',variables('pipName'))).IpAddress]"
         },
-        "virtualMachineNIC" : {
+        "virtualMachineIP" : {
             "type" : "string",
-            "value": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+            "value": "[reference(resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))).ipConfigurations[0].properties.privateIPAddress]"
         }
     }
 }
