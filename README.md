@@ -139,7 +139,7 @@ Use this template to deploy a Virtual Network for all templates uses a Virtual M
 
 [![VNETVMSS](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fmaster%2Fresources%2FvirtualNetworkVMSS.json)
 
-### Virtual Network for Full Stack
+### Virtual Network for Full Stacks
 
 This will deploy a Virtual Network for a full OutSystems stack with Dev, Test, Prd and Lifetime.
 The virtual network will contain five subnets. One for Dev, another for Test, two for Prd (VM and Application Gateway) and another for Lifetime.
