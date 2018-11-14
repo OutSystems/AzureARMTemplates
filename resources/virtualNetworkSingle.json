@@ -11,7 +11,7 @@
         },
         "subnetName": {
             "type": "string",
-            "defaultValue": "OutSystems"
+            "defaultValue": "outsystems-subnet"
         },
         "subnetAddressSpace": {
             "type": "string",

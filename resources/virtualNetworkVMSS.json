@@ -11,7 +11,7 @@
         },
         "subnetNameForVMs": {
             "type": "string",
-            "defaultValue": "OutSystems"
+            "defaultValue": "outsystems-subnet"
         },
         "subnetAddressSpaceForVMs": {
             "type": "string",
@@ -19,7 +19,7 @@
         },
         "subnetNameForApplicationGateway": {
             "type": "string",
-            "defaultValue": "ApplicationGateway"
+            "defaultValue": "appgw-subnet"
         },
         "subnetAddressSpaceForApplicationGateway": {
             "type": "string",
