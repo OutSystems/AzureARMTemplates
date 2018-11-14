@@ -6,7 +6,8 @@
             "type": "string"
         },
         "virtualAddressSpace": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "10.0.0.0/16"
         },
         "devSubnetName": {
             "type": "string",
