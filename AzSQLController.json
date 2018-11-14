@@ -359,6 +359,10 @@
             "type": "string",
             "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('virtualMachineName'), '.VirtualMachine')).outputs.virtualMachinePIP.value]"
         },
+        "virtualMachineNIC": {
+            "type": "string",
+            "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('virtualMachineName'), '.VirtualMachine')).outputs.virtualMachineNIC.value]"
+        },
         "sqlServerNameFQDN": {
             "type": "string",
             "value": "[concat(reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('virtualMachineName'), '.AzureSQLServer')).outputs.serverName.value, '.database.windows.net')]"

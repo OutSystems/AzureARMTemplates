@@ -200,7 +200,10 @@
         "virtualMachinePIP" : {
             "type" : "string",
             "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses',variables('pipName'))).IpAddress]"
+        },
+        "virtualMachineNIC" : {
+            "type" : "string",
+            "value": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
         }
-        
     }
 }
