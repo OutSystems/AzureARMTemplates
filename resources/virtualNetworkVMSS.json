@@ -9,11 +9,19 @@
             "type": "string",
             "defaultValue": "10.0.0.0/16"
         },
-        "subnetName": {
+        "subnetNameForVMs": {
             "type": "string",
             "defaultValue": "OutSystems"
         },
-        "subnetAddressSpace": {
+        "subnetAddressSpaceForVMs": {
+            "type": "string",
+            "defaultValue": "10.0.0.0/24"
+        },
+        "subnetNameForApplicationGateway": {
+            "type": "string",
+            "defaultValue": "ApplicationGateway"
+        },
+        "subnetAddressSpaceForApplicationGateway": {
             "type": "string",
             "defaultValue": "10.0.0.0/24"
         }
@@ -33,9 +41,15 @@
                 },
                 "subnets": [
                     {
-                        "name": "[parameters('subnetName')]",
+                        "name": "[parameters('subnetNameForVMs')]",
                         "properties": {
-                            "addressPrefix": "[parameters('subnetAddressSpace')]"
+                            "addressPrefix": "[parameters('subnetAddressSpaceForVMs')]"
+                        }
+                    },
+                    {
+                        "name": "[parameters('subnetNameForApplicationGateway')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('subnetAddressSpaceForApplicationGateway')]"
                         }
                     }
                 ]

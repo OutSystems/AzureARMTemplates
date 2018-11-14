@@ -120,3 +120,28 @@ For a full stack with Dev, Test, Prod and Lifetime environments deployed on a ne
 To deploy a full stack on an existing VNET you can also use this templates but you will need to deploy each environment one at the time.
 
 Use template number five for the Dev, Test and Prod environments and the number six for Lifetime. If you want to have a Prod environment with scalling and HA capabilities, use the template number seven.
+
+## Auxiliary Templates
+
+This is a group of templates to help you creating the OutSystems infrastructure in Azure.
+
+### Virtual Network for Single Environments
+
+This will deploy a Virtual Network with a single subnet for OutSystems VMs.
+Use this template to deploy a Virtual Network for all templates that DONT uses a Virtual Machine Scale Set.
+
+[![VNETSingle](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fmaster%2Fresources%2FvirtualNetworkSingle.json)
+
+### Virtual Network for Virtual Machine Scale Sets
+
+This will deploy a Virtual Network with two subnet. One for VMs and another for Application Gateways.
+Use this template to deploy a Virtual Network for all templates uses a Virtual Machine Scale Set.
+
+[![VNETVMSS](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fmaster%2Fresources%2FvirtualNetworkVMSS.json)
+
+### Virtual Network for Full Stack
+
+This will deploy a Virtual Network for a full OutSystems stack with Dev, Test, Prd and Lifetime.
+The virtual network will contain five subnets. One for Dev, another for Test, two for Prd (VM and Application Gateway) and another for Lifetime.
+
+[![VNETVMSS](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fmaster%2Fresources%2FvirtualNetworkFullStack.json)
