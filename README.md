@@ -81,7 +81,7 @@ Use this group of templates to deploy OutSystems on Azure SQL.
 
 This template deploys an OutSystems environment on a virtual machine on Azure SQL.
 
-[![AzSQLController](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fmaster%2FAzSQLController.json)
+[![AzSQLController](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Ffeature%2Fuse-marketplace-image%2FAzSQLController.json)
 
 ### 6. Lifetime Environment
 

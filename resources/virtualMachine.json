@@ -34,7 +34,10 @@
         "subnetid": "[concat(variables('vnetId'), '/subnets/', parameters('virtualNetworkSubnetName'))]",
         "nicName": "[concat(parameters('virtualMachineName'), '-nic01')]",
         "nsgName": "[concat(parameters('virtualMachineName'), '-nsg')]",
-        "pipName": "[concat(parameters('virtualMachineName'), '-pip')]"
+        "pipName": "[concat(parameters('virtualMachineName'), '-pip')]",
+        "solutionImagePublisher": "outsystems",
+        "SolutionImageOffer": "os11-vm-baseimage",
+        "SolutionImageSku": "os11-ws2016"
     },
     "resources": [
         {
@@ -138,6 +141,11 @@
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2017-03-30",
             "location": "[resourceGroup().location]",
+            "plan": {
+                "name": "[variables('solutionImageSku')]",
+                "publisher": "[variables('solutionImagePublisher')]",
+                "product": "[variables('solutionImageOffer')]"
+            },
             "dependsOn": [
                 "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
             ],
@@ -155,9 +163,9 @@
                 },
                 "storageProfile": {
                     "imageReference": {
-                        "publisher": "MicrosoftWindowsServer",
-                        "offer": "WindowsServer",
-                        "sku": "[parameters('virtualMachineSku')]",
+                        "publisher": "[variables('solutionImagePublisher')]",
+                        "offer": "[variables('solutionImageOffer')]",
+                        "sku": "[variables('solutionImageSku')]",
                         "version": "latest"
                     },
                     "osDisk": {
@@ -170,16 +178,15 @@
                     },
                     "dataDisks": [
                         {
-                          "diskSizeGB": 256,
-                          "lun": 0,
-                          "createOption": "Empty",
-                          "name": "[concat(parameters('virtualMachineName'), '-dataDisk')]",
-                          "managedDisk": {
-                            "storageAccountType": "Premium_LRS"
-                          },
-                          "caching": "None"
+                            "lun": 0,
+                            "createOption": "FromImage",
+                            "name": "[concat(parameters('virtualMachineName'), '-dataDisk')]",
+                            "managedDisk": {
+                                "storageAccountType": "Premium_LRS"
+                            },
+                            "caching": "None"
                         }
-                      ]
+                    ]
                 },
                 "networkProfile": {
                     "networkInterfaces": [
@@ -193,16 +200,16 @@
         }
     ],
     "outputs": {
-        "virtualMachineName" : {
-            "type" : "string",
+        "virtualMachineName": {
+            "type": "string",
             "value": "[parameters('virtualMachineName')]"
         },
-        "virtualMachinePIP" : {
-            "type" : "string",
+        "virtualMachinePIP": {
+            "type": "string",
             "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses',variables('pipName'))).IpAddress]"
         },
-        "virtualMachineIP" : {
-            "type" : "string",
+        "virtualMachineIP": {
+            "type": "string",
             "value": "[reference(resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))).ipConfigurations[0].properties.privateIPAddress]"
         }
     }
