@@ -148,6 +148,12 @@
             "apiVersion": "2015-01-01",
             "name": "pid-d6afbe29-a6dc-4149-863a-c2f7d985c159",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[concat('OutSystems.DC.', parameters('virtualMachineName'))]",
+                "[concat('OutSystems.FEVMSS.', parameters('vmssName'), '.VirtualMachineScaleSet')]",
+                "[concat('OutSystems.FEVMSS.', parameters('vmssName'), '.FrontendRole')]",
+                "[concat('OutSystems.FEVMSS.', parameters('vmssName'), '.AzureSQLServer.FirewallRule')]"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "template": {
