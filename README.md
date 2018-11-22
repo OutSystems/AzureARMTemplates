@@ -81,7 +81,7 @@ Use this group of templates to deploy OutSystems on Azure SQL.
 
 This template deploys an OutSystems environment on a virtual machine on Azure SQL.
 
-[![AzSQLController](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Ffeature%2Fuse-marketplace-image%2FAzSQLController.json)
+[![AzSQLController](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fmaster%2FAzSQLController.json)
 
 ### 6. Lifetime Environment
 
@@ -94,7 +94,7 @@ Same as the previous template but for the Lifetime environment.
 Single environment with a frontend server deployed in a VMSS cluster. This enables scaling/auto-scaling of the frontends (ideal for production environments).
 
 ![AzSQLVMSS](https://raw.githubusercontent.com/OutSystems/AzureARMTemplates/master/media/AzSQLVMSS1.PNG)
-[![AzSQLFrontendVMSS](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Ffeature%2Fuse-marketplace-image%2FAzSQLFrontendVMSS.json)
+[![AzSQLFrontendVMSS](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fmaster%2FAzSQLFrontendVMSS.json)
 
 **Notes:**
 
