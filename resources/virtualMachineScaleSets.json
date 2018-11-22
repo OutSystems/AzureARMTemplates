@@ -50,7 +50,10 @@
         "appgwName": "[concat(parameters('vmssName'),'-appgw')]",
         "appgwId": "[resourceId('Microsoft.Network/applicationGateways',variables('appgwName'))]",
         "appgwBackendPoolName": "appGatewayBackendPool",
-        "appgwsubnetid": "[concat(variables('vnetId'), '/subnets/', parameters('applicationGatewayvirtualNetworkSubnetName'))]"
+        "appgwsubnetid": "[concat(variables('vnetId'), '/subnets/', parameters('applicationGatewayvirtualNetworkSubnetName'))]",
+        "solutionImagePublisher": "outsystems",
+        "SolutionImageOffer": "os11-vm-baseimage",
+        "SolutionImageSku": "os11-ws2016"
     },
     "resources": [
         {
@@ -81,6 +84,11 @@
             "type": "Microsoft.Compute/virtualMachineScaleSets",
             "name": "[parameters('vmssName')]",
             "location": "[resourceGroup().location]",
+            "plan": {
+                "name": "[variables('solutionImageSku')]",
+                "publisher": "[variables('solutionImagePublisher')]",
+                "product": "[variables('solutionImageOffer')]"
+            },
             "dependsOn": [
                 "[concat('Microsoft.Network/loadBalancers/', variables('slbName'))]",
                 "[concat('Microsoft.Network/applicationGateways/', variables('appgwName'))]"
@@ -105,9 +113,8 @@
                         },
                         "dataDisks": [
                             {
-                              "diskSizeGB": 256,
                               "lun": 0,
-                              "createOption": "Empty",
+                              "createOption": "FromImage",
                               "managedDisk": {
                                 "storageAccountType": "Premium_LRS"
                               },
@@ -115,9 +122,9 @@
                             }
                         ],
                         "imageReference": {
-                            "publisher": "MicrosoftWindowsServer",
-                            "offer": "WindowsServer",
-                            "sku": "[parameters('virtualMachineSku')]",
+                            "publisher": "[variables('solutionImagePublisher')]",
+                            "offer": "[variables('solutionImageOffer')]",
+                            "sku": "[variables('solutionImageSku')]",
                             "version": "latest"
                         }
                     },

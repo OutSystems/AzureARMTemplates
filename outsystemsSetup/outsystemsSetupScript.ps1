@@ -32,7 +32,7 @@ param(
     [string]$OSRabbitMQUser,
     [string]$OSRabbitMQPass,
     [string]$OSRabbitMQVHost,
-    [string]$OSInstallDir = 'F:\OutSystems',
+    [string]$OSInstallDir = 'E:\OutSystems',
     [string]$OSServerVersion,
     [string]$OSServiceStudioVersion
 )
@@ -56,7 +56,8 @@ $rebootNeeded = $false
 $majorVersion = "$(([System.Version]$OSServerVersion).Major).$(([System.Version]$OSServerVersion).Minor)"
 
 # Initialize and format the data disk
-Get-Disk 2 | Initialize-Disk -PartitionStyle MBR -PassThru | New-Partition -UseMaximumSize -MbrType IFS -driveletter F | Format-Volume -FileSystem NTFS -Confirm:$false | Out-Null
+#Get-Disk 2 | Initialize-Disk -PartitionStyle MBR -PassThru | New-Partition -UseMaximumSize -MbrType IFS -driveletter F | Format-Volume -FileSystem NTFS -Confirm:$false | Out-Null
+Get-Partition -DiskNumber 2 -PartitionNumber 1 | Format-Volume -FileSystem NTFS -Confirm:$false | Out-Null
 $null = Get-PSDrive
 
 # -- Disable windows defender realtime scan
