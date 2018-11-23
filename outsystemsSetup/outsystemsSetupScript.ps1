@@ -103,6 +103,8 @@ Install-OSServiceStudio -Version $OSServiceStudioVersion -InstallDir $OSInstallD
 # -- Disable IPv6
 Disable-OSServerIPv6 -ErrorAction Stop | Out-Null
 
+Start-Sleep -Seconds 10
+
 # -- Start a new config
 if ($OSPrivateKey)
 {
