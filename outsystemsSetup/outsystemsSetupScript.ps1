@@ -103,7 +103,9 @@ Install-OSServiceStudio -Version $OSServiceStudioVersion -InstallDir $OSInstallD
 # -- Disable IPv6
 Disable-OSServerIPv6 -ErrorAction Stop | Out-Null
 
-Start-Sleep -Seconds 10
+# -- Added 10 seconds sleep here to avoid this error on the configuration tool:
+# The process cannot access the file 'C:\Windows\Microsoft.NET\Framework64\v4.0.30319\config\machine.config' because it is being used by another process.
+Start-Sleep -Seconds 15
 
 # -- Start a new config
 if ($OSPrivateKey)
