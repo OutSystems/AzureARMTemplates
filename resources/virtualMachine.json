@@ -174,7 +174,7 @@
                         "managedDisk": {
                             "storageAccountType": "Premium_LRS"
                         },
-                        "caching": "ReadOnly"
+                        "caching": "ReadWrite"
                     },
                     "dataDisks": [
                         {
