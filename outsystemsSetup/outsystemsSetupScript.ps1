@@ -48,7 +48,7 @@ Start-Transcript -Path "$Env:Windir\temp\OutSystemsSetupScript.log" -Append | Ou
 
 # -- Import module from Powershell Gallery
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force | Out-Null
-Install-Module -Name Outsystems.SetupTools -RequiredVersion 2.3.1.0 -Force | Out-Null
+Install-Module -Name Outsystems.SetupTools -RequiredVersion 2.3.2.0 -Force | Out-Null
 Import-Module -Name Outsystems.SetupTools -ArgumentList $true, 'AzureRM' | Out-Null
 
 # -- Script variables
@@ -102,10 +102,6 @@ Install-OSServiceStudio -Version $OSServiceStudioVersion -InstallDir $OSInstallD
 
 # -- Disable IPv6
 Disable-OSServerIPv6 -ErrorAction Stop | Out-Null
-
-# -- Added 10 seconds sleep here to avoid this error on the configuration tool:
-# The process cannot access the file 'C:\Windows\Microsoft.NET\Framework64\v4.0.30319\config\machine.config' because it is being used by another process.
-Start-Sleep -Seconds 15
 
 # -- Start a new config
 if ($OSPrivateKey)
