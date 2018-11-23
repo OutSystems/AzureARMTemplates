@@ -343,6 +343,9 @@
                     "OSServiceStudioVersion": {
                         "value": "[parameters('outsystemsServiceStudioVersion')]"
                     },
+                    "OSController": {
+                        "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('virtualMachineName'), '.VirtualMachine')).outputs.virtualMachineIP.value]"
+                    },
                     "_artifactsLocation": {
                         "value": "[deployment().properties.templateLink.uri]"
                     }
