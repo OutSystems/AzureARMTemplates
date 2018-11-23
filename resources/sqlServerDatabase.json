@@ -10,7 +10,7 @@
         },
         "databaseCollation" : {
             "type": "string",
-            "defaultValue": "SQL_Latin1_General_CP1_CI_AS"
+            "defaultValue": "SQL_Latin1_General_CP1_CI_AI"
         },
         "databaseSKU" : {
             "type": "string",
