@@ -108,7 +108,7 @@
                 "virtualMachineProfile": {
                     "storageProfile": {
                         "osDisk": {
-                            "caching": "ReadWrite",
+                            "caching": "ReadOnly",
                             "createOption": "FromImage"
                         },
                         "dataDisks": [
@@ -118,7 +118,7 @@
                               "managedDisk": {
                                 "storageAccountType": "Premium_LRS"
                               },
-                              "caching": "None"
+                              "caching": "ReadOnly"
                             }
                         ],
                         "imageReference": {
