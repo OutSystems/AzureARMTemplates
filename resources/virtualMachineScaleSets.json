@@ -9,10 +9,6 @@
             "type": "string",
             "defaultValue": "Standard_D2s_v3"
         },
-        "virtualMachineSku": {
-            "type": "string",
-            "defaultValue": "2016-Datacenter"
-        },
         "instanceCount": {
             "type": "int",
             "defaultValue": 1
