@@ -261,7 +261,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(deployment().properties.templateLink.uri, 'resources/virtualMachine.json')]"
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'resources/virtualMachinePrivate.json')]"
                 },
                 "parameters": {
                     "virtualMachineName": {
@@ -357,10 +357,6 @@
         "virtualMachineName": {
             "type": "string",
             "value": "[parameters('virtualMachineName')]"
-        },
-        "virtualMachinePIP": {
-            "type": "string",
-            "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('virtualMachineName'), '.VirtualMachine')).outputs.virtualMachinePIP.value]"
         },
         "virtualMachineIP": {
             "type": "string",
