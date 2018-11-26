@@ -39,6 +39,8 @@ param(
 
 # -- Script variables
 $ErrorActionPreference = 'Stop'
+$WarningPreference = 'SilentlyContinue'
+
 $OSDBSACred = New-Object System.Management.Automation.PSCredential ($OSDBSAUser, $(ConvertTo-SecureString $OSDBSAPass -AsPlainText -Force))
 $OSDBLogCred = New-Object System.Management.Automation.PSCredential ($OSDBSALogUser, $(ConvertTo-SecureString $OSDBSALogPass -AsPlainText -Force)) 
 $OSDBSessionCred = New-Object System.Management.Automation.PSCredential ($OSDBSASessionUser, $(ConvertTo-SecureString $OSDBSASessionPass -AsPlainText -Force)) 
@@ -47,9 +49,9 @@ $OSDBSessionCred = New-Object System.Management.Automation.PSCredential ($OSDBSA
 Start-Transcript -Path "$Env:Windir\temp\OutSystemsSetupScript.log" -Append | Out-Null
 
 # -- Import module from Powershell Gallery
-Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force | Out-Null
-Install-Module -Name Outsystems.SetupTools -RequiredVersion 2.3.4.0 -Force | Out-Null
-Import-Module -Name Outsystems.SetupTools -ArgumentList $true, 'AzureRM' | Out-Null
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -WarningAction SilentlyContinue | Out-Null
+Install-Module -Name Outsystems.SetupTools -RequiredVersion 2.3.4.0 -Force -WarningAction SilentlyContinue | Out-Null
+Import-Module -Name Outsystems.SetupTools -ArgumentList $true, 'AzureRM' -WarningAction SilentlyContinue | Out-Null
 
 # -- Script variables
 $rebootNeeded = $false
