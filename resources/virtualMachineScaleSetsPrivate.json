@@ -184,8 +184,9 @@
                 "probes": [
                     {
                         "properties": {
-                            "protocol": "Tcp",
+                            "protocol": "Http",
                             "port": 80,
+                            "requestPath": "/servicecenter/_ping.aspx",
                             "intervalInSeconds": 15,
                             "numberOfProbes": 2
                         },
@@ -193,8 +194,9 @@
                     },
                     {
                         "properties": {
-                            "protocol": "Tcp",
+                            "protocol": "Http",
                             "port": 443,
+                            "requestPath": "/servicecenter/_ping.aspx",
                             "intervalInSeconds": 15,
                             "numberOfProbes": 2
                         },
