@@ -174,8 +174,8 @@
                                 "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('slbName')), '/probes/https')]"
                             },
                             "protocol": "Tcp",
-                            "frontendPort": 80,
-                            "backendPort": 80,
+                            "frontendPort": 443,
+                            "backendPort": 443,
                             "idleTimeoutInMinutes": 15
                         },
                         "Name": "https"
@@ -194,7 +194,7 @@
                     {
                         "properties": {
                             "protocol": "Tcp",
-                            "port": 80,
+                            "port": 443,
                             "intervalInSeconds": 15,
                             "numberOfProbes": 2
                         },
