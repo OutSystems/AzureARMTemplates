@@ -369,7 +369,7 @@
         },
         "privateKey": {
             "type": "string",
-            "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('virtualMachineName'), '.ControllerRole')).outputs.message.value]"
+            "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('virtualMachineName'), '.LifetimeRole')).outputs.message.value]"
         }
     }
 }
