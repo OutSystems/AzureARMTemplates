@@ -249,7 +249,7 @@
                         "value": "AllowVNet"
                     },
                     "virtualNetworkSubnetId": {
-                        "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('virtualNetworkSubnetName'))]"
+                        "value": "[resourceId(parameters('virtualNetworkResourceGroup'),'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('virtualNetworkSubnetName'))]"
                     }
                 }
             }
