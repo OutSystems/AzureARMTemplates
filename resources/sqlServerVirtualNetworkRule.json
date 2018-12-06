@@ -21,7 +21,7 @@
             "location": "[resourceGroup().location]",
             "properties": {
                 "virtualNetworkSubnetId": "[parameters('virtualNetworkSubnetId')]",
-                "ignoreMissingVnetServiceEndpoint": true
+                "ignoreMissingVnetServiceEndpoint": false
             }
         }
     ],
