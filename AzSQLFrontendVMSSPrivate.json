@@ -266,16 +266,16 @@
                         "value": "[parameters('databaseAdministratorPass')]"
                     },
                     "OSDBSessionPass": {
-                        "value": "[parameters('adminPassword')]"
+                        "value": "[parameters('databaseAdministratorPass')]"
                     },
                     "OSDBAdminPass": {
-                        "value": "[parameters('adminPassword')]"
+                        "value": "[parameters('databaseAdministratorPass')]"
                     },
                     "OSDBRuntimePass": {
-                        "value": "[parameters('adminPassword')]"
+                        "value": "[parameters('databaseAdministratorPass')]"
                     },
                     "OSDBLogPass": {
-                        "value": "[parameters('adminPassword')]"
+                        "value": "[parameters('databaseAdministratorPass')]"
                     },
                     "OSController": {
                         "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', concat(parameters('virtualMachineName')))).outputs.virtualMachineName.value]"
