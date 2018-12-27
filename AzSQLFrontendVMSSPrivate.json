@@ -278,7 +278,7 @@
                         "value": "[parameters('databaseAdministratorPass')]"
                     },
                     "OSController": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', concat(parameters('virtualMachineName')))).outputs.virtualMachineName.value]"
+                        "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', concat(parameters('virtualMachineName')))).outputs.virtualMachineIP.value]"
                     },
                     "OSPrivateKey": {
                         "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', concat(parameters('virtualMachineName')))).outputs.privatekey.value]"
