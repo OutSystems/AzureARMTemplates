@@ -77,7 +77,7 @@
                     "script": {
                         "value": "E:/OutSystems/Installer/outsystemsConfig.ps1"
                     },
-                    "arguments": {
+                    "scriptParameters": {
                         "value": "[concat(' -DBAdminUser \"', parameters('DBAdminUser'),'\" -DBAdminPass \"', parameters('DBAdminPass'), '\" -DBServer \"', parameters('DBServer'), '\" -DBPlatform \"', parameters('DBPlatform'), '\" -DBLogging \"', parameters('DBLogging'), '\" -DBSession \"', parameters('DBSession'), '\" -OSControllerName \"', parameters('OSControllerName'), '\" -OSControllerIP \"', parameters('OSControllerIP'), '\" -OSRole \"', parameters('OSRole'), '\" -OSPurpose \"', parameters('OSPurpose'), '\" -OSPrivateKey \"', variables('OSPrivateKey'))]"
                     }
                 }
