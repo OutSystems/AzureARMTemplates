@@ -13,7 +13,7 @@
             "metadata": {
                 "description": "Size of the deployment controller virtual machine."
             },
-            "defaultValue": "Standard_D2s_v3"
+            "defaultValue": "Standard_F4s_v2"
         },
         "adminUsername": {
             "type": "string",
@@ -86,7 +86,7 @@
         },
         "databaseLog": {
             "type": "string",
-            "defaultValue": " ",
+            "defaultValue": "osLog",
             "metadata": {
                 "description": "The OutSystems log database name. If not specified, defaults to the database platform. This is only appliable to OutSystems 11. Leave this setting empty when deploying OutSystems 10."
             }
