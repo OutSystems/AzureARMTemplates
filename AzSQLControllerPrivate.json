@@ -91,42 +91,22 @@
                 "description": "The OutSystems log database name. If not specified, defaults to the database platform. This is only appliable to OutSystems 11. Leave this setting empty when deploying OutSystems 10."
             }
         },
-        "outsystemsServerVersion": {
+        "outsystemsEnvironmentPurpose": {
             "type": "string",
-            "defaultValue": "11.0.108.0",
             "allowedValues": [
-                "11.0.108.0",
-                "10.0.904.0",
-                "10.0.900.0",
-                "10.0.828.0",
-                "10.0.823.0",
-                "10.0.816.0"
+                "Development",
+                "Lifetime"
             ],
+            "defaultValue": "Development",
             "metadata": {
-                "description": "The version of the OutSystems platform server you want to install."
-            }
-        },
-        "outsystemsServiceStudioVersion": {
-            "type": "string",
-            "defaultValue": "11.0.109.0",
-            "allowedValues": [
-                "11.0.109.0",
-                "10.0.906.0",
-                "10.0.903.0",
-                "10.0.902.0",
-                "10.0.830.0",
-                "10.0.827.0",
-                "10.0.825.0",
-                "10.0.822.0"
-            ],
-            "metadata": {
-                "description": "The version of the OutSystems service studio you want to install."
+                "description": "The OutSystems environment purpose."
             }
         }
     },
     "variables": {
         "logCatalogDepName": "[if(empty(trim(parameters('databaseLog'))), '.AzureSQLDatabase.Platform', '.AzureSQLDatabase.Log')]",
-        "sessionCatalogDepName": "[if(empty(trim(parameters('databaseSession'))), '.AzureSQLDatabase.Platform', '.AzureSQLDatabase.Session')]"
+        "sessionCatalogDepName": "[if(empty(trim(parameters('databaseSession'))), '.AzureSQLDatabase.Platform', '.AzureSQLDatabase.Session')]",
+        "imageSku": "[if(equals(parameters('outsystemsEnvironmentPurpose'),'Development'), 'platformserver', 'lifetime')]"
     },
     "resources": [
         {
@@ -284,6 +264,9 @@
                     },
                     "virtualNetworkSubnetName": {
                         "value": "[parameters('virtualNetworkSubnetName')]"
+                    },
+                    "imageSku": {
+                        "value": "[variables('imageSku')]"
                     }
                 }
             }
@@ -324,6 +307,9 @@
                     },
                     "OSControllerName": {
                         "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('virtualMachineName'), '.VirtualMachine')).outputs.virtualMachineName.value]"
+                    },
+                    "OSPurpose": {
+                        "value": "[parameters('outsystemsEnvironmentPurpose')]"
                     },
                     "_artifactsLocation": {
                         "value": "[deployment().properties.templateLink.uri]"

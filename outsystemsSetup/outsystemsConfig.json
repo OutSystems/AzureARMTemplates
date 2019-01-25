@@ -45,7 +45,7 @@
             "allowedValues": [
                 "Development",
                 "Lifetime",
-                "N/a"
+                "N/A"
             ],
             "defaultValue": "Development"
         },
