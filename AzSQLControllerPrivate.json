@@ -295,56 +295,35 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(deployment().properties.templateLink.uri, 'outsystemsSetup/outsystemsController.json')]"
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'outsystemsSetup/outsystemsConfig.json')]"
                 },
                 "parameters": {
                     "resourceName": {
                         "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('virtualMachineName'), '.VirtualMachine')).outputs.virtualMachineName.value]"
                     },
-                    "OSDBServer": {
+                    "DBServer": {
                         "value": "[concat(reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('virtualMachineName'), '.AzureSQLServer')).outputs.serverName.value, '.database.windows.net')]"
                     },
-                    "OSDBCatalog": {
+                    "DBPlatform": {
                         "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('virtualMachineName'), '.AzureSQLDatabase.Platform')).outputs.databaseName.value]"
                     },
-                    "OSDBSessionCatalog": {
+                    "DBSession": {
                         "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('virtualMachineName'), variables('sessionCatalogDepName'))).outputs.databaseName.value]"
                     },
-                    "OSDBLogCatalog": {
+                    "DBLogging": {
                         "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('virtualMachineName'), variables('logCatalogDepName'))).outputs.databaseName.value]"
                     },
-                    "OSDBSAUser": {
+                    "DBAdminUser": {
                         "value": "[parameters('databaseAdministratorLogin')]"
                     },
-                    "OSDBSAPass": {
+                    "DBAdminPass": {
                         "value": "[parameters('databaseAdministratorPass')]"
                     },
-                    "OSDBAdminPass": {
-                        "value": "[parameters('databaseAdministratorPass')]"
-                    },
-                    "OSDBRuntimePass": {
-                        "value": "[parameters('databaseAdministratorPass')]"
-                    },
-                    "OSDBLogPass": {
-                        "value": "[parameters('databaseAdministratorPass')]"
-                    },
-                    "OSDBSessionPass": {
-                        "value": "[parameters('databaseAdministratorPass')]"
-                    },
-                    "OSRabbitMQUser": {
-                        "value": "[parameters('adminUsername')]"
-                    },
-                    "OSRabbitMQPass": {
-                        "value": "[parameters('adminPassword')]"
-                    },
-                    "OSServerVersion": {
-                        "value": "[parameters('outsystemsServerVersion')]"
-                    },
-                    "OSServiceStudioVersion": {
-                        "value": "[parameters('outsystemsServiceStudioVersion')]"
-                    },
-                    "OSController": {
+                    "OSControllerIP": {
                         "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('virtualMachineName'), '.VirtualMachine')).outputs.virtualMachineIP.value]"
+                    },
+                    "OSControllerName": {
+                        "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('virtualMachineName'), '.VirtualMachine')).outputs.virtualMachineName.value]"
                     },
                     "_artifactsLocation": {
                         "value": "[deployment().properties.templateLink.uri]"

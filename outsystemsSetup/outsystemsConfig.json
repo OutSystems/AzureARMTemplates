@@ -1,0 +1,93 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "resourceName": {
+            "type": "string"
+        },
+        "DBAdminUser": {
+            "type": "string"
+        },
+        "DBAdminPass": {
+            "type": "string"
+        },
+        "DBServer": {
+            "type": "string"
+        },
+        "DBPlatform": {
+            "type": "string",
+            "defaultValue": "outsystems"
+        },
+        "DBLogging": {
+            "type": "string",
+            "defaultValue": "osLog"
+        },
+        "DBSession": {
+            "type": "string",
+            "defaultValue": "osSession"
+        },
+        "OSControllerName": {
+            "type": "string"
+        },
+        "OSControllerIP": {
+            "type": "string"
+        },
+        "OSRole": {
+            "type": "string",
+            "allowedValues": [
+                "Controller",
+                "Frontend"
+            ],
+            "defaultValue": "Controller"
+        },
+        "OSPurpose": {
+            "type": "string",
+            "allowedValues": [
+                "Development",
+                "Lifetime",
+                "N/a"
+            ],
+            "defaultValue": "Development"
+        },
+        "OSPrivateKey": {
+            "type": "string",
+            "defaultValue": " "
+        },
+        "_artifactsLocation": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "OSPrivateKey": "[trim(parameters('OSPrivateKey'))]"
+    },
+    "resources": [
+        {
+            "name": "[concat(parameters('resourceName'), '.Outsystems.CustomScriptExtension')]",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(parameters('_artifactsLocation'),'resources/customScriptExtension.json')]"
+                },
+                "parameters": {
+                    "resourceName": {
+                        "value": "[parameters('resourceName')]"
+                    },
+                    "script": {
+                        "value": "E:/OutSystems/Installer/outsystemsConfig.ps1"
+                    },
+                    "arguments": {
+                        "value": "[concat(' -DBAdminUser \"', parameters('DBAdminUser'),'\" -DBAdminPass \"', parameters('DBAdminPass'), '\" -DBServer \"', parameters('DBServer'), '\" -DBPlatform \"', parameters('DBPlatform'), '\" -DBLogging \"', parameters('DBLogging'), '\" -DBSession \"', parameters('DBSession'), '\" -OSControllerName \"', parameters('OSControllerName'), '\" -OSControllerIP \"', parameters('OSControllerIP'), '\" -OSRole \"', parameters('OSRole'), '\" -OSPurpose \"', parameters('OSPurpose'), '\" -OSPrivateKey \"', variables('OSPrivateKey'))]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "message": {
+            "type": "string",
+            "value": "[reference(concat('Microsoft.Resources/deployments/', parameters('resourceName'), '.Outsystems.CustomScriptExtension')).outputs.message.value]"
+        }
+    }
+}

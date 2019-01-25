@@ -5,39 +5,28 @@
         "resourceName": {
             "type": "string"
         },
-        "location": {
+        "script": {
             "type": "string"
         },
-        "fileUris": {
-            "type": "string"
-        },
-        "arguments": {
+        "scriptParameters": {
             "type": "string",
             "defaultValue": " "
         }
-    },
-    "variables": {
-        "UriFileNamePieces": "[split(parameters('fileUris'), '/')]",
-        "firstFileNameString": "[variables('UriFileNamePieces')[sub(length(variables('UriFileNamePieces')), 1)]]",
-        "firstFileNameBreakString": "[split(variables('firstFileNameString'), '?')]",
-        "firstFileName": "[variables('firstFileNameBreakString')[0]]"
     },
     "resources": [
         {
             "name": "[concat(parameters('resourceName'),'/CustomScriptExtension')]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "location": "[parameters('location')]",
+            "location": "[resourceGroup().location]",
             "apiVersion": "2015-06-15",
             "properties": {
                 "publisher": "Microsoft.Compute",
                 "type": "CustomScriptExtension",
                 "typeHandlerVersion": "1.7",
                 "autoUpgradeMinorVersion": true,
-                "settings": {
-                    "fileUris": "[split(parameters('fileUris'), ' ')]"
-                },
+                "settings": {},
                 "protectedSettings": {
-                    "commandToExecute": "[concat ('powershell -ExecutionPolicy Unrestricted -File ', variables('firstFileName'), ' ', parameters('arguments'))]"
+                    "commandToExecute": "[concat ('powershell -ExecutionPolicy Unrestricted -File ', parameters('script'), ' ', parameters('scriptParameters'))]"
                 }
             }
         }

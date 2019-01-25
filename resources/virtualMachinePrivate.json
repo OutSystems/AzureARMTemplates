@@ -30,8 +30,9 @@
         "subnetid": "[concat(variables('vnetId'), '/subnets/', parameters('virtualNetworkSubnetName'))]",
         "nicName": "[concat(parameters('virtualMachineName'), '-nic01')]",
         "solutionImagePublisher": "outsystems",
-        "SolutionImageOffer": "os11-vm-baseimage",
-        "SolutionImageSku": "os11-ws2016"
+        "SolutionImageOffer": "os11-vm-baseimage-preview",
+        "SolutionImageSku": "platformserver",
+        "SolutionImageVersion": "1.3.0"
     },
     "resources": [
         {
@@ -83,7 +84,7 @@
                         "publisher": "[variables('solutionImagePublisher')]",
                         "offer": "[variables('solutionImageOffer')]",
                         "sku": "[variables('solutionImageSku')]",
-                        "version": "latest"
+                        "version": "[variables('solutionImageVersion')]"
                     },
                     "osDisk": {
                         "name": "[concat(parameters('virtualMachineName'), '-osDisk')]",
