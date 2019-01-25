@@ -38,7 +38,7 @@
         "subnetid": "[concat(variables('vnetId'), '/subnets/', parameters('virtualNetworkSubnetName'))]",
         "nicName": "[concat(parameters('virtualMachineName'), '-nic01')]",
         "solutionImagePublisher": "outsystems",
-        "SolutionImageOffer": "os11-vm-baseimage-preview",
+        "SolutionImageOffer": "os11-vm-baseimage",
         "SolutionImageSku": "[parameters('imageSku')]",
         "SolutionImageVersion": "1.3.0"
     },
