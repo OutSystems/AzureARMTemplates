@@ -31,6 +31,10 @@
                 "lifetime"
             ],
             "defaultValue": "platformserver"
+        },
+        "availabilitySetResourceId": {
+            "type": "string",
+            "defaultValue": " "
         }
     },
     "variables": {
@@ -40,7 +44,8 @@
         "solutionImagePublisher": "outsystems",
         "SolutionImageOffer": "os11-vm-baseimage",
         "SolutionImageSku": "[parameters('imageSku')]",
-        "SolutionImageVersion": "1.3.0"
+        "SolutionImageVersion": "1.3.0",
+        "availabilitySetResourceId": "[if(empty(trim(parameters('availabilitySetResourceId'))), '', json(concat('{\"id\": \"', parameters('availabilitySetResourceId'), '\"}')))]"
     },
     "resources": [
         {
@@ -76,6 +81,7 @@
                 "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
             ],
             "properties": {
+                "availabilitySet":"[variables('availabilitySetResourceId')]",
                 "osProfile": {
                     "computerName": "[parameters('virtualMachineName')]",
                     "adminUsername": "[parameters('adminUsername')]",

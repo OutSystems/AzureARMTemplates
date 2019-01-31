@@ -112,7 +112,8 @@
     "variables": {
         "logCatalogDepName": "[if(empty(trim(parameters('databaseLog'))), '.AzureSQLDatabase.Platform', '.AzureSQLDatabase.Log')]",
         "sessionCatalogDepName": "[if(empty(trim(parameters('databaseSession'))), '.AzureSQLDatabase.Platform', '.AzureSQLDatabase.Session')]",
-        "imageSku": "[if(equals(parameters('outsystemsEnvironmentPurpose'),'Development'), 'platformserver', 'lifetime')]"
+        "imageSku": "[if(equals(parameters('outsystemsEnvironmentPurpose'),'Development'), 'platformserver', 'lifetime')]",
+        "availabilitySetName": "[concat(parameters('controllerVirtualMachineName'), '-avset')]"
     },
     "resources": [
         {
@@ -273,6 +274,9 @@
                     },
                     "imageSku": {
                         "value": "[variables('imageSku')]"
+                    },
+                    "availabilitySetResourceId": {
+                        "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('controllerVirtualMachineName'), '.AvailabilitySet')).outputs.resourceId.value]"
                     }
                 }
             }
@@ -310,6 +314,9 @@
                     },
                     "imageSku": {
                         "value": "[variables('imageSku')]"
+                    },
+                    "availabilitySetResourceId": {
+                        "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('controllerVirtualMachineName'), '.AvailabilitySet')).outputs.resourceId.value]"
                     }
                 }
             }
@@ -408,6 +415,22 @@
                     },
                     "_artifactsLocation": {
                         "value": "[deployment().properties.templateLink.uri]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[concat('OutSystems.DC.', parameters('controllerVirtualMachineName'), '.AvailabilitySet')]",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'resources/availabilitySets.json')]"
+                },
+                "parameters": {
+                    "availabilitySetName": {
+                        "value": "[variables('availabilitySetName')]"
                     }
                 }
             }
