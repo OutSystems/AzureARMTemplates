@@ -359,6 +359,58 @@
                     }
                 }
             }
+        },
+        {
+            "name": "[concat('OutSystems.FE.', parameters('controllerVirtualMachineName'), '.FrontendRole')]",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'outsystemsSetup/outsystemsConfig.json')]"
+                },
+                "parameters": {
+                    "resourceName": {
+                        "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.FE.', parameters('frontendVirtualMachineName'), '.VirtualMachine')).outputs.virtualMachineName.value]"
+                    },
+                    "DBServer": {
+                        "value": "[concat(reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('controllerVirtualMachineName'), '.AzureSQLServer')).outputs.serverName.value, '.database.windows.net')]"
+                    },
+                    "DBPlatform": {
+                        "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('controllerVirtualMachineName'), '.AzureSQLDatabase.Platform')).outputs.databaseName.value]"
+                    },
+                    "DBSession": {
+                        "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('controllerVirtualMachineName'), variables('sessionCatalogDepName'))).outputs.databaseName.value]"
+                    },
+                    "DBLogging": {
+                        "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('controllerVirtualMachineName'), variables('logCatalogDepName'))).outputs.databaseName.value]"
+                    },
+                    "DBAdminUser": {
+                        "value": "[parameters('databaseAdministratorLogin')]"
+                    },
+                    "DBAdminPass": {
+                        "value": "[parameters('databaseAdministratorPass')]"
+                    },
+                    "OSControllerIP": {
+                        "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('controllerVirtualMachineName'), '.VirtualMachine')).outputs.virtualMachineIP.value]"
+                    },
+                    "OSControllerName": {
+                        "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('controllerVirtualMachineName'), '.VirtualMachine')).outputs.virtualMachineName.value]"
+                    },
+                    "OSPurpose": {
+                        "value": "N/A"
+                    },
+                    "OSRole": {
+                        "value": "Frontend"
+                    },
+                    "OSPrivateKey": {
+                        "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.DC.', parameters('controllerVirtualMachineName'), '.ControllerRole')).outputs.message.value]"
+                    },
+                    "_artifactsLocation": {
+                        "value": "[deployment().properties.templateLink.uri]"
+                    }
+                }
+            }
         }
     ],
     "outputs": {
