@@ -190,7 +190,7 @@
                 "description": "The version of the OutSystems service studio you want to install."
             }
         },
-        "outsystemsServerRole": {
+        "outsystemsEnvironmentServerRole": {
             "type": "string",
             "defaultValue": "Controller",
             "allowedValues": [
@@ -328,7 +328,7 @@
                         "value": "[parameters('outsystemsEnvironmentPrivatekey')]"
                     },
                     "OSRole": {
-                        "value": "[parameters('outsystemsServerRole')]"
+                        "value": "[parameters('outsystemsEnvironmentServerRole')]"
                     },
                     "OSOutgoingIp": {
                         "value": "[reference(concat('OutSystems.DC.', parameters('virtualMachineName'), '.VirtualMachine')).outputs.virtualMachineIP.value]"

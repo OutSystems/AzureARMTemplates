@@ -195,7 +195,7 @@ switch ($majorVersion)
 }
 
 # -- Install service center and SysComponents
-if ($OSRole -eq "Contoller")
+if ($OSRole -eq "Controller")
 {
     # -- If not a frontend install Service Center, SysComponents and license
     Install-OSPlatformServiceCenter | Out-Null
