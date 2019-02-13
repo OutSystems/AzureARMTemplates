@@ -106,6 +106,24 @@
         "OSServiceStudioVersion": {
             "type": "string"
         },
+        "OSOutgoingIp": {
+            "type": "string"
+        },
+        "OSRole": {
+            "type": "string",
+            "defaultValue": "Controller",
+            "allowedValues": [
+                "Controller",
+                "Frontend"
+            ]
+        },
+        "OSPurpose": {
+            "type": "string",
+            "allowedValues": [
+                "Development",
+                "Lifetime"
+            ]
+        },
         "_artifactsLocation": {
             "type": "string"
         }
@@ -134,10 +152,10 @@
                         "value": "[resourceGroup().location]"
                     },
                     "fileUris": {
-                        "value": "[uri(parameters('_artifactsLocation'),'outsystemsSetup/outsystemsSetupScript.ps1')]"
+                        "value": "[uri(parameters('_artifactsLocation'),'outsystemsSetup/outsystemsSetup.ps1')]"
                     },
                     "arguments": {
-                        "value": "[concat(' -OSRole \"FE\"',' -OSController \"', trim(parameters('OSController')), '\" -OSPrivateKey \"', trim(parameters('OSPrivateKey')), '\" -OSDBServer \"', trim(parameters('OSDBServer')), '\" -OSDBLogServer \"', trim(variables('OSDBLogServer')), '\" -OSDBSessionServer \"', trim(variables('OSDBSessionServer')), '\" -OSDBSAUser \"', trim(parameters('OSDBSAUser')), '\" -OSDBSAPass \"', trim(parameters('OSDBSAPass')), '\" -OSDBSALogUser \"', trim(parameters('OSDBSALogUser')), '\" -OSDBSALogPass \"', trim(parameters('OSDBSALogPass')), '\" -OSDBSASessionUser \"', trim(parameters('OSDBSASessionUser')), '\" -OSDBSASessionPass \"', trim(parameters('OSDBSASessionPass')), '\" -OSDBCatalog \"', trim(parameters('OSDBCatalog')), '\" -OSDBLogCatalog \"', trim(variables('OSDBLogCatalog')), '\" -OSDBSessionCatalog \"', trim(variables('OSDBSessionCatalog')), '\" -OSDBAdminUser \"', trim(parameters('OSDBAdminUser')), '\" -OSDBAdminPass \"', trim(parameters('OSDBAdminPass')), '\" -OSDBRuntimeUser \"', trim(parameters('OSDBRuntimeUser')), '\" -OSDBRuntimePass \"', trim(parameters('OSDBRuntimePass')), '\" -OSDBLogUser \"', trim(parameters('OSDBLogUser')), '\" -OSDBLogPass \"', trim(parameters('OSDBLogPass')), '\" -OSDBSessionUser \"', trim(parameters('OSDBSessionUser')), '\" -OSDBSessionPass \"', trim(parameters('OSDBSessionPass')), '\" -OSRabbitMQHost \"', trim(parameters('OSRabbitMQHost')), '\" -OSRabbitMQUser \"', trim(parameters('OSRabbitMQUser')), '\" -OSRabbitMQPass \"', trim(parameters('OSRabbitMQPass')), '\" -OSRabbitMQVHost \"', trim(parameters('OSRabbitMQVHost')), '\" -OSServerVersion \"', trim(parameters('OSServerVersion')), '\" -OSServiceStudioVersion \"', trim(parameters('OSServiceStudioVersion')), '\"')]"
+                        "value": "[concat(' -OSOutgoingIp \"', parameters('OSOutgoingIp'), '\" -OSPurpose \"', parameters('OSPurpose'), '\" -OSRole \"', parameters('OSRole'), '\" -OSController \"', trim(parameters('OSController')), '\" -OSPrivateKey \"', trim(parameters('OSPrivateKey')), '\" -OSDBServer \"', trim(parameters('OSDBServer')), '\" -OSDBLogServer \"', trim(variables('OSDBLogServer')), '\" -OSDBSessionServer \"', trim(variables('OSDBSessionServer')), '\" -OSDBSAUser \"', trim(parameters('OSDBSAUser')), '\" -OSDBSAPass \"', trim(parameters('OSDBSAPass')), '\" -OSDBSALogUser \"', trim(parameters('OSDBSALogUser')), '\" -OSDBSALogPass \"', trim(parameters('OSDBSALogPass')), '\" -OSDBSASessionUser \"', trim(parameters('OSDBSASessionUser')), '\" -OSDBSASessionPass \"', trim(parameters('OSDBSASessionPass')), '\" -OSDBCatalog \"', trim(parameters('OSDBCatalog')), '\" -OSDBLogCatalog \"', trim(variables('OSDBLogCatalog')), '\" -OSDBSessionCatalog \"', trim(variables('OSDBSessionCatalog')), '\" -OSDBAdminUser \"', trim(parameters('OSDBAdminUser')), '\" -OSDBAdminPass \"', trim(parameters('OSDBAdminPass')), '\" -OSDBRuntimeUser \"', trim(parameters('OSDBRuntimeUser')), '\" -OSDBRuntimePass \"', trim(parameters('OSDBRuntimePass')), '\" -OSDBLogUser \"', trim(parameters('OSDBLogUser')), '\" -OSDBLogPass \"', trim(parameters('OSDBLogPass')), '\" -OSDBSessionUser \"', trim(parameters('OSDBSessionUser')), '\" -OSDBSessionPass \"', trim(parameters('OSDBSessionPass')), '\" -OSRabbitMQHost \"', trim(parameters('OSRabbitMQHost')), '\" -OSRabbitMQUser \"', trim(parameters('OSRabbitMQUser')), '\" -OSRabbitMQPass \"', trim(parameters('OSRabbitMQPass')), '\" -OSRabbitMQVHost \"', trim(parameters('OSRabbitMQVHost')), '\" -OSServerVersion \"', trim(parameters('OSServerVersion')), '\" -OSServiceStudioVersion \"', trim(parameters('OSServiceStudioVersion')), '\"')]"
                     }
                 }
             }

@@ -189,6 +189,17 @@
             "metadata": {
                 "description": "The version of the OutSystems service studio you want to install."
             }
+        },
+        "outsystemsServerRole": {
+            "type": "string",
+            "defaultValue": "Controller",
+            "allowedValues": [
+                "Controller",
+                "Frontend"
+            ],
+            "metadata": {
+                "description": "The environment role of this server."
+            }
         }
     },
     "variables": {},
@@ -247,7 +258,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(deployment().properties.templateLink.uri, 'outsystemsSetup/outsystemsController.json')]"
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'outsystemsSetup/outsystemsSetup.json')]"
                 },
                 "parameters": {
                     "resourceName": {
@@ -315,6 +326,15 @@
                     },
                     "OSPrivateKey": {
                         "value": "[parameters('outsystemsEnvironmentPrivatekey')]"
+                    },
+                    "OSRole": {
+                        "value": "[parameters('outsystemsServerRole')]"
+                    },
+                    "OSOutgoingIp": {
+                        "value": "[reference(concat('OutSystems.DC.', parameters('virtualMachineName'), '.VirtualMachine')).outputs.virtualMachineIP.value]"
+                    },
+                    "OSPurpose": {
+                        "value": "Development"
                     },
                     "_artifactsLocation": {
                         "value": "[deployment().properties.templateLink.uri]"

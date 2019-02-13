@@ -1,13 +1,17 @@
 ﻿[CmdletBinding()]
 param(
     [Parameter()]
-    [ValidateSet('DC', 'FE', 'LT')]
+    [ValidateSet('Controller', 'Frontend')]
     [string]$OSRole,
+
+    [Parameter()]
+    [ValidateSet('Development', 'Lifetime')]
+    [string]$OSPurpose,
     
     [Parameter()]
     [string]$OSDBAuth = 'Database Authentication',
     [string]$OSController,
-    [string]$OSOutgoingIp,  #!!!!!
+    [string]$OSOutgoingIp,
     [string]$OSPrivateKey,
     [string]$OSDBServer,
     [string]$OSDBLogServer,
@@ -78,29 +82,28 @@ Install-OSServerPreReqs -MajorVersion "$(([System.Version]$OSServerVersion).Majo
 # -- Download and install OS Server and Dev environment from repo
 switch ($OSRole)
 {
-    'DC'
+    'Controller'
     {
-        Install-OSServer -Version $OSServerVersion -InstallDir $OSInstallDir -ErrorAction Stop | Out-Null
-    }
-    'FE'
-    {
-        switch ($majorVersion)
+        switch ($OSPurpose)
         {
-            '11.0'
+            'Development'
             {
                 Install-OSServer -Version $OSServerVersion -InstallDir $OSInstallDir -ErrorAction Stop | Out-Null
             }
-            '10.0'
+            'Lifetime'
             {
-                Install-OSServer -Version $OSServerVersion -InstallDir $OSInstallDir -ErrorAction Stop | Out-Null
+                Install-OSServer -Version $OSServerVersion -InstallDir $OSInstallDir -WithLifetime -ErrorAction Stop | Out-Null
             }
         }
+    }
+    'Frontend'
+    {
+        Install-OSServer -Version $OSServerVersion -InstallDir $OSInstallDir -SkipRabbitMQ -ErrorAction Stop | Out-Null
         Get-Service -Name "OutSystems Deployment Controller Service" | Stop-Service -WarningAction SilentlyContinue | Out-Null
         Set-Service -Name "OutSystems Deployment Controller Service" -StartupType "Disabled" | Out-Null
-    }
-    'LT'
-    {
-        Install-OSServer -Version $OSServerVersion -InstallDir $OSInstallDir -WithLifetime -ErrorAction Stop | Out-Null
+
+        # -- Disable the Deployment Service to avoid the replication to start after we apply the configuration
+        Set-Service -Name 'OutSystems Deployment Service' -StartupType Disabled -ErrorAction Stop | Out-Null
     }
 }
 Install-OSServiceStudio -Version $OSServiceStudioVersion -InstallDir $OSInstallDir -ErrorAction Stop | Out-Null
@@ -137,8 +140,10 @@ Set-OSServerConfig -SettingSection 'SessionDatabaseConfiguration' -Setting 'Sess
 Set-OSServerConfig -SettingSection 'ServiceConfiguration' -Setting 'CompilerServerHostname' -Value $OSController -ErrorAction Stop | Out-Null
 # **** Other config ****
 Set-OSServerConfig -SettingSection 'OtherConfigurations' -Setting 'DBTimeout' -Value '60' -ErrorAction Stop | Out-Null
+# **** Network config ****
+Set-OSServerConfig -SettingSection 'NetworkConfiguration' -Setting 'OutgoingIPAddress' -Value $OSOutgoingIp -ErrorAction Stop | Out-Null
 
-# -- Configure platform according to major version
+# -- Configure platform according to major version and role
 switch ($majorVersion)
 {
     '11.0'
@@ -162,11 +167,11 @@ switch ($majorVersion)
         # -- Apply the configuration
         switch ($OSRole)
         {
-            {$_ -in 'DC','LT'}
+            'Controller'
             {
                 Set-OSServerConfig -Apply -PlatformDBCredential $OSDBSACred -SessionDBCredential $OSDBSessionCred -LogDBCredential $OSDBLogCred -ConfigureCacheInvalidationService -ErrorAction Stop | Out-Null
             }
-            'FE'
+            'Frontend'
             {
                 Set-OSServerConfig -Apply -PlatformDBCredential $OSDBSACred -SessionDBCredential $OSDBSessionCred -LogDBCredential $OSDBLogCred -ErrorAction Stop | Out-Null
             }
@@ -189,28 +194,30 @@ switch ($majorVersion)
     }
 }
 
-# -- If this is a frontend, disable the controller service and wait for the service center to be published by the controller before running the system tunning
-if ($OSRole -ne "FE")
+# -- Install service center and SysComponents
+if ($OSRole -eq "Contoller")
 {
     # -- If not a frontend install Service Center, SysComponents and license
     Install-OSPlatformServiceCenter | Out-Null
     Publish-OSPlatformSystemComponents | Out-Null
     Install-OSPlatformLicense | Out-Null
+
+    # -- Install Lifetime if purpose is Lifetime
+    if ($OSPurpose -eq "Lifetime")
+    {
+        Publish-OSPlatformLifetime | Out-Null
+    }
 }
 
-# -- Install Lifetime if role is LT
-if ($OSRole -eq "LT")
-{
-    Publish-OSPlatformLifetime | Out-Null
-}
+# -- System tunning and security settings
+Set-OSServerPerformanceTunning | Out-Null
+Set-OSServerSecuritySettings | Out-Null
 
-if ($OSRole -ne "FE")
+if ($OSRole -eq "Frontend")
 {
-    # -- System tunning
-    Set-OSServerPerformanceTunning | Out-Null
-
-    # -- Security settings
-    Set-OSServerSecuritySettings | Out-Null
+    # -- Now, enable and start the Deployment Service to begin the replication of the Apps
+    Set-Service -Name 'OutSystems Deployment Service' -StartupType Automatic -ErrorAction Stop | Out-Null
+    Start-OSServerServices -ErrorAction Stop | Out-Null
 }
 
 # -- Outputs the private key
