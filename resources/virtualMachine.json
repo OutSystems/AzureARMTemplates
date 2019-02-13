@@ -7,11 +7,7 @@
         },
         "virtualMachineSize": {
             "type": "string",
-            "defaultValue": "Standard_D2s_v3"
-        },
-        "virtualMachineSku": {
-            "type": "string",
-            "defaultValue": "2016-Datacenter"
+            "defaultValue": "Standard_F4s_v2"
         },
         "adminUsername": {
             "type": "string"
@@ -32,12 +28,7 @@
     "variables": {
         "vnetId": "[resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
         "subnetid": "[concat(variables('vnetId'), '/subnets/', parameters('virtualNetworkSubnetName'))]",
-        "nicName": "[concat(parameters('virtualMachineName'), '-nic01')]",
-        "nsgName": "[concat(parameters('virtualMachineName'), '-nsg')]",
-        "pipName": "[concat(parameters('virtualMachineName'), '-pip')]",
-        "solutionImagePublisher": "outsystems",
-        "SolutionImageOffer": "os11-vm-baseimage",
-        "SolutionImageSku": "os11-ws2016"
+        "nicName": "[concat(parameters('virtualMachineName'), '-nic01')]"
     },
     "resources": [
         {
@@ -45,10 +36,6 @@
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2017-06-01",
             "location": "[resourceGroup().location]",
-            "dependsOn": [
-                "[concat('Microsoft.Network/publicIpAddresses/', variables('pipName'))]",
-                "[concat('Microsoft.Network/networkSecurityGroups/', variables('nsgName'))]"
-            ],
             "properties": {
                 "ipConfigurations": [
                     {
@@ -57,83 +44,10 @@
                             "subnet": {
                                 "id": "[variables('subnetId')]"
                             },
-                            "privateIPAllocationMethod": "Dynamic",
-                            "publicIpAddress": {
-                                "id": "[resourceId(resourceGroup().name,'Microsoft.Network/publicIpAddresses', variables('pipName'))]"
-                            }
-                        }
-                    }
-                ],
-                "networkSecurityGroup": {
-                    "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
-                }
-            }
-        },
-        {
-            "name": "[variables('nsgName')]",
-            "type": "Microsoft.Network/networkSecurityGroups",
-            "apiVersion": "2018-01-01",
-            "location": "[resourceGroup().location]",
-            "properties": {
-                "securityRules": [
-                    {
-                        "name": "RDP",
-                        "properties": {
-                            "priority": 300,
-                            "protocol": "Tcp",
-                            "access": "Allow",
-                            "direction": "Inbound",
-                            "sourceApplicationSecurityGroups": [],
-                            "destinationApplicationSecurityGroups": [],
-                            "sourceAddressPrefix": "*",
-                            "sourcePortRange": "*",
-                            "destinationAddressPrefix": "*",
-                            "destinationPortRange": "3389"
-                        }
-                    },
-                    {
-                        "name": "HTTP",
-                        "properties": {
-                            "priority": 310,
-                            "protocol": "Tcp",
-                            "access": "Allow",
-                            "direction": "Inbound",
-                            "sourceApplicationSecurityGroups": [],
-                            "destinationApplicationSecurityGroups": [],
-                            "sourceAddressPrefix": "*",
-                            "sourcePortRange": "*",
-                            "destinationAddressPrefix": "*",
-                            "destinationPortRange": "80"
-                        }
-                    },
-                    {
-                        "name": "HTTPS",
-                        "properties": {
-                            "priority": 320,
-                            "protocol": "Tcp",
-                            "access": "Allow",
-                            "direction": "Inbound",
-                            "sourceApplicationSecurityGroups": [],
-                            "destinationApplicationSecurityGroups": [],
-                            "sourceAddressPrefix": "*",
-                            "sourcePortRange": "*",
-                            "destinationAddressPrefix": "*",
-                            "destinationPortRange": "443"
+                            "privateIPAllocationMethod": "Dynamic"
                         }
                     }
                 ]
-            }
-        },
-        {
-            "name": "[variables('pipName')]",
-            "type": "Microsoft.Network/publicIPAddresses",
-            "apiVersion": "2017-08-01",
-            "location": "[resourceGroup().location]",
-            "properties": {
-                "publicIPAllocationMethod": "Static"
-            },
-            "sku": {
-                "name": "Basic"
             }
         },
         {
@@ -141,11 +55,6 @@
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2017-03-30",
             "location": "[resourceGroup().location]",
-            "plan": {
-                "name": "[variables('solutionImageSku')]",
-                "publisher": "[variables('solutionImagePublisher')]",
-                "product": "[variables('solutionImageOffer')]"
-            },
             "dependsOn": [
                 "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
             ],
@@ -163,9 +72,9 @@
                 },
                 "storageProfile": {
                     "imageReference": {
-                        "publisher": "[variables('solutionImagePublisher')]",
-                        "offer": "[variables('solutionImageOffer')]",
-                        "sku": "[variables('solutionImageSku')]",
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServer",
+                        "sku": "2016-Datacenter",
                         "version": "latest"
                     },
                     "osDisk": {
@@ -179,7 +88,8 @@
                     "dataDisks": [
                         {
                             "lun": 0,
-                            "createOption": "FromImage",
+                            "createOption": "Empty",
+                            "diskSizeGB": 256,
                             "name": "[concat(parameters('virtualMachineName'), '-dataDisk')]",
                             "managedDisk": {
                                 "storageAccountType": "Premium_LRS"
@@ -203,10 +113,6 @@
         "virtualMachineName": {
             "type": "string",
             "value": "[parameters('virtualMachineName')]"
-        },
-        "virtualMachinePIP": {
-            "type": "string",
-            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses',variables('pipName'))).IpAddress]"
         },
         "virtualMachineIP": {
             "type": "string",

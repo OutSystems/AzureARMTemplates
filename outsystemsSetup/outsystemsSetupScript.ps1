@@ -7,6 +7,7 @@ param(
     [Parameter()]
     [string]$OSDBAuth = 'Database Authentication',
     [string]$OSController,
+    [string]$OSOutgoingIp,  #!!!!!
     [string]$OSPrivateKey,
     [string]$OSDBServer,
     [string]$OSDBLogServer,
@@ -46,17 +47,21 @@ $OSDBSessionCred = New-Object System.Management.Automation.PSCredential ($OSDBSA
 # Start PS Logging
 Start-Transcript -Path "$Env:Windir\temp\OutSystemsSetupScript.log" -Append | Out-Null
 
-# -- Import module from Powershell Gallery
+# -- Import needed powershell modules from Powershell Gallery
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force | Out-Null
-Install-Module -Name Outsystems.SetupTools -RequiredVersion 2.3.4.0 -Force | Out-Null
+Install-Module -Name Outsystems.SetupTools -RequiredVersion 2.4.2.0 -Force | Out-Null
+Install-Module SqlServer -Force -RequiredVersion 21.1.18068 | Out-Null
 Import-Module -Name Outsystems.SetupTools -ArgumentList $true, 'AzureRM' | Out-Null
 
 # -- Script variables
-$rebootNeeded = $false
 $majorVersion = "$(([System.Version]$OSServerVersion).Major).$(([System.Version]$OSServerVersion).Minor)"
 
+# -- Change CDROM letter to F:
+Get-CimInstance -Class Win32_volume -Filter 'DriveType=5' | Select-Object -First 1 | Set-CimInstance -Arguments @{DriveLetter = 'F:'} | Out-Null
+$null = Get-PSDrive
+
 # Initialize and format the data disk
-#Get-Disk 2 | Initialize-Disk -PartitionStyle MBR -PassThru | New-Partition -UseMaximumSize -MbrType IFS -driveletter F | Format-Volume -FileSystem NTFS -Confirm:$false | Out-Null
+Get-Disk 2 | Initialize-Disk -PartitionStyle MBR -PassThru | New-Partition -UseMaximumSize -MbrType IFS -driveletter F | Format-Volume -FileSystem NTFS -Confirm:$false | Out-Null
 Get-Partition -DiskNumber 2 -PartitionNumber 1 | Format-Volume -FileSystem NTFS -Confirm:$false | Out-Null
 $null = Get-PSDrive
 
@@ -83,7 +88,7 @@ switch ($OSRole)
         {
             '11.0'
             {
-                Install-OSServer -Version $OSServerVersion -InstallDir $OSInstallDir -SkipRabbitMQ -ErrorAction Stop | Out-Null
+                Install-OSServer -Version $OSServerVersion -InstallDir $OSInstallDir -ErrorAction Stop | Out-Null
             }
             '10.0'
             {

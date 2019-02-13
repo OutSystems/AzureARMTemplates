@@ -18,6 +18,12 @@ The goal is to enable our customers to deploy OutSystems on Microsoft Azure with
 - You must chose the same major version for the Platform Server and Service Studio.
 - On OutSystems 11, the RabbitMQ user and password is the virtual machine admin user and password.
 
+**Warnings:**
+
+- This templates are updated frequently and we don't ensure backward compatibility.
+- If you want to use them on production environments you should clone/fork this repo to your own GitHub account, change the "Deploy to Azure" button links to your repository and start the deployment from there.
+- This warning is especially important when using scale-sets. The scale-set is dependent of the repository where it was created from for scale-up operations. The newly created instances NEED ACCESS to the GitHub repository to perform the OutSystems configuration!!! So, or avoid using scale-sets or clone/fork this repository to your own!!!
+
 ## Existing Database Server
 
 Use this group of templates to deploy OutSystems in an existing database server.
