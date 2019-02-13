@@ -45,7 +45,7 @@ $OSDBLogCred = New-Object System.Management.Automation.PSCredential ($OSDBSALogU
 $OSDBSessionCred = New-Object System.Management.Automation.PSCredential ($OSDBSASessionUser, $(ConvertTo-SecureString $OSDBSASessionPass -AsPlainText -Force)) 
 
 # Start PS Logging
-Start-Transcript -Path "$Env:Windir\temp\OutSystemsSetupScript.log" -Append | Out-Null
+Start-Transcript -Path "$Env:Windir\temp\PowerShellTranscript.log" -Append | Out-Null
 
 # -- Import needed powershell modules from Powershell Gallery
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force | Out-Null
@@ -61,7 +61,7 @@ Get-CimInstance -Class Win32_volume -Filter 'DriveType=5' | Select-Object -First
 $null = Get-PSDrive
 
 # Initialize and format the data disk
-Get-Disk 2 | Initialize-Disk -PartitionStyle MBR -PassThru | New-Partition -UseMaximumSize -MbrType IFS -driveletter F | Format-Volume -FileSystem NTFS -Confirm:$false | Out-Null
+Get-Disk 2 | New-Partition -UseMaximumSize -MbrType IFS -driveletter E | Format-Volume -FileSystem NTFS -Confirm:$false | Out-Null
 Get-Partition -DiskNumber 2 -PartitionNumber 1 | Format-Volume -FileSystem NTFS -Confirm:$false | Out-Null
 $null = Get-PSDrive
 
