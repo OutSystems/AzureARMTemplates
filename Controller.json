@@ -190,15 +190,15 @@
                 "description": "The version of the OutSystems service studio you want to install."
             }
         },
-        "outsystemsEnvironmentServerRole": {
+        "outsystemsEnvironmentPurpose": {
             "type": "string",
-            "defaultValue": "Controller",
+            "defaultValue": "Development",
             "allowedValues": [
-                "Controller",
-                "Frontend"
+                "Development",
+                "Lifetime"
             ],
             "metadata": {
-                "description": "The environment role of this server."
+                "description": "The version of the OutSystems service studio you want to install."
             }
         }
     },
@@ -328,13 +328,16 @@
                         "value": "[parameters('outsystemsEnvironmentPrivatekey')]"
                     },
                     "OSRole": {
-                        "value": "[parameters('outsystemsEnvironmentServerRole')]"
+                        "value": "Controller"
+                    },
+                    "OSController": {
+                        "value": "[reference(concat('OutSystems.DC.', parameters('virtualMachineName'), '.VirtualMachine')).outputs.virtualMachineIP.value]"
                     },
                     "OSOutgoingIp": {
                         "value": "[reference(concat('OutSystems.DC.', parameters('virtualMachineName'), '.VirtualMachine')).outputs.virtualMachineIP.value]"
                     },
                     "OSPurpose": {
-                        "value": "Development"
+                        "value": "[parameters('outsystemsEnvironmentPurpose')]"
                     },
                     "_artifactsLocation": {
                         "value": "[deployment().properties.templateLink.uri]"

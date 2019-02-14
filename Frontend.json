@@ -154,14 +154,9 @@
         "outsystemsEnvironmentPrivatekey": {
             "type": "string",
             "metadata": {
-                "description": "Environment private key."
-            }
-        },
-        "outsystemsEnvironmentController": {
-            "type": "string",
-            "metadata": {
-                "description": "Environment controller hostname/IP."
-            }
+                "description": "Environment private key. If not specified a random one will be generated."
+            },
+            "defaultValue": " "
         },
         "outsystemsServerVersion": {
             "type": "string",
@@ -194,6 +189,12 @@
             "metadata": {
                 "description": "The version of the OutSystems service studio you want to install."
             }
+        },
+        "outsystemsEnvironmentController": {
+            "type": "string",
+            "metadata": {
+                "description": "The IP or the hostname of the environment controller."
+            }
         }
     },
     "variables": {},
@@ -212,7 +213,7 @@
             }
         },
         {
-            "name": "[concat('OutSystems.FE.', parameters('virtualMachineName'), '.VirtualMachine')]",
+            "name": "[concat('OutSystems.DC.', parameters('virtualMachineName'), '.VirtualMachine')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -246,17 +247,17 @@
             }
         },
         {
-            "name": "[concat('OutSystems.FE.', parameters('virtualMachineName'), '.FrontendRole')]",
+            "name": "[concat('OutSystems.DC.', parameters('virtualMachineName'), '.ControllerRole')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(deployment().properties.templateLink.uri, 'outsystemsSetup/outsystemsFrontend.json')]"
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'outsystemsSetup/outsystemsSetup.json')]"
                 },
                 "parameters": {
                     "resourceName": {
-                        "value": "[reference(concat('Microsoft.Resources/deployments/OutSystems.FE.', parameters('virtualMachineName'), '.VirtualMachine')).outputs.virtualMachineName.value]"
+                        "value": "[reference(concat('OutSystems.DC.', parameters('virtualMachineName'), '.VirtualMachine')).outputs.virtualMachineName.value]"
                     },
                     "OSDBServer": {
                         "value": "[parameters('databasePlatformServer')]"
@@ -321,8 +322,17 @@
                     "OSPrivateKey": {
                         "value": "[parameters('outsystemsEnvironmentPrivatekey')]"
                     },
+                    "OSRole": {
+                        "value": "Frontend"
+                    },
                     "OSController": {
                         "value": "[parameters('outsystemsEnvironmentController')]"
+                    },
+                    "OSOutgoingIp": {
+                        "value": "[reference(concat('OutSystems.DC.', parameters('virtualMachineName'), '.VirtualMachine')).outputs.virtualMachineIP.value]"
+                    },
+                    "OSPurpose": {
+                        "value": "Development"
                     },
                     "_artifactsLocation": {
                         "value": "[deployment().properties.templateLink.uri]"
