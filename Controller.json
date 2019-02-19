@@ -160,34 +160,23 @@
         },
         "outsystemsServerVersion": {
             "type": "string",
-            "defaultValue": "11.0.108.0",
-            "allowedValues": [
-                "11.0.108.0",
-                "10.0.904.0",
-                "10.0.900.0",
-                "10.0.828.0",
-                "10.0.823.0",
-                "10.0.816.0"
-            ],
+            "defaultValue": "11.0.211.0",
             "metadata": {
                 "description": "The version of the OutSystems platform server you want to install."
             }
         },
         "outsystemsServiceStudioVersion": {
             "type": "string",
-            "defaultValue": "11.0.109.0",
-            "allowedValues": [
-                "11.0.109.0",
-                "10.0.906.0",
-                "10.0.903.0",
-                "10.0.902.0",
-                "10.0.830.0",
-                "10.0.827.0",
-                "10.0.825.0",
-                "10.0.822.0"
-            ],
+            "defaultValue": "11.0.408.0",
             "metadata": {
                 "description": "The version of the OutSystems service studio you want to install."
+            }
+        },
+        "outsystemsLifetimeVersion": {
+            "type": "string",
+            "defaultValue": "11.0.304.0",
+            "metadata": {
+                "description": "The version of the OutSystems Lifetime you want to install."
             }
         },
         "outsystemsEnvironmentPurpose": {
@@ -202,7 +191,10 @@
             }
         }
     },
-    "variables": {},
+    "variables": {
+        "outsystemsServerVersion": "[if(equals(parameters('outsystemsEnvironmentPurpose'),'Development'), parameters('outsystemsServerVersion'), parameters('outsystemsLifetimeVersion'))]"
+        
+    },
     "resources": [
         {
             "apiVersion": "2015-01-01",
@@ -319,7 +311,7 @@
                         "value": "[parameters('adminPassword')]"
                     },
                     "OSServerVersion": {
-                        "value": "[parameters('outsystemsServerVersion')]"
+                        "value": "[variables('outsystemsServerVersion')]"
                     },
                     "OSServiceStudioVersion": {
                         "value": "[parameters('outsystemsServiceStudioVersion')]"
