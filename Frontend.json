@@ -289,9 +289,6 @@
                     "OSDBSessionPass": {
                         "value": "[parameters('outsystemsDatabaseSessionPass')]"
                     },
-                    "OSRabbitMQUser": {
-                        "value": "[parameters('adminUsername')]"
-                    },
                     "OSRabbitMQPass": {
                         "value": "[parameters('adminPassword')]"
                     },
