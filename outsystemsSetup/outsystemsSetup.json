@@ -91,14 +91,15 @@
             "defaultValue": "[parameters('OSController')]"
         },
         "OSRabbitMQUser": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "admin"
         },
         "OSRabbitMQPass": {
             "type": "securestring"
         },
         "OSRabbitMQVHost": {
             "type": "string",
-            "defaultValue": "/OutSystems"
+            "defaultValue": "/outsystems"
         },
         "OSServerVersion": {
             "type": "string"
