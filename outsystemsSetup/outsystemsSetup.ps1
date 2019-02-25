@@ -53,7 +53,7 @@ Start-Transcript -Path "$Env:Windir\temp\PowerShellTranscript.log" -Append | Out
 
 # -- Import needed powershell modules from Powershell Gallery
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force | Out-Null
-Install-Module -Name Outsystems.SetupTools -RequiredVersion 2.4.2.0 -Force | Out-Null
+Install-Module -Name Outsystems.SetupTools -RequiredVersion 2.4.3.0 -Force | Out-Null
 Install-Module SqlServer -Force -RequiredVersion 21.1.18068 | Out-Null
 Import-Module -Name Outsystems.SetupTools -ArgumentList $true, 'AzureRM' | Out-Null
 
