@@ -172,14 +172,29 @@
                 "description": "The version of the OutSystems service studio you want to install."
             }
         },
-        "outsystemsEnvironmentController": {
+        "outsystemsLifetimeVersion": {
             "type": "string",
+            "defaultValue": "11.0.304.0",
             "metadata": {
-                "description": "The IP or the hostname of the environment controller."
+                "description": "The version of the OutSystems Lifetime you want to install."
+            }
+        },
+        "outsystemsEnvironmentPurpose": {
+            "type": "string",
+            "defaultValue": "Development",
+            "allowedValues": [
+                "Development",
+                "Lifetime"
+            ],
+            "metadata": {
+                "description": "The version of the OutSystems service studio you want to install."
             }
         }
     },
-    "variables": {},
+    "variables": {
+        "outsystemsServerVersion": "[if(equals(parameters('outsystemsEnvironmentPurpose'),'Development'), parameters('outsystemsServerVersion'), parameters('outsystemsLifetimeVersion'))]"
+        
+    },
     "resources": [
         {
             "apiVersion": "2015-01-01",
@@ -194,7 +209,7 @@
             }
         },
         {
-            "name": "[concat('OutSystems.FE.', parameters('virtualMachineName'), '.VirtualMachine')]",
+            "name": "[concat('OutSystems.DC.', parameters('virtualMachineName'), '.VirtualMachine')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -228,7 +243,7 @@
             }
         },
         {
-            "name": "[concat('OutSystems.FE.', parameters('virtualMachineName'), '.Setup')]",
+            "name": "[concat('OutSystems.DC.', parameters('virtualMachineName'), '.Setup')]",
             "apiVersion": "2015-01-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -238,7 +253,7 @@
                 },
                 "parameters": {
                     "resourceName": {
-                        "value": "[reference(concat('OutSystems.FE.', parameters('virtualMachineName'), '.VirtualMachine')).outputs.virtualMachineName.value]"
+                        "value": "[reference(concat('OutSystems.DC.', parameters('virtualMachineName'), '.VirtualMachine')).outputs.virtualMachineName.value]"
                     },
                     "OSDBServer": {
                         "value": "[parameters('databasePlatformServer')]"
@@ -292,7 +307,7 @@
                         "value": "[parameters('adminPassword')]"
                     },
                     "OSServerVersion": {
-                        "value": "[parameters('outsystemsServerVersion')]"
+                        "value": "[variables('outsystemsServerVersion')]"
                     },
                     "OSServiceStudioVersion": {
                         "value": "[parameters('outsystemsServiceStudioVersion')]"
@@ -301,16 +316,16 @@
                         "value": "[parameters('outsystemsEnvironmentPrivatekey')]"
                     },
                     "OSRole": {
-                        "value": "Frontend"
+                        "value": "Controller"
                     },
                     "OSController": {
-                        "value": "[parameters('outsystemsEnvironmentController')]"
+                        "value": "[reference(concat('OutSystems.DC.', parameters('virtualMachineName'), '.VirtualMachine')).outputs.virtualMachineIP.value]"
                     },
                     "OSOutgoingIp": {
-                        "value": "[reference(concat('OutSystems.FE.', parameters('virtualMachineName'), '.VirtualMachine')).outputs.virtualMachineIP.value]"
+                        "value": "[reference(concat('OutSystems.DC.', parameters('virtualMachineName'), '.VirtualMachine')).outputs.virtualMachineIP.value]"
                     },
                     "OSPurpose": {
-                        "value": "Development"
+                        "value": "[parameters('outsystemsEnvironmentPurpose')]"
                     },
                     "_artifactsLocation": {
                         "value": "[deployment().properties.templateLink.uri]"
