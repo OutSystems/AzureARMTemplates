@@ -154,9 +154,8 @@
         "outsystemsEnvironmentPrivatekey": {
             "type": "string",
             "metadata": {
-                "description": "Environment private key. If not specified a random one will be generated."
-            },
-            "defaultValue": " "
+                "description": "Environment private key."
+            }
         },
         "outsystemsServerVersion": {
             "type": "string",
@@ -189,6 +188,7 @@
                 "mode": "Incremental",
                 "template": {
                     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
                     "resources": []
                 }
             }
@@ -319,5 +319,10 @@
             }
         }
     ],
-    "outputs": {}
+    "outputs": {
+        "virtualMachineName": {
+            "type": "string",
+            "value": "[parameters('virtualMachineName')]"
+        }
+    }
 }
