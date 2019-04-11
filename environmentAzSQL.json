@@ -43,7 +43,7 @@
         },
         "databaseServerName": {
             "type": "string",
-            "defaultValue": "yourproject-newEnv-srv-unique_suffix"
+            "defaultValue": "yourproject-newEnv-srvaddyouruniquesuffix"
         },
         "databaseServerAdminUser": {
             "type": "string",
