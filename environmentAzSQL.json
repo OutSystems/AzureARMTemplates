@@ -98,7 +98,7 @@
             }
         },
         "lifetimeVersion": {
-            "type": "Microsoft.Common.DropDown",
+            "type": "string",
             "allowedValues": [
                 "LifeTime 11.0.211.0",
                 "LifeTime 11.0.180.0"
