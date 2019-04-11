@@ -3,10 +3,12 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "controllerName": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "yourproject-newEnv-vm"
         },
         "controllerAdminUser": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "OutSystemsOnAzureAdmin"
         },
         "controllerAdminPass": {
             "type": "securestring"
@@ -23,14 +25,16 @@
         },
         "virtualNetworkName": {
             "type": "string",
+            "defaultValue": "newEnv-vnet",
             "metadata": {
-                "description": "The name of the existing virtual network (VNET)."
+                "description": "The name of the virtual network (VNET) to be used."
             }
         },
         "controllerSubnetName": {
             "type": "string",
+            "defaultValue": "newEnv-subnet",
             "metadata": {
-                "description": "The subnet where you want to deploy the deployment controller virtual machine."
+                "description": "The name of the subnet where you will deploy the deployment controller virtual machine."
             }
         },
         "controllerWithPublicIp": {
@@ -38,38 +42,40 @@
             "defaultValue": false
         },
         "databaseServerName": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "yourproject-newEnv-srv-unique_suffix"
         },
         "databaseServerAdminUser": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "OutSystemsOnAzureAdmin-SQL"
         },
         "databaseServerAdminPass": {
             "type": "securestring"
         },
         "platformDatabaseName": {
             "type": "string",
-            "defaultValue": "outsystems"
+            "defaultValue": "yourproject-newEnv-db"
         },
         "sessionDatabaseName": {
             "type": "string",
-            "defaultValue": "osSession"
+            "defaultValue": "yourproject-newEnvSession-db"
         },
         "loggingDatabaseName": {
             "type": "string",
-            "defaultValue": "osLog"
+            "defaultValue": "yourproject-newEnvLog-db"
         },
         "gatewayName": {
             "type": "string",
-            "defaultValue": " ",
+            "defaultValue": "yourproject-newEnv-appgw",
             "metadata": {
                 "description": "If specified, the virtual machine will be exposed to internet throught an Application Gateway"
             }
         },
         "gatewaySubnetName": {
             "type": "string",
-            "defaultValue": " ",
+            "defaultValue": "newAppGateway-subnet",
             "metadata": {
-                "description": "Only needed if gatewayName parameter is specified"
+                "description": "Only needed if gatewayName parameter is specified. Use the one you created when deploying the Virtual Network for Single Environments Template"
             }
         },
         "environmentPurpose": {

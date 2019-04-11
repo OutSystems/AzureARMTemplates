@@ -3,27 +3,37 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "virtualNetworkName": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "newEnv-vnet"
         },
         "virtualAddressSpace": {
             "type": "string",
-            "defaultValue": "10.0.0.0/16"
+            "defaultValue": "10.8.0.0/16",
+            "metadata": {
+                "description": "Make sure this range does not collide with existing ones in your subscription"
+            }
         },
         "subnetNameForVMs": {
             "type": "string",
-            "defaultValue": "outsystems-subnet"
+            "defaultValue": "newEnv-subnet"
         },
         "subnetAddressSpaceForVMs": {
             "type": "string",
-            "defaultValue": "10.0.0.0/24"
+            "defaultValue": "10.8.0.0/24",
+            "metadata": {
+                "description": "Make sure this range does not collide with existing ones in your subscription"
+            }
         },
         "subnetNameForApplicationGateway": {
             "type": "string",
-            "defaultValue": "appgw-subnet"
+            "defaultValue": "newAppGateway-subnet"
         },
         "subnetAddressSpaceForApplicationGateway": {
             "type": "string",
-            "defaultValue": "10.0.1.0/24"
+            "defaultValue": "10.8.1.0/24",
+            "metadata": {
+                "description": "Make sure this range does not collide with existing ones in your subscription"
+            }
         }
     },
     "variables": {},
