@@ -4,7 +4,7 @@
     "parameters": {
         "controllerName": {
             "type": "string",
-            "defaultValue": "yourproject-newEnv-vm"
+            "defaultValue": "your-newEnv-vm"
         },
         "controllerAdminUser": {
             "type": "string",
