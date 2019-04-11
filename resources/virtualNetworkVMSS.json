@@ -53,7 +53,12 @@
                     {
                         "name": "[parameters('subnetNameForVMs')]",
                         "properties": {
-                            "addressPrefix": "[parameters('subnetAddressSpaceForVMs')]"
+                            "addressPrefix": "[parameters('subnetAddressSpaceForVMs')]",
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.Sql"
+                                }
+                            ]
                         }
                     },
                     {
