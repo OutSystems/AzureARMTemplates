@@ -138,7 +138,7 @@
             "size": "[parameters('controllerSize')]",
             "subnetId": "[variables('controllerSubnetId')]",
             "imageSku": "[if(equals(parameters('environmentPurpose'),'Lifetime'),'lifetime','platformserver')]",
-            "imageVersion": "[if(equals(parameters('environmentPurpose'),'Lifetime'),'[variables('lifetimeVersion')[parameters('LTImage')].lifetimeVersion','[variables('platformVersion')[parameters('PSImage')].platformVersion')]",
+            "imageVersion": "[if(equals(parameters('environmentPurpose'),'Lifetime'),'[variables('lifetimeVersion')[parameters('LTImage')].lifetimeVersion]','[variables('platformVersion')[parameters('PSImage')].platformVersion]')]",
             "withPublicIp": "[parameters('controllerWithPublicIp')]",
             "deploymentName": "[concat(deployment().name, '.VirtualMachine')]",
             "templateUri": "[uri(variables('_artifactsLocation'), concat('sharedResources/virtualMachines.json', variables('_artifactsLocationSasToken')))]"
