@@ -89,33 +89,21 @@
         "platformVersion": {
             "type": "string",
             "allowedValues": [
-                {
-                    "label":"Latest",
-                    "value":"1.4.1"
-                },
-                {
-                    "label":"11.0.108.0",
-                    "value":"1.3.0"
-                }
+                "Latest",
+                "11.0.180.0"
             ],
-            "defaultValue": "1.4.1",
+            "defaultValue": "Latest",
             "metadata": {
                     "description": "If the Purpose is Development, the template will install the Platform version declared here."
             }
         },
         "lifetimeVersion": {
-            "type": "string",
+            "type": "Microsoft.Common.DropDown",
             "allowedValues": [
-                {
-                    "label":"Latest LifeTime",
-                    "value":"1.4.1"
-                },
-                {
-                    "label":"LT 11.0.108.0",
-                    "value":"1.3.0"
-                }
+                "Latest",
+                "LifeTime 11.0.180.0"
             ],
-            "defaultValue": "1.4.1",
+            "defaultValue": "Latest",
             "metadata": {
                 "description": "If the Purpose is LifeTime, the template will install the LifeTime version declared here."
         }
