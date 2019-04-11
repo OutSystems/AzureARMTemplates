@@ -40,6 +40,7 @@ This template deploys a single OutSystems environment on a virtual machine.
 
 **Notes:**
 
+- **If you don't have your own Virtual Network, use this auxiliary template to deploy it before deploying this template**: [Virtual Network Ready for Single Environment](https://github.com/OutSystems/AzureARMTemplates/tree/master#virtual-network-for-single-environments)
 - You have an optional parameter for the OutSystems environment private key. Usefull if you want to connect the VM to an existing OutSystems environment database (environment clone).
 
 ### 2. Lifetime Environment
@@ -47,6 +48,10 @@ This template deploys a single OutSystems environment on a virtual machine.
 Same as the previous template but for a Lifetime environment.
 
 [![Lifetime](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fmaster%2FLifetime.json)
+
+**Notes:**
+
+- **If you don't have your own Virtual Network, use this auxiliary template to deploy it before deploying this template**: [Virtual Network Ready for Single Environment](https://github.com/OutSystems/AzureARMTemplates/tree/master#virtual-network-for-single-environments)
 
 ### 3. Frontend Server
 
@@ -93,11 +98,19 @@ This template deploys an OutSystems environment on a virtual machine on Azure SQ
 
 [![AzSQLController](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fmaster%2FAzSQLController.json)
 
+**Notes:**
+
+- **If you don't have your own Virtual Network, use this auxiliary template to deploy it before deploying this template**: [Virtual Network Ready for Single Environment](https://github.com/OutSystems/AzureARMTemplates/tree/master#virtual-network-for-single-environments)
+
 ### 6. Lifetime Environment
 
 Same as the previous template but for the Lifetime environment.
 
 [![AzSQLLifetime](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fmaster%2FAzSQLLifetime.json)
+
+**Notes:**
+
+- **If you don't have your own Virtual Network, use this auxiliary template to deploy it before deploying this template**: [Virtual Network Ready for Single Environmentt](https://github.com/OutSystems/AzureARMTemplates/tree/master#virtual-network-for-single-environments)
 
 ### 7. Single Environment + Frontend Server in a Virtual Machine Scale Set
 
