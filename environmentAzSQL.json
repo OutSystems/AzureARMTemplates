@@ -89,16 +89,36 @@
         "platformVersion": {
             "type": "string",
             "allowedValues": [
-                "Platform Server 11.0.108.0"
+                {
+                    "label":"Latest",
+                    "value":"1.4.1"
+                },
+                {
+                    "label":"11.0.108.0",
+                    "value":"1.3.0"
+                }
             ],
-            "defaultValue": "Latest"
+            "defaultValue": "Latest",
+            "metadata": {
+                    "description": "If the Purpose is Development, the template will install the Platform version declared here."
+            }
         },
         "lifetimeVersion": {
             "type": "string",
             "allowedValues": [
-                "LifeTime 11.0.108.0"
+                {
+                    "label":"Latest LifeTime",
+                    "value":"1.4.1"
+                },
+                {
+                    "label":"11.0.108.0",
+                    "value":"1.3.0"
+                }
             ],
-            "defaultValue": "Latest"
+            "defaultValue": "Latest LifeTime",
+            "metadata": {
+                "description": "If the Purpose is LifeTime, the template will install the LifeTime version declared here."
+        }
         }
     },
     "variables": {
