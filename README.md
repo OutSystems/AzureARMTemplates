@@ -106,6 +106,7 @@ This template deploys an OutSystems Deployment Controller on a virtual machine a
 ### 6. Complete Environment (deploys an Application Gateway)
 
 This template deploys an OutSystems Deployment Controller on a virtual machine and an AzureSQL server with OutSystems databases. Also deploys an Application Gateway for accessing the Environment. Use this template to deploy a complete, standalone environment.
+Fill the form with your own naming convention, replacing the default values placed as examples.
 
 [![AzSQLController](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fmaster%2FAzSQLController.json)
 
