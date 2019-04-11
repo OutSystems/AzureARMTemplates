@@ -28,7 +28,9 @@ The goal is to enable our customers to deploy OutSystems on Microsoft Azure with
 
 Use this group of templates to deploy OutSystems in an existing database server.
 
-You should check if the virtual network has network connectivity to the database server before starting the deployment.
+**Notes:**
+- You should check if the virtual network has network connectivity to the database server before starting the deployment.
+- Always validate if you already have your own Virtual Network to deploy on or if you need to use one of the auxiliary templates (bottom of this read.me)
 
 ### 1. Single Environment
 
@@ -65,7 +67,8 @@ Same as the previous template but this time, the frontend server will be deploye
 
 **Notes:**
 
-- The virtual network for this deployment must contain at least two subnets. One for the VMs and another for the Azure Application Gateway. The subnet for the Application Gateway must not contain any other resources.
+- **If you don't have your own Virtual Network, use this auxiliary template to deploy it before deploying this template**: [Virtual Network Ready for ScaleSet](https://github.com/OutSystems/AzureARMTemplates#virtual-network-for-virtual-machine-scale-sets)
+- If you already have your own Virtual Network for this deployment, it must contain at least two subnets: One for the VMs and another for the Azure Application Gateway. The subnet for the Application Gateway must not contain any other resources. 
 - The trial license included in the templates only allows two frontend servers including the deployment controller. To scale to two frontends using the Virtual Machine Scale Set you need to go to Service Center -> Frontends, and disable the frontend role of the deployment controller server.
 - To scale to more than two frontends you need to install your own OutSystems license.
 - IMPORTANT: When the Virtual Machine Scale Set is scalling up, it needs access to the "outsystemsSetup\OutSystemsSetupScript.ps1" file in this repository. So you should not block internet access to the VMSS.
@@ -82,6 +85,7 @@ Use this group of templates to deploy OutSystems on Azure SQL.
 
 - The Azure SQL Server admin username MUST BE different from the VM admin username.
 - When installing OutSystems 10 leave the Database Log parameter empty.
+- Always validate if you already have your own Virtual Network to deploy on or if you need to use one of the auxiliary templates (bottom of this read.me)
 
 ### 5. Single Environment
 
@@ -104,7 +108,8 @@ Single environment with a frontend server deployed in a VMSS cluster. This enabl
 
 **Notes:**
 
-- The virtual network for this deployment must contain at least two subnets. One for the VMs and another for the Azure Application Gateway. The subnet for the Application Gateway must not contain any other resources.
+- **If you don't have your own Virtual Network, use this auxiliary template to deploy it before deploying this template**: [Virtual Network Ready for ScaleSet](https://github.com/OutSystems/AzureARMTemplates#virtual-network-for-virtual-machine-scale-sets)
+- If you already have your own Virtual Network for this deployment, it must contain at least two subnets: One for the VMs and another for the Azure Application Gateway. The subnet for the Application Gateway must not contain any other resources. 
 - The trial license included in the templates only allows two frontend servers including the deployment controller. To scale to two frontends using the Virtual Machine Scale Set you need to go to Service Center -> Frontends, and disable the frontend role of the deployment controller server.
 - To scale to more than two frontends you need to install your own OutSystems license.
 - IMPORTANT: When the Virtual Machine Scale Set is scalling up, it needs access to the "outsystemsSetup\OutSystemsSetupScript.ps1" file in this repository. So you should not block internet access to the VMSS.
