@@ -85,6 +85,20 @@
                 "Lifetime"
             ],
             "defaultValue": "Development"
+        },
+        "platformVersion": {
+            "type": "string",
+            "allowedValues": [
+                "Platform Server 11.0.108.0"
+            ],
+            "defaultValue": "Latest"
+        },
+        "lifetimeVersion": {
+            "type": "string",
+            "allowedValues": [
+                "LifeTime 11.0.108.0"
+            ],
+            "defaultValue": "Latest"
         }
     },
     "variables": {
@@ -100,7 +114,7 @@
             "size": "[parameters('controllerSize')]",
             "subnetId": "[variables('controllerSubnetId')]",
             "imageSku": "[if(equals(parameters('environmentPurpose'),'Lifetime'),'lifetime','platformserver')]",
-            "imageVersion": "[if(equals(parameters('environmentPurpose'),'Lifetime'),'1.4.1','1.4.1')]",
+            "imageVersion": "[if(equals(parameters('environmentPurpose'),'Lifetime'),'lifetimeVersion','platformVersion')]",
             "withPublicIp": "[parameters('controllerWithPublicIp')]",
             "deploymentName": "[concat(deployment().name, '.VirtualMachine')]",
             "templateUri": "[uri(variables('_artifactsLocation'), concat('sharedResources/virtualMachines.json', variables('_artifactsLocationSasToken')))]"
