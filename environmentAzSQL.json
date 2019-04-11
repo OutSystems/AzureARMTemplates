@@ -8,7 +8,7 @@
         },
         "controllerAdminUser": {
             "type": "string",
-            "defaultValue": "OutSystemsOnAzureAdmin"
+            "defaultValue": "OutSystemsVMAdmin"
         },
         "controllerAdminPass": {
             "type": "securestring"
