@@ -90,7 +90,7 @@
             "type": "string",
             "allowedValues": [
                 "11.0.211.0",
-                "11.0.180.0"
+                "11.0.108.0"
             ],
             "defaultValue": "11.0.211.0",
             "metadata": {
@@ -101,7 +101,7 @@
             "type": "string",
             "allowedValues": [
                 "LifeTime 11.0.211.0",
-                "LifeTime 11.0.180.0"
+                "LifeTime 11.0.108.0"
             ],
             "defaultValue": "LifeTime 11.0.211.0",
             "metadata": {
@@ -119,7 +119,7 @@
             "11.0.211.0":{
                 "platformVersion": "1.4.0"
             },
-            "11.0.180.0":{
+            "11.0.108.0":{
                 "platformVersion": "1.3.0"
             }
         },
@@ -127,7 +127,7 @@
             "LifeTime 11.0.211.0":{
                 "lifetimeVersion": "1.4.0"
             },
-            "LifeTime 11.0.180.0":{
+            "LifeTime 11.0.108.0":{
                 "lifetimeVersion": "1.3.0"
             }
         },
