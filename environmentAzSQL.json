@@ -89,10 +89,10 @@
         "platformVersion": {
             "type": "string",
             "allowedValues": [
-                "Latest",
+                "11.0.211.0",
                 "11.0.180.0"
             ],
-            "defaultValue": "Latest",
+            "defaultValue": "11.0.211.0",
             "metadata": {
                     "description": "If the Purpose is Development, the template will install the Platform version declared here."
             }
@@ -100,10 +100,10 @@
         "lifetimeVersion": {
             "type": "Microsoft.Common.DropDown",
             "allowedValues": [
-                "Latest",
+                "LifeTime 11.0.211.0",
                 "LifeTime 11.0.180.0"
             ],
-            "defaultValue": "Latest",
+            "defaultValue": "LifeTime 11.0.211.0",
             "metadata": {
                 "description": "If the Purpose is LifeTime, the template will install the LifeTime version declared here."
         }
