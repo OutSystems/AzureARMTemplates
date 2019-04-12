@@ -1,31 +1,21 @@
 {
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "virtualMachineName": {
+        "frontendName": {
             "type": "string",
-            "metadata": {
-                "description": "Name of the deployment controller virtual machine."
-            }
+            "defaultValue": "your-newEnv-vm"
         },
-        "virtualMachineSize": {
+        "frontendAdminUser": {
             "type": "string",
-            "metadata": {
-                "description": "Size of the deployment controller virtual machine."
-            },
+            "defaultValue": "OutSystemsVMAdmin"
+        },
+        "frontendAdminPass": {
+            "type": "securestring"
+        },
+        "controllerSize": {
+            "type": "string",
             "defaultValue": "Standard_F4s_v2"
-        },
-        "adminUsername": {
-            "type": "string",
-            "metadata": {
-                "description": "Admin username of all Windows VMs."
-            }
-        },
-        "adminPassword": {
-            "type": "securestring",
-            "metadata": {
-                "description": "Admin password of all Windows VMs."
-            }
         },
         "virtualNetworkResourceGroup": {
             "type": "string",
@@ -35,153 +25,129 @@
         },
         "virtualNetworkName": {
             "type": "string",
+            "defaultValue": "newEnv-vnet",
             "metadata": {
-                "description": "The name of the existing virtual network (VNET)."
+                "description": "The name of the virtual network (VNET) to be used."
             }
         },
-        "virtualNetworkSubnetName": {
+        "controllerSubnetName": {
             "type": "string",
+            "defaultValue": "newEnv-subnet",
             "metadata": {
-                "description": "The subnet where you want to deploy the deployment controller virtual machine."
+                "description": "The name of the subnet where you will deploy the deployment controller virtual machine."
             }
         },
-        "databasePlatformServer": {
+        "controllerWithPublicIp": {
+            "type": "bool",
+            "defaultValue": false
+        },
+        "databaseServerName": {
             "type": "string",
-            "metadata": {
-                "description": "The SQL Server hostname/IP for the platform database."
-            }
+            "defaultValue": "yourproject-newEnv-srvaddyouruniquesuffix"
         },
-        "databaseSessionServer": {
+        "databaseServerAdminUser": {
             "type": "string",
-            "defaultValue": " ",
-            "metadata": {
-                "description": "The SQL Server hostname/IP for the session database. If not specified, defaults to the SQL Server of the platform database."
-            }
+            "defaultValue": "OutSystemsOnAzureAdmin-SQL"
         },
-        "databaseLogServer": {
+        "databaseServerAdminPass": {
+            "type": "securestring"
+        },
+        "platformDatabaseName": {
             "type": "string",
-            "defaultValue": " ",
-            "metadata": {
-                "description": "The SQL Server hostname/IP for the session database. If not specified, defaults to the SQL Server of the platform database. This is only appliable to OutSystems 11."
-            }
+            "defaultValue": "yourproject-newEnv-db"
         },
-        "databaseAdministratorLogin": {
+        "sessionDatabaseName": {
             "type": "string",
-            "metadata": {
-                "description": "The SQL Server administrator login."
-            },
-            "defaultValue": "sa"
+            "defaultValue": "yourproject-newEnvSession-db"
         },
-        "databaseAdministratorPass": {
-            "type": "securestring",
-            "metadata": {
-                "description": "The SQL Server administrator login password."
-            }
-        },
-        "databasePlatformCatalog": {
+        "loggingDatabaseName": {
             "type": "string",
-            "defaultValue": "outsystems",
-            "metadata": {
-                "description": "Name of the platform catalog."
-            }
+            "defaultValue": "yourproject-newEnvLog-db"
         },
-        "databaseSessionCatalog": {
+        "gatewayName": {
             "type": "string",
-            "defaultValue": "osSession",
+            "defaultValue": "yourproject-newEnv-appgw",
             "metadata": {
-                "description": "Name of the session catalog. Is not specified, default to the platform catalog."
+                "description": "If specified, the virtual machine will be exposed to internet throught an Application Gateway"
             }
         },
-        "databaseLogCatalog": {
+        "gatewaySubnetName": {
             "type": "string",
-            "defaultValue": " ",
+            "defaultValue": "newAppGateway-subnet",
             "metadata": {
-                "description": "Name of the log catalog. Is not specified, default to the platform catalog. This is only appliable to OutSystems 11."
+                "description": "Only needed if gatewayName parameter is specified. Use the one you created when deploying the Virtual Network for Single Environments Template"
             }
         },
-        "outsystemsDatabaseAdminUser": {
+        "platformVersion": {
             "type": "string",
-            "defaultValue": "OSADMIN",
-            "metadata": {
-                "description": "Name of the user that is the owner of OutSystems metamodel tables."
-            }
-        },
-        "outsystemsDatabaseAdminPass": {
-            "type": "securestring",
-            "metadata": {
-                "description": "Password of the user that is the owner of OutSystems metamodel tables."
-            }
-        },
-        "outsystemsDatabaseRuntimeUser": {
-            "type": "string",
-            "defaultValue": "OSRUNTIME",
-            "metadata": {
-                "description": "Name of the user that is the owner of tables created in the development environment."
-            }
-        },
-        "outsystemsDatabaseRuntimePass": {
-            "type": "securestring",
-            "metadata": {
-                "description": "Password of the user that is the owner of tables created in the development environment."
-            }
-        },
-        "outsystemsDatabaseLogUser": {
-            "type": "string",
-            "defaultValue": "OSLOG",
-            "metadata": {
-                "description": "Name of the user that is the owner of logging tables."
-            }
-        },
-        "outsystemsDatabaseLogPass": {
-            "type": "securestring",
-            "metadata": {
-                "description": "Password of the user that is the owner of logging tables."
-            }
-        },
-        "outsystemsDatabaseSessionUser": {
-            "type": "string",
-            "defaultValue": "OSSTATE",
-            "metadata": {
-                "description": "Name of the user that is the owner of OutSystems session tables."
-            }
-        },
-        "outsystemsDatabaseSessionPass": {
-            "type": "securestring",
-            "metadata": {
-                "description": "Password of the user that is the owner of OutSystems session tables."
-            }
-        },
-        "outsystemsEnvironmentPrivatekey": {
-            "type": "string",
-            "metadata": {
-                "description": "Environment private key."
-            }
-        },
-        "outsystemsServerVersion": {
-            "type": "string",
+            "allowedValues": [
+                "11.0.211.0"
+            ],
             "defaultValue": "11.0.211.0",
             "metadata": {
-                "description": "The version of the OutSystems platform server you want to install."
+                "description": "If the Purpose is Development, the template will install the Platform version declared here."
             }
         },
-        "outsystemsServiceStudioVersion": {
+        "controllerName": {
             "type": "string",
-            "defaultValue": "11.0.408.0",
             "metadata": {
-                "description": "The version of the OutSystems service studio you want to install."
+                "description": "The virtual machine name of the existing OutSystems controller"
             }
         },
-        "outsystemsEnvironmentController": {
+        "controllerIp": {
             "type": "string",
             "metadata": {
-                "description": "The IP or the hostname of the environment controller."
+                "description": "The IP address of the existing OutSystems controller"
+            }
+        },
+        "environmentPrivateKey": {
+            "type": "string",
+            "metadata": {
+                "description": "The private key of the existing environment"
             }
         }
     },
-    "variables": {},
+    "variables": {
+        "_artifactsLocation": "https://gallery.azure.com/artifact/20161101/outsystems.outsystems_platformoutsystems-infrastructure.1.0.5/Artifacts/",
+        "_artifactsLocationSasToken": " ",
+        "location": "[resourceGroup().location]",
+        "controllerSubnetId": "[concat(resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName')), '/subnets/', parameters('controllerSubnetName'))]",
+        "gatewaySubnetId": "[concat(resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName')), '/subnets/', parameters('gatewaySubnetName'))]",
+        "PSImage": {
+            "11.0.211.0": {
+                "baseimage": "1.4.2"
+            }
+        },
+        "virtualMachine": {
+            "name": "[parameters('frontendName')]",
+            "adminUser": "[parameters('frontendAdminUser')]",
+            "adminPass": "[parameters('frontendAdminPass')]",
+            "size": "[parameters('controllerSize')]",
+            "subnetId": "[variables('controllerSubnetId')]",
+            "imageSku": "platformserver",
+            "imageVersion": "[variables('PSImage')[parameters('platformVersion')].baseimage]",
+            "withPublicIp": "[parameters('controllerWithPublicIp')]",
+            "deploymentName": "[concat(deployment().name, '.VirtualMachine')]",
+            "templateUri": "[uri(variables('_artifactsLocation'), concat('sharedResources/virtualMachines.json', variables('_artifactsLocationSasToken')))]"
+        },
+        "applicationGateway": {
+            "name": "[parameters('gatewayName')]",
+            "dnsName": "[toLower(concat(parameters('gatewayName'), uniqueString(resourceGroup().id)))]",
+            "subnetId": "[variables('gatewaySubnetId')]",
+            "deploymentName": "[concat(deployment().name, '.Gateway')]",
+            "templateUri": "[uri(variables('_artifactsLocation'), concat('sharedResources/applicationGateways.json', variables('_artifactsLocationSasToken')))]"
+        },
+        "outsystemsConfig": {
+            "serverRole": "Frontend",
+            "environmentPurpose": "N/A",
+            "sslOffLoad": "[not(empty(trim(parameters('gatewayName'))))]",
+            "deploymentName": "[concat(deployment().name, '.Config')]",
+            "templateUri": "[uri(variables('_artifactsLocation'), concat('outsystemsResources/outsystemsConfig.json', variables('_artifactsLocationSasToken')))]"
+        }
+    },
     "resources": [
         {
-            "apiVersion": "2015-01-01",
+            "apiVersion": "2017-05-10",
             "name": "pid-d6afbe29-a6dc-4149-863a-c2f7d985c159",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -194,135 +160,150 @@
             }
         },
         {
-            "name": "[concat('OutSystems.FE.', parameters('virtualMachineName'), '.VirtualMachine')]",
-            "apiVersion": "2015-01-01",
+            "name": "[variables('virtualMachine').deploymentName]",
+            "apiVersion": "2017-05-10",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(deployment().properties.templateLink.uri, 'resources/virtualMachine.json')]"
+                    "uri": "[variables('virtualMachine').templateUri]"
                 },
                 "parameters": {
                     "virtualMachineName": {
-                        "value": "[parameters('virtualMachineName')]"
+                        "value": "[variables('virtualMachine').name]"
                     },
                     "virtualMachineSize": {
-                        "value": "[parameters('virtualMachineSize')]"
+                        "value": "[variables('virtualMachine').size]"
                     },
-                    "adminUsername": {
-                        "value": "[parameters('adminUsername')]"
+                    "virtualMachineImageSku": {
+                        "value": "[variables('virtualMachine').imageSku]"
+                    },
+                    "virtualMachineImageVersion": {
+                        "value": "[variables('virtualMachine').imageVersion]"
+                    },
+                    "adminUserName": {
+                        "value": "[variables('virtualMachine').adminUser]"
                     },
                     "adminPassword": {
-                        "value": "[parameters('adminPassword')]"
+                        "value": "[variables('virtualMachine').adminPass]"
                     },
-                    "virtualNetworkResourceGroup": {
-                        "value": "[parameters('virtualNetworkResourceGroup')]"
+                    "virtualNetworkSubnetId": {
+                        "value": "[variables('virtualMachine').subnetId]"
                     },
-                    "virtualNetworkName": {
-                        "value": "[parameters('virtualNetworkName')]"
+                    "withPublicIp": {
+                        "value": "[variables('virtualMachine').withPublicIp]"
                     },
-                    "virtualNetworkSubnetName": {
-                        "value": "[parameters('virtualNetworkSubnetName')]"
+                    "location": {
+                        "value": "[variables('location')]"
                     }
                 }
             }
         },
         {
-            "name": "[concat('OutSystems.FE.', parameters('virtualMachineName'), '.Setup')]",
-            "apiVersion": "2015-01-01",
+            "name": "[variables('outsystemsConfig').deploymentName]",
+            "apiVersion": "2017-05-10",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(deployment().properties.templateLink.uri, 'outsystemsSetup/outsystemsSetup.json')]"
+                    "uri": "[variables('outsystemsConfig').templateUri]"
                 },
                 "parameters": {
                     "resourceName": {
-                        "value": "[reference(concat('OutSystems.FE.', parameters('virtualMachineName'), '.VirtualMachine')).outputs.virtualMachineName.value]"
+                        "value": "[variables('virtualMachine').name]"
                     },
-                    "OSDBServer": {
-                        "value": "[parameters('databasePlatformServer')]"
+                    "adminUser": {
+                        "value": "[parameters('databaseServerAdminUser')]"
                     },
-                    "OSDBSessionServer": {
-                        "value": "[parameters('databaseSessionServer')]"
+                    "adminPass": {
+                        "value": "[parameters('databaseServerAdminPass')]"
                     },
-                    "OSDBLogServer": {
-                        "value": "[parameters('databaseLogServer')]"
+                    "dbServer": {
+                        "value": "[parameters('databaseServerName')]"
                     },
-                    "OSDBCatalog": {
-                        "value": "[parameters('databasePlatformCatalog')]"
+                    "dbOutsys": {
+                        "value": "[parameters('platformDatabaseName')]"
                     },
-                    "OSDBSessionCatalog": {
-                        "value": "[parameters('databaseSessionCatalog')]"
+                    "dbSession": {
+                        "value": "[parameters('sessionDatabaseName')]"
                     },
-                    "OSDBLogCatalog": {
-                        "value": "[parameters('databaseLogCatalog')]"
+                    "dbLogging": {
+                        "value": "[parameters('loggingDatabaseName')]"
                     },
-                    "OSDBSAUser": {
-                        "value": "[parameters('databaseAdministratorLogin')]"
+                    "controllerName": {
+                        "value": "[parameters('controllerName')]"
                     },
-                    "OSDBSAPass": {
-                        "value": "[parameters('databaseAdministratorPass')]"
+                    "controllerIp": {
+                        "value": "[parameters('controllerIp')]"
                     },
-                    "OSDBAdminUser": {
-                        "value": "[parameters('outsystemsDatabaseAdminUser')]"
+                    "privateKey": {
+                        "value": "[parameters('environmentPrivateKey')]"
                     },
-                    "OSDBAdminPass": {
-                        "value": "[parameters('outsystemsDatabaseAdminPass')]"
+                    "serverRole": {
+                        "value": "[variables('outsystemsConfig').serverRole]"
                     },
-                    "OSDBRuntimeUser": {
-                        "value": "[parameters('outsystemsDatabaseRuntimeUser')]"
+                    "environmentPurpose": {
+                        "value": "[variables('outsystemsConfig').environmentPurpose]"
                     },
-                    "OSDBRuntimePass": {
-                        "value": "[parameters('outsystemsDatabaseRuntimePass')]"
+                    "sslOffLoad": {
+                        "value": "[variables('outsystemsConfig').sslOffLoad]"
                     },
-                    "OSDBLogUser": {
-                        "value": "[parameters('outsystemsDatabaseLogUser')]"
+                    "storageAccountURI": {
+                        "value": "\"\""
                     },
-                    "OSDBLogPass": {
-                        "value": "[parameters('outsystemsDatabaseLogPass')]"
-                    },
-                    "OSDBSessionUser": {
-                        "value": "[parameters('outsystemsDatabaseSessionUser')]"
-                    },
-                    "OSDBSessionPass": {
-                        "value": "[parameters('outsystemsDatabaseSessionPass')]"
-                    },
-                    "OSRabbitMQPass": {
-                        "value": "[parameters('adminPassword')]"
-                    },
-                    "OSServerVersion": {
-                        "value": "[parameters('outsystemsServerVersion')]"
-                    },
-                    "OSServiceStudioVersion": {
-                        "value": "[parameters('outsystemsServiceStudioVersion')]"
-                    },
-                    "OSPrivateKey": {
-                        "value": "[parameters('outsystemsEnvironmentPrivatekey')]"
-                    },
-                    "OSRole": {
-                        "value": "Frontend"
-                    },
-                    "OSController": {
-                        "value": "[parameters('outsystemsEnvironmentController')]"
-                    },
-                    "OSOutgoingIp": {
-                        "value": "[reference(concat('OutSystems.FE.', parameters('virtualMachineName'), '.VirtualMachine')).outputs.virtualMachineIP.value]"
-                    },
-                    "OSPurpose": {
-                        "value": "Development"
+                    "storageAccountkey": {
+                        "value": "\"\""
                     },
                     "_artifactsLocation": {
-                        "value": "[deployment().properties.templateLink.uri]"
+                        "value": "[variables('_artifactsLocation')]"
+                    },
+                    "_artifactsLocationSasToken": {
+                        "value": "[variables('_artifactsLocationSasToken')]"
+                    },
+                    "location": {
+                        "value": "[variables('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('applicationGateway').deploymentName]",
+            "apiVersion": "2017-05-10",
+            "condition": "[not(empty(trim(variables('applicationGateway').name)))]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('applicationGateway').templateUri]"
+                },
+                "parameters": {
+                    "applicationGatewayName": {
+                        "value": "[variables('applicationGateway').name]"
+                    },
+                    "applicationGatewayDnsName": {
+                        "value": "[variables('applicationGateway').dnsName]"
+                    },
+                    "applicationGatewaySubnetId": {
+                        "value": "[variables('applicationGateway').subnetId]"
+                    },
+                    "applicationGatewayBackendAddress": {
+                        "value": "[reference(variables('virtualMachine').deploymentName).outputs.virtualMachineIP.value]"
+                    },
+                    "location": {
+                        "value": "[variables('location')]"
                     }
                 }
             }
         }
     ],
     "outputs": {
-        "virtualMachineName": {
+        "frontendName": {
             "type": "string",
-            "value": "[parameters('virtualMachineName')]"
+            "value": "[variables('virtualMachine').name]"
+        },
+        "frontendIp": {
+            "type": "string",
+            "value": "[reference(variables('virtualMachine').deploymentName).outputs.virtualMachineIP.value]"
         }
     }
 }
