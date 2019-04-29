@@ -110,7 +110,8 @@
         }
     },
     "variables": {
-        "_artifactsLocation": "https://gallery.azure.com/artifact/20161101/outsystems.outsystems_platformoutsystems-infrastructure.1.0.5/Artifacts/",
+        "_artifactsLocation1": "https://gallery.azure.com/artifact/20161101/outsystems.outsystems_platformoutsystems-infrastructure.1.0.5/Artifacts/",
+        "_artifactsLocation": "https://catalogartifact.azureedge.net/publicartifacts/outsystems.outsystems_platform-preview-4caf5f02-694d-4f61-ae2d-f2a1d72848bd-outsystems-infrastructure/Artifacts/",
         "_artifactsLocationSasToken": " ",
         "location": "[resourceGroup().location]",
         "controllerSubnetId": "[concat(resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName')), '/subnets/', parameters('controllerSubnetName'))]",
@@ -420,13 +421,29 @@
             "type": "string",
             "value": "[reference(variables('virtualMachine').deploymentName).outputs.virtualMachineIP.value]"
         },
+        "privateKey" : {
+            "type": "string",
+            "value": "[reference(variables('outsystemsConfig').deploymentName).outputs.privateKey.value]"
+        },
         "databaseServerFQDN": {
             "type": "string",
             "value": "[reference(variables('sqlServer').deploymentName).outputs.serverNameFQDN.value]"
         },
-        "databaseServerName": {
+        "databaseServerAdminUser": {
             "type": "string",
-            "value": "[variables('sqlServer').name]"
+            "value": "[parameters('databaseServerAdminUser')]"
+        },
+        "databasePlatform": {
+            "type": "string",
+            "value": "[reference(variables('sqlDatabases')[0].deploymentName).outputs.databaseName.value]"
+        },
+        "databaseSession": {
+            "type": "string",
+            "value": "[reference(variables('sqlDatabases')[1].deploymentName).outputs.databaseName.value]"
+        },
+        "databaseLogging": {
+            "type": "string",
+            "value": "[reference(variables('sqlDatabases')[2].deploymentName).outputs.databaseName.value]"
         }
     }
 }

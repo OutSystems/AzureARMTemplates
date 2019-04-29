@@ -13,7 +13,7 @@
         "frontendAdminPass": {
             "type": "securestring"
         },
-        "controllerSize": {
+        "frontendSize": {
             "type": "string",
             "defaultValue": "Standard_F4s_v2"
         },
@@ -30,14 +30,14 @@
                 "description": "The name of the virtual network (VNET) to be used."
             }
         },
-        "controllerSubnetName": {
+        "frontendSubnetName": {
             "type": "string",
             "defaultValue": "newEnv-subnet",
             "metadata": {
                 "description": "The name of the subnet where you will deploy the deployment controller virtual machine."
             }
         },
-        "controllerWithPublicIp": {
+        "frontendWithPublicIp": {
             "type": "bool",
             "defaultValue": false
         },
@@ -108,10 +108,11 @@
         }
     },
     "variables": {
-        "_artifactsLocation": "https://gallery.azure.com/artifact/20161101/outsystems.outsystems_platformoutsystems-infrastructure.1.0.5/Artifacts/",
+        "_artifactsLocation1": "https://gallery.azure.com/artifact/20161101/outsystems.outsystems_platformoutsystems-infrastructure.1.0.5/Artifacts/",
+        "_artifactsLocation": "https://catalogartifact.azureedge.net/publicartifacts/outsystems.outsystems_platform-preview-4caf5f02-694d-4f61-ae2d-f2a1d72848bd-outsystems-infrastructure/Artifacts/",
         "_artifactsLocationSasToken": " ",
         "location": "[resourceGroup().location]",
-        "controllerSubnetId": "[concat(resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName')), '/subnets/', parameters('controllerSubnetName'))]",
+        "controllerSubnetId": "[concat(resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName')), '/subnets/', parameters('frontendSubnetName'))]",
         "gatewaySubnetId": "[concat(resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName')), '/subnets/', parameters('gatewaySubnetName'))]",
         "PSImage": {
             "11.0.211.0": {
@@ -122,11 +123,11 @@
             "name": "[parameters('frontendName')]",
             "adminUser": "[parameters('frontendAdminUser')]",
             "adminPass": "[parameters('frontendAdminPass')]",
-            "size": "[parameters('controllerSize')]",
+            "size": "[parameters('frontendSize')]",
             "subnetId": "[variables('controllerSubnetId')]",
             "imageSku": "platformserver",
             "imageVersion": "[variables('PSImage')[parameters('platformVersion')].baseimage]",
-            "withPublicIp": "[parameters('controllerWithPublicIp')]",
+            "withPublicIp": "[parameters('frontendWithPublicIp')]",
             "deploymentName": "[concat(deployment().name, '.VirtualMachine')]",
             "templateUri": "[uri(variables('_artifactsLocation'), concat('sharedResources/virtualMachines.json', variables('_artifactsLocationSasToken')))]"
         },
@@ -210,7 +211,7 @@
                 },
                 "parameters": {
                     "resourceName": {
-                        "value": "[variables('virtualMachine').name]"
+                        "value": "[reference(variables('virtualMachine').deploymentName).outputs.virtualMachineName.value]"
                     },
                     "adminUser": {
                         "value": "[parameters('databaseServerAdminUser')]"
