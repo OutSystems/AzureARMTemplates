@@ -90,8 +90,7 @@
         }
     },
     "variables": {
-        "_artifactsLocation1": "https://gallery.azure.com/artifact/20161101/outsystems.outsystems_platformoutsystems-infrastructure.1.0.5/Artifacts/",
-        "_artifactsLocation": "https://catalogartifact.azureedge.net/publicartifacts/outsystems.outsystems_platform-preview-4caf5f02-694d-4f61-ae2d-f2a1d72848bd-outsystems-infrastructure/Artifacts/",
+        "_artifactsLocation": "https://catalogartifact.azureedge.net/publicartifacts/outsystems.outsystems_platform-f305c2a3-8ee0-4661-9a7a-2b04d6d14e3c-outsystems-infrastructure/Artifacts/",
         "_artifactsLocationSasToken": " ",
         "location": "[resourceGroup().location]",
         "vmssSubnetId": "[concat(resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName')), '/subnets/', parameters('vmssSubnetName'))]",
