@@ -34,7 +34,7 @@ Use this group of templates to deploy OutSystems on top of an existing database 
 - You should check if the virtual network has network connectivity to the database server before starting the deployment.
 - Always validate if you already have your own Virtual Network to deploy on or if you need to use one of the auxiliary templates (bottom of this read.me)
 
-### 1. Single Environment (You can choose if it's a Development/Production or LifeTime Environmnet)
+### 1. Single Environment (You can choose if it's a Development/Production or LifeTime Environment)
 
 This template deploys a single OutSystems environment on a virtual machine.
 
@@ -85,7 +85,7 @@ Use this group of templates to deploy OutSystems on Azure SQL.
 - The Azure SQL Server admin username MUST BE different from the VM admin username.
 - Always validate if you already have your own Virtual Network to deploy on or if you need to use one of the auxiliary templates (bottom of this read.me)
 
-### 4. Full Environment (You can choose if it's a Development/Production or LifeTime Environmnet)
+### 4. Full Environment (You can choose if it's a Development/Production or LifeTime Environment)
 
 This template deploys an OutSystems Deployment Controller on a virtual machine and an AzureSQL server with OutSystems databases. Also deploys an Application Gateway for accessing the Environment. Use this template to deploy a complete, standalone environment.
 Fill the form with your own naming convention, replacing the default values placed as examples.
