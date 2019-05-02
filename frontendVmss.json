@@ -1,0 +1,271 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vmssName": {
+            "type": "string"
+        },
+        "vmssInstanceAdminUser": {
+            "type": "string"
+        },
+        "vmssInstanceAdminPass": {
+            "type": "securestring"
+        },
+        "vmssInstanceSize": {
+            "type": "string",
+            "defaultValue": "Standard_F4s_v2"
+        },
+        "vmssInstanceCount": {
+            "type": "int",
+            "defaultValue": 1
+        },
+        "virtualNetworkResourceGroup": {
+            "type": "string",
+            "metadata": {
+                "description": "The Resource Group where the existing virtual network (VNET) is located."
+            }
+        },
+        "virtualNetworkName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the existing virtual network (VNET)."
+            }
+        },
+        "vmssSubnetName": {
+            "type": "string",
+            "metadata": {
+                "description": "The subnet where you want to deploy the virtual machine scale set."
+            }
+        },
+        "databaseServerName": {
+            "type": "string"
+        },
+        "databaseServerAdminUser": {
+            "type": "string"
+        },
+        "databaseServerAdminPass": {
+            "type": "securestring"
+        },
+        "platformDatabaseName": {
+            "type": "string",
+            "defaultValue": "outsystems"
+        },
+        "sessionDatabaseName": {
+            "type": "string",
+            "defaultValue": "osSession"
+        },
+        "loggingDatabaseName": {
+            "type": "string",
+            "defaultValue": "osLog"
+        },
+        "gatewayName": {
+            "type": "string",
+            "metadata": {
+                "description": "Virtual machine scale set Application Gateway name"
+            }
+        },
+        "gatewaySubnetName": {
+            "type": "string",
+            "metadata": {
+                "description": "Virtual machine scale set Application Gateway subnet name"
+            }
+        },
+        "controllerName": {
+            "type": "string",
+            "metadata": {
+                "description": "The virtual machine name of the existing OutSystems controller"
+            }
+        },
+        "controllerIp": {
+            "type": "string",
+            "metadata": {
+                "description": "The IP address of the existing OutSystems controller"
+            }
+        },
+        "environmentPrivateKey": {
+            "type": "string",
+            "metadata": {
+                "description": "The private key of the existing environment"
+            }
+        }
+    },
+    "variables": {
+        "_artifactsLocation": "https://catalogartifact.azureedge.net/publicartifacts/outsystems.outsystems_platform-f305c2a3-8ee0-4661-9a7a-2b04d6d14e3c-outsystems-infrastructure/Artifacts/",
+        "_artifactsLocationSasToken": " ",
+        "location": "[resourceGroup().location]",
+        "vmssSubnetId": "[concat(resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName')), '/subnets/', parameters('vmssSubnetName'))]",
+        "gatewaySubnetId": "[concat(resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName')), '/subnets/', parameters('gatewaySubnetName'))]",
+        "virtualMachineScaleSet": {
+            "name": "[parameters('vmssName')]",
+            "adminUser": "[parameters('vmssInstanceAdminUser')]",
+            "adminPass": "[parameters('vmssInstanceAdminPass')]",
+            "size": "[parameters('vmssInstanceSize')]",
+            "count": "[parameters('vmssInstanceCount')]",
+            "subnetId": "[variables('vmssSubnetId')]",
+            "imageSku": "platformserver",
+            "imageVersion": "1.5.0",
+            "deploymentName": "[concat(deployment().name, '.Frontends.VirtualMachineScaleSet')]",
+            "templateUri": "[uri(variables('_artifactsLocation'), concat('sharedResources/virtualMachineScaleSets.json', variables('_artifactsLocationSasToken')))]"
+        },
+        "applicationGateway": {
+            "name": "[parameters('gatewayName')]",
+            "dnsName": "[toLower(concat(parameters('gatewayName'), uniqueString(resourceGroup().id)))]",
+            "subnetId": "[variables('gatewaySubnetId')]",
+            "deploymentName": "[concat(deployment().name, '.Frontends.Gateway')]",
+            "templateUri": "[uri(variables('_artifactsLocation'), concat('sharedResources/applicationGateways.json', variables('_artifactsLocationSasToken')))]"
+        },
+        "outsystemsFrontendConfig": {
+            "serverRole": "Frontend",
+            "environmentPurpose": "N/A",
+            "resourceType": "virtualMachineScaleSets",
+            "deploymentName": "[concat(deployment().name, '.Frontends.Config')]",
+            "templateUri": "[uri(variables('_artifactsLocation'), concat('outsystemsResources/outsystemsConfig.json', variables('_artifactsLocationSasToken')))]"
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2017-05-10",
+            "name": "pid-d6afbe29-a6dc-4149-863a-c2f7d985c159",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": []
+                }
+            }
+        },
+        {
+            "name": "[variables('virtualMachineScaleSet').deploymentName]",
+            "apiVersion": "2017-05-10",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('virtualMachineScaleSet').templateUri]"
+                },
+                "parameters": {
+                    "vmssName": {
+                        "value": "[variables('virtualMachineScaleSet').name]"
+                    },
+                    "virtualMachineSize": {
+                        "value": "[variables('virtualMachineScaleSet').size]"
+                    },
+                    "virtualMachineImageSku": {
+                        "value": "[variables('virtualMachineScaleSet').imageSku]"
+                    },
+                    "virtualMachineImageVersion": {
+                        "value": "[variables('virtualMachineScaleSet').imageVersion]"
+                    },
+                    "adminUserName": {
+                        "value": "[variables('virtualMachineScaleSet').adminUser]"
+                    },
+                    "adminPassword": {
+                        "value": "[variables('virtualMachineScaleSet').adminPass]"
+                    },
+                    "virtualNetworkSubnetId": {
+                        "value": "[variables('virtualMachineScaleSet').subnetId]"
+                    },
+                    "applicationGatewayBackendAddressPools": {
+                        "value": "[reference(variables('applicationGateway').deploymentName).outputs.backendPoolId.value]"
+                    },
+                    "location": {
+                        "value": "[variables('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('outsystemsFrontendConfig').deploymentName]",
+            "apiVersion": "2017-05-10",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('outsystemsFrontendConfig').templateUri]"
+                },
+                "parameters": {
+                    "resourceName": {
+                        "value": "[reference(variables('virtualMachineScaleSet').deploymentName).outputs.vmssName.value]"
+                    },
+                    "resourceType": {
+                        "value": "[variables('outsystemsFrontendConfig').resourceType]"
+                    },
+                    "adminUser": {
+                        "value": "[parameters('databaseServerAdminUser')]"
+                    },
+                    "adminPass": {
+                        "value": "[parameters('databaseServerAdminPass')]"
+                    },
+                    "dbServer": {
+                        "value": "[parameters('databaseServerName')]"
+                    },
+                    "dbOutsys": {
+                        "value": "[parameters('platformDatabaseName')]"
+                    },
+                    "dbSession": {
+                        "value": "[parameters('sessionDatabaseName')]"
+                    },
+                    "dbLogging": {
+                        "value": "[parameters('loggingDatabaseName')]"
+                    },
+                    "controllerName": {
+                        "value": "[parameters('controllerName')]"
+                    },
+                    "controllerIp": {
+                        "value": "[parameters('controllerIp')]"
+                    },
+                    "serverRole": {
+                        "value": "[variables('outsystemsFrontendConfig').serverRole]"
+                    },
+                    "privateKey": {
+                        "value": "[parameters('environmentPrivateKey')]"
+                    },
+                    "storageAccountURI": {
+                        "value": "\"\""
+                    },
+                    "storageAccountkey": {
+                        "value": "\"\""
+                    },
+                    "_artifactsLocation": {
+                        "value": "[variables('_artifactsLocation')]"
+                    },
+                    "_artifactsLocationSasToken": {
+                        "value": "[variables('_artifactsLocationSasToken')]"
+                    },
+                    "location": {
+                        "value": "[variables('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('applicationGateway').deploymentName]",
+            "apiVersion": "2017-05-10",
+            "condition": "[not(empty(trim(variables('applicationGateway').name)))]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('applicationGateway').templateUri]"
+                },
+                "parameters": {
+                    "applicationGatewayName": {
+                        "value": "[variables('applicationGateway').name]"
+                    },
+                    "applicationGatewayDnsName": {
+                        "value": "[variables('applicationGateway').dnsName]"
+                    },
+                    "applicationGatewaySubnetId": {
+                        "value": "[variables('applicationGateway').subnetId]"
+                    },
+                    "location": {
+                        "value": "[variables('location')]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}

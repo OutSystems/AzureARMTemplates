@@ -1,0 +1,343 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "controllerName": {
+            "type": "string",
+            "defaultValue": "your-newEnv-vm"
+        },
+        "controllerAdminUser": {
+            "type": "string",
+            "defaultValue": "OutSystemsVMAdmin"
+        },
+        "controllerAdminPass": {
+            "type": "securestring"
+        },
+        "controllerSize": {
+            "type": "string",
+            "defaultValue": "Standard_F4s_v2"
+        },
+        "virtualNetworkResourceGroup": {
+            "type": "string",
+            "metadata": {
+                "description": "The Resource Group where the existing virtual network (VNET) is located."
+            }
+        },
+        "virtualNetworkName": {
+            "type": "string",
+            "defaultValue": "newEnv-vnet",
+            "metadata": {
+                "description": "The name of the virtual network (VNET) to be used."
+            }
+        },
+        "controllerSubnetName": {
+            "type": "string",
+            "defaultValue": "newEnv-subnet",
+            "metadata": {
+                "description": "The name of the subnet where you will deploy the deployment controller virtual machine."
+            }
+        },
+        "controllerWithPublicIp": {
+            "type": "bool",
+            "defaultValue": false
+        },
+        "databaseServerName": {
+            "type": "string",
+            "defaultValue": "yourproject-newEnv-srvaddyouruniquesuffix"
+        },
+        "databaseServerAdminUser": {
+            "type": "string",
+            "defaultValue": "OutSystemsOnAzureAdmin-SQL"
+        },
+        "databaseServerAdminPass": {
+            "type": "securestring"
+        },
+        "platformDatabaseName": {
+            "type": "string",
+            "defaultValue": "yourproject-newEnv-db"
+        },
+        "sessionDatabaseName": {
+            "type": "string",
+            "defaultValue": "yourproject-newEnvSession-db"
+        },
+        "loggingDatabaseName": {
+            "type": "string",
+            "defaultValue": "yourproject-newEnvLog-db"
+        },
+        "gatewayName": {
+            "type": "string",
+            "defaultValue": "yourproject-newEnv-appgw",
+            "metadata": {
+                "description": "If specified, the virtual machine will be exposed to internet throught an Application Gateway"
+            }
+        },
+        "gatewaySubnetName": {
+            "type": "string",
+            "defaultValue": "newAppGateway-subnet",
+            "metadata": {
+                "description": "Only needed if gatewayName parameter is specified. Use the one you created when deploying the Virtual Network for Single Environments Template"
+            }
+        },
+        "environmentPurpose": {
+            "type": "string",
+            "allowedValues": [
+                "Development",
+                "Lifetime"
+            ],
+            "defaultValue": "Development"
+        },
+        "platformVersion": {
+            "type": "string",
+            "allowedValues": [
+                "11.0.211.0",
+                "11.0.108.0"
+            ],
+            "defaultValue": "11.0.211.0",
+            "metadata": {
+                "description": "If the Purpose is Development, the template will install the Platform version declared here."
+            }
+        },
+        "lifetimeVersion": {
+            "type": "string",
+            "allowedValues": [
+                "LifeTime 11.0.211.0",
+                "LifeTime 11.0.108.0"
+            ],
+            "defaultValue": "LifeTime 11.0.211.0",
+            "metadata": {
+                "description": "If the Purpose is LifeTime, the template will install the LifeTime version declared here."
+            }
+        }
+    },
+    "variables": {
+        "_artifactsLocation": "https://catalogartifact.azureedge.net/publicartifacts/outsystems.outsystems_platform-f305c2a3-8ee0-4661-9a7a-2b04d6d14e3c-outsystems-infrastructure/Artifacts/",
+        "_artifactsLocationSasToken": " ",
+        "location": "[resourceGroup().location]",
+        "controllerSubnetId": "[concat(resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName')), '/subnets/', parameters('controllerSubnetName'))]",
+        "gatewaySubnetId": "[concat(resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName')), '/subnets/', parameters('gatewaySubnetName'))]",
+        "PSImage": {
+            "11.0.211.0": {
+                "baseimage": "1.5.0"
+            },
+            "11.0.108.0": {
+                "baseimage": "1.3.0"
+            }
+        },
+        "LTImage": {
+            "LifeTime 11.0.211.0": {
+                "baseimage": "1.5.0"
+            },
+            "LifeTime 11.0.108.0": {
+                "baseimage": "1.3.0"
+            }
+        },
+        "virtualMachine": {
+            "name": "[parameters('controllerName')]",
+            "adminUser": "[parameters('controllerAdminUser')]",
+            "adminPass": "[parameters('controllerAdminPass')]",
+            "size": "[parameters('controllerSize')]",
+            "subnetId": "[variables('controllerSubnetId')]",
+            "imageSku": "[if(equals(parameters('environmentPurpose'),'Lifetime'),'lifetime','platformserver')]",
+            "imageVersion": "[if(equals(parameters('environmentPurpose'),'Lifetime'), variables('LTImage')[parameters('lifetimeVersion')].baseimage, variables('PSImage')[parameters('platformVersion')].baseimage)]",
+            "withPublicIp": "[parameters('controllerWithPublicIp')]",
+            "deploymentName": "[concat(deployment().name, '.VirtualMachine')]",
+            "templateUri": "[uri(variables('_artifactsLocation'), concat('sharedResources/virtualMachines.json', variables('_artifactsLocationSasToken')))]"
+        },
+        "applicationGateway": {
+            "name": "[parameters('gatewayName')]",
+            "dnsName": "[toLower(concat(parameters('gatewayName'), uniqueString(resourceGroup().id)))]",
+            "subnetId": "[variables('gatewaySubnetId')]",
+            "deploymentName": "[concat(deployment().name, '.Gateway')]",
+            "templateUri": "[uri(variables('_artifactsLocation'), concat('sharedResources/applicationGateways.json', variables('_artifactsLocationSasToken')))]"
+        },
+        "outsystemsConfig": {
+            "serverRole": "Controller",
+            "environmentPurpose": "[parameters('environmentPurpose')]",
+            "sslOffLoad": "[not(empty(trim(parameters('gatewayName'))))]",
+            "deploymentName": "[concat(deployment().name, '.Config')]",
+            "templateUri": "[uri(variables('_artifactsLocation'), concat('outsystemsResources/outsystemsConfig.json', variables('_artifactsLocationSasToken')))]"
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2017-05-10",
+            "name": "pid-d6afbe29-a6dc-4149-863a-c2f7d985c159",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": []
+                }
+            }
+        },
+        {
+            "name": "[variables('virtualMachine').deploymentName]",
+            "apiVersion": "2017-05-10",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('virtualMachine').templateUri]"
+                },
+                "parameters": {
+                    "virtualMachineName": {
+                        "value": "[variables('virtualMachine').name]"
+                    },
+                    "virtualMachineSize": {
+                        "value": "[variables('virtualMachine').size]"
+                    },
+                    "virtualMachineImageSku": {
+                        "value": "[variables('virtualMachine').imageSku]"
+                    },
+                    "virtualMachineImageVersion": {
+                        "value": "[variables('virtualMachine').imageVersion]"
+                    },
+                    "adminUserName": {
+                        "value": "[variables('virtualMachine').adminUser]"
+                    },
+                    "adminPassword": {
+                        "value": "[variables('virtualMachine').adminPass]"
+                    },
+                    "virtualNetworkSubnetId": {
+                        "value": "[variables('virtualMachine').subnetId]"
+                    },
+                    "withPublicIp": {
+                        "value": "[variables('virtualMachine').withPublicIp]"
+                    },
+                    "location": {
+                        "value": "[variables('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('outsystemsConfig').deploymentName]",
+            "apiVersion": "2017-05-10",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('outsystemsConfig').templateUri]"
+                },
+                "parameters": {
+                    "resourceName": {
+                        "value": "[variables('virtualMachine').name]"
+                    },
+                    "adminUser": {
+                        "value": "[parameters('databaseServerAdminUser')]"
+                    },
+                    "adminPass": {
+                        "value": "[parameters('databaseServerAdminPass')]"
+                    },
+                    "dbServer": {
+                        "value": "[parameters('databaseServerName')]"
+                    },
+                    "dbOutsys": {
+                        "value": "[parameters('platformDatabaseName')]"
+                    },
+                    "dbSession": {
+                        "value": "[parameters('sessionDatabaseName')]"
+                    },
+                    "dbLogging": {
+                        "value": "[parameters('loggingDatabaseName')]"
+                    },
+                    "controllerName": {
+                        "value": "[reference(variables('virtualMachine').deploymentName).outputs.virtualMachineName.value]"
+                    },
+                    "controllerIp": {
+                        "value": "[reference(variables('virtualMachine').deploymentName).outputs.virtualMachineIp.value]"
+                    },
+                    "serverRole": {
+                        "value": "[variables('outsystemsConfig').serverRole]"
+                    },
+                    "environmentPurpose": {
+                        "value": "[variables('outsystemsConfig').environmentPurpose]"
+                    },
+                    "sslOffLoad": {
+                        "value": "[variables('outsystemsConfig').sslOffLoad]"
+                    },
+                    "storageAccountURI": {
+                        "value": "\"\""
+                    },
+                    "storageAccountkey": {
+                        "value": "\"\""
+                    },
+                    "_artifactsLocation": {
+                        "value": "[variables('_artifactsLocation')]"
+                    },
+                    "_artifactsLocationSasToken": {
+                        "value": "[variables('_artifactsLocationSasToken')]"
+                    },
+                    "location": {
+                        "value": "[variables('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('applicationGateway').deploymentName]",
+            "apiVersion": "2017-05-10",
+            "condition": "[not(empty(trim(variables('applicationGateway').name)))]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('applicationGateway').templateUri]"
+                },
+                "parameters": {
+                    "applicationGatewayName": {
+                        "value": "[variables('applicationGateway').name]"
+                    },
+                    "applicationGatewayDnsName": {
+                        "value": "[variables('applicationGateway').dnsName]"
+                    },
+                    "applicationGatewaySubnetId": {
+                        "value": "[variables('applicationGateway').subnetId]"
+                    },
+                    "applicationGatewayBackendAddress": {
+                        "value": "[reference(variables('virtualMachine').deploymentName).outputs.virtualMachineIP.value]"
+                    },
+                    "location": {
+                        "value": "[variables('location')]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "controllerName": {
+            "type": "string",
+            "value": "[variables('virtualMachine').name]"
+        },
+        "controllerIp": {
+            "type": "string",
+            "value": "[reference(variables('virtualMachine').deploymentName).outputs.virtualMachineIP.value]"
+        },
+        "privateKey" : {
+            "type": "string",
+            "value": "[reference(variables('outsystemsConfig').deploymentName).outputs.privateKey.value]"
+        },
+        "databaseServerFQDN": {
+            "type": "string",
+            "value": "[parameters('databaseServerName')]"
+        },
+        "databaseServerAdminUser": {
+            "type": "string",
+            "value": "[parameters('databaseServerAdminUser')]"
+        },
+        "databasePlatform": {
+            "type": "string",
+            "value": "[parameters('platformDatabaseName')]"
+        },
+        "databaseSession": {
+            "type": "string",
+            "value": "[parameters('sessionDatabaseName')]"
+        },
+        "databaseLogging": {
+            "type": "string",
+            "value": "[parameters('loggingDatabaseName')]"
+        }
+    }
+}
