@@ -75,7 +75,7 @@
             "type": "string",
             "defaultValue":"",
             "metadata": {
-                "description": "Only needed if gatewayName parameter is specified. Use the one you created when deploying the Virtual Network for Single Environments Template"
+                "description": "Only needed if gatewayName parameter is specified."
             }
         },
         "platformVersion": {
