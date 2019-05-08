@@ -65,7 +65,8 @@
             "defaultValue": "yourproject-newEnvLog-db"
         },
         "gatewayName": {
-            "type": "string",            
+            "type": "string",
+            "defaultValue":{},
             "metadata": {
                 "description": "If you sepcify a name here, the template will deploy an Application Gateway. Leave this empty if you want to use your existing one. (You'll have to manually register this new VM in the backend pool of your Gateway)"
             }
