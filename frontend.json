@@ -66,13 +66,14 @@
         },
         "gatewayName": {
             "type": "string",
-            "defaultValue":{},
+            "defaultValue":"",
             "metadata": {
                 "description": "If you sepcify a name here, the template will deploy an Application Gateway. Leave this empty if you want to use your existing one. (You'll have to manually register this new VM in the backend pool of your Gateway)"
             }
         },
         "gatewaySubnetName": {
             "type": "string",
+            "defaultValue":"",
             "metadata": {
                 "description": "Only needed if gatewayName parameter is specified. Use the one you created when deploying the Virtual Network for Single Environments Template"
             }
