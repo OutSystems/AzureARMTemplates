@@ -63,7 +63,7 @@ Same as the previous template but this time, the frontend server will be deploye
 [![FrontendVMSS](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fmaster%2FfrontendVmss.json)
 
 ![AzSQLVMSS](https://raw.githubusercontent.com/OutSystems/AzureARMTemplates/master/media/AzSQLVMSS1.PNG)
-[![AzSQLFrontendVMSS](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fmaster%2FAzSQLFrontendVMSS.json)
+
 
 **Notes:**
 
