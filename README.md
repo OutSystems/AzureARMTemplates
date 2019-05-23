@@ -64,7 +64,6 @@ Same as the previous template but this time, the frontend server will be deploye
 
 ![AzSQLVMSS](https://raw.githubusercontent.com/OutSystems/AzureARMTemplates/master/media/AzSQLVMSS1.PNG)
 
-
 **Notes:**
 
 - **If you don't have your own Virtual Network, use this auxiliary template to deploy it before deploying this template**: [Virtual Network Ready for ScaleSet](https://github.com/OutSystems/AzureARMTemplates#virtual-network-for-virtual-machine-scale-sets)
@@ -135,3 +134,27 @@ This will deploy a Virtual Network for a full OutSystems stack with Dev, Test, P
 The virtual network will contain five subnets. One for Dev, another for Test, two for Prd (VM and Application Gateway) and another for Lifetime.
 
 [![VNETVMSS](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fmaster%2Fresources%2FvirtualNetworkFullStack.json)
+
+## Base Image Versioning
+
+In case you want to use OutSystems Base Images (VMs) published (unlisted) in the Azure Marketplace, you can use the following settings to include them in your ARM templates:
+
+    "virtualMachineImage": {
+        "publisher": "outsystems",
+        "offer": "os11-vm-baseimage",
+        "sku": "platformserver/lifetime",
+        "version": "1.x.x"
+        }
+
+In the SKU field you can type _platformserver_ if you're deploying a VM that will run one of the development or production environments. Type _lifetime_ if your VM will run the Lifetime environment only.
+
+The version to use and the software installed on each one are described in the following table:
+| Image Version  | Platform Server | Lifetime | Service Studio |
+|---|---|---|---|
+| 1.0.1 | 11.0.108.0 | 11.0.108.0 | 11.0.109.0 |
+| 1.5.0 | 11.0.211.0 | 11.0.304.0 | 11.0.408.0 |
+| tba | 11.0.424.0 | 11.0.304.0 | 11.0.510.0 |
+
+You can also use the versioning here to update your scalesets. Please follow Microsoft's reference documentation on the subject here:
+
+[Update the OS image for your scale set](https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-upgrade-scale-set#update-the-os-image-for-your-scale-set)
