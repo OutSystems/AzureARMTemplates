@@ -149,6 +149,7 @@ In case you want to use OutSystems Base Images (VMs) published (unlisted) in the
 In the SKU field you can type _platformserver_ if you're deploying a VM that will run one of the development or production environments. Type _lifetime_ if your VM will run the Lifetime environment only.
 
 The version to use and the software installed on each one are described in the following table:
+
 | Image Version  | Platform Server | Lifetime | Service Studio |
 |---|---|---|---|
 | 1.0.1 | 11.0.108.0 | 11.0.108.0 | 11.0.109.0 |
