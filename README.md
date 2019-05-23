@@ -152,7 +152,6 @@ The version to use and the software installed on each one are described in the f
 
 | Image Version  | Platform Server | Lifetime | Service Studio |
 |---|---|---|---|
-| 1.0.1 | 11.0.108.0 | 11.0.108.0 | 11.0.109.0 |
 | 1.5.0 | 11.0.211.0 | 11.0.304.0 | 11.0.408.0 |
 | tba | 11.0.424.0 | 11.0.304.0 | 11.0.510.0 |
 
