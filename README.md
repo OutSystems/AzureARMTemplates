@@ -153,7 +153,7 @@ The version to use and the software installed on each one are described in the f
 | Image Version  | Platform Server | Lifetime | Service Studio |
 |---|---|---|---|
 | 1.5.0 | 11.0.211.0 | 11.0.304.0 | 11.0.408.0 |
-| tba | 11.0.424.0 | 11.0.304.0 | 11.0.510.0 |
+| 1.6.0 | 11.0.424.0 | 11.0.308.0 | 11.0.511.0 |
 
 You can also use the versioning here to update your scalesets. Please follow Microsoft's reference documentation on the subject here:
 
