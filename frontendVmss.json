@@ -103,7 +103,7 @@
             "count": "[parameters('vmssInstanceCount')]",
             "subnetId": "[variables('vmssSubnetId')]",
             "imageSku": "platformserver",
-            "imageVersion": "1.5.0",
+            "imageVersion": "1.6.0",
             "deploymentName": "[concat(deployment().name, '.Frontends.VirtualMachineScaleSet')]",
             "templateUri": "[uri(variables('_artifactsLocation'), concat('sharedResources/virtualMachineScaleSets.json', variables('_artifactsLocationSasToken')))]"
         },
