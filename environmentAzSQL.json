@@ -106,7 +106,7 @@
             "allowedValues": [
                 "LifeTime 11.0.211.0",
                 "LifeTime 11.0.308.0",
-                "LifeTime 11.0.327.0
+                "LifeTime 11.0.327.0"
             ],
             "defaultValue": "LifeTime 11.0.308.0",
             "metadata": {
