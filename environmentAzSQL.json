@@ -193,7 +193,6 @@
         "outsystemsConfig": {
             "serverRole": "Controller",
             "environmentPurpose": "[parameters('environmentPurpose')]",
-            "sslOffLoad": "[not(empty(trim(parameters('gatewayName'))))]",
             "serviceCenterPassword": "[parameters('serviceCenterPassword')]",
             "deploymentName": "[concat(deployment().name, '.Config')]",
             "templateUri": "[uri(variables('_artifactsLocation'), concat('outsystemsResources/outsystemsConfig.json', variables('_artifactsLocationSasToken')))]"
@@ -371,9 +370,6 @@
                     },
                     "environmentPurpose": {
                         "value": "[variables('outsystemsConfig').environmentPurpose]"
-                    },
-                    "sslOffLoad": {
-                        "value": "[variables('outsystemsConfig').sslOffLoad]"
                     },
                     "serviceCenterPassword": {
                         "value": "[variables('outsystemsConfig').serviceCenterPassword]"
