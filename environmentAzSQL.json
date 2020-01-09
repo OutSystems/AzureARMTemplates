@@ -81,6 +81,10 @@
         "serviceCenterPassword": {
             "type": "securestring"
         },
+        "feConfigOnly": {
+            "type": "bool",
+            "defaultValue": false
+        },
         "environmentPurpose": {
             "type": "string",
             "allowedValues": [
@@ -194,6 +198,7 @@
             "serverRole": "Controller",
             "environmentPurpose": "[parameters('environmentPurpose')]",
             "serviceCenterPassword": "[parameters('serviceCenterPassword')]",
+            "feConfigOnly": "[parameters('feConfigOnly')]",
             "deploymentName": "[concat(deployment().name, '.Config')]",
             "templateUri": "[uri(variables('_artifactsLocation'), concat('outsystemsResources/outsystemsConfig.json', variables('_artifactsLocationSasToken')))]"
         }
@@ -373,6 +378,9 @@
                     },
                     "serviceCenterPassword": {
                         "value": "[variables('outsystemsConfig').serviceCenterPassword]"
+                    },
+                    "feConfigOnly": {
+                        "value": "[variables('outsystemsConfig').feConfigOnly]"
                     },
                     "storageAccountURI": {
                         "value": "\"\""
