@@ -89,7 +89,7 @@
             ],
             "defaultValue": false,
             "metadata": {
-                "description": "Only deploys the Front-End and populates the Configuration Tool. It will not register the server immediately."
+                "description": "Only deploys the Front-End and populates the Configuration Tool. It will not register the server immediately. You'll need to access the VM, enable the OutSystems Deployment Service and run the Configuration Tool. Use only if you need to apply an hotfix before starting this front-end."
                 }
         },
         "platformVersion": {
