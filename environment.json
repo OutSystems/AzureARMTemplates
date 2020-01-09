@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "controllerName": {
@@ -38,7 +38,11 @@
             }
         },
         "controllerWithPublicIp": {
-            "type": "bool",
+            "type": "string",
+            "allowedValues": [
+                "false",
+                "true"
+            ],
             "defaultValue": false
         },
         "databaseServerName": {
@@ -105,16 +109,17 @@
             "type": "string",
             "allowedValues": [
                 "LifeTime 11.0.211.0",
-                "LifeTime 11.0.308.0"
+                "LifeTime 11.0.308.0",
+                "LifeTime 11.0.322.0"
             ],
-            "defaultValue": "LifeTime 11.0.308.0",
+            "defaultValue": "LifeTime 11.0.322.0",
             "metadata": {
                 "description": "If the Purpose is LifeTime, the template will install the LifeTime version declared here."
             }
         }
     },
     "variables": {
-        "_artifactsLocation": "https://catalogartifact.azureedge.net/publicartifacts/outsystems.outsystems_platform-f305c2a3-8ee0-4661-9a7a-2b04d6d14e3c-outsystems-infrastructure/Artifacts/",
+        "_artifactsLocation": "https://catalogartifact.azureedge.net/publicartifacts/outsystems.outsystems_platform-e8cb7567-f493-490c-aada-71ed93dd0396-outsystems-infrastructure/Artifacts/",
         "_artifactsLocationSasToken": " ",
         "location": "[resourceGroup().location]",
         "controllerSubnetId": "[concat(resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName')), '/subnets/', parameters('controllerSubnetName'))]",
@@ -137,7 +142,7 @@
             "LifeTime 11.0.308.0": {
                 "baseimage": "1.6.0"
             },
-            "LifeTime 11.0.308.0": {
+            "LifeTime 11.0.322.0": {
                 "baseimage": "1.8.0"
             }
         },
@@ -145,7 +150,6 @@
             "name": "[parameters('controllerName')]",
             "adminUser": "[parameters('controllerAdminUser')]",
             "adminPass": "[parameters('controllerAdminPass')]",
-            "serviceCenterPass": "[parameters('serviceCenterPassword')]",
             "size": "[parameters('controllerSize')]",
             "subnetId": "[variables('controllerSubnetId')]",
             "imageSku": "[if(equals(parameters('environmentPurpose'),'Lifetime'),'lifetime','platformserver')]",
@@ -164,7 +168,6 @@
         "outsystemsConfig": {
             "serverRole": "Controller",
             "environmentPurpose": "[parameters('environmentPurpose')]",
-            "sslOffLoad": "[not(empty(trim(parameters('gatewayName'))))]",
             "serviceCenterPassword": "[parameters('serviceCenterPassword')]",
             "deploymentName": "[concat(deployment().name, '.Config')]",
             "templateUri": "[uri(variables('_artifactsLocation'), concat('outsystemsResources/outsystemsConfig.json', variables('_artifactsLocationSasToken')))]"
@@ -266,9 +269,6 @@
                     },
                     "environmentPurpose": {
                         "value": "[variables('outsystemsConfig').environmentPurpose]"
-                    },
-                    "sslOffLoad": {
-                        "value": "[variables('outsystemsConfig').sslOffLoad]"
                     },
                     "serviceCenterPassword": {
                         "value": "[variables('outsystemsConfig').serviceCenterPassword]"

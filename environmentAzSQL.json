@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "controllerName": {
@@ -80,10 +80,6 @@
         },
         "serviceCenterPassword": {
             "type": "securestring"
-        },
-        "feConfigOnly": {
-            "type": "bool",
-            "defaultValue": false
         },
         "environmentPurpose": {
             "type": "string",
@@ -198,7 +194,6 @@
             "serverRole": "Controller",
             "environmentPurpose": "[parameters('environmentPurpose')]",
             "serviceCenterPassword": "[parameters('serviceCenterPassword')]",
-            "feConfigOnly": "[parameters('feConfigOnly')]",
             "deploymentName": "[concat(deployment().name, '.Config')]",
             "templateUri": "[uri(variables('_artifactsLocation'), concat('outsystemsResources/outsystemsConfig.json', variables('_artifactsLocationSasToken')))]"
         }
@@ -378,9 +373,6 @@
                     },
                     "serviceCenterPassword": {
                         "value": "[variables('outsystemsConfig').serviceCenterPassword]"
-                    },
-                    "feConfigOnly": {
-                        "value": "[variables('outsystemsConfig').feConfigOnly]"
                     },
                     "storageAccountURI": {
                         "value": "\"\""
