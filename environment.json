@@ -86,13 +86,17 @@
             ],
             "defaultValue": "Development"
         },
+        "serviceCenterPassword": {
+            "type": "securestring"
+        },
         "platformVersion": {
             "type": "string",
             "allowedValues": [
                 "11.0.211.0",
-                "11.0.424.0"
+                "11.0.424.0",
+                "11.0.607.0"
             ],
-            "defaultValue": "11.0.424.0",
+            "defaultValue": "11.0.607.0",
             "metadata": {
                 "description": "If the Purpose is Development, the template will install the Platform version declared here."
             }
@@ -121,6 +125,9 @@
             },
             "11.0.424.0":{
                 "baseimage": "1.6.0"
+            },
+            "11.0.607.0":{
+                "baseimage": "1.8.0"
             }
         },
         "LTImage": {
@@ -129,12 +136,16 @@
             },
             "LifeTime 11.0.308.0": {
                 "baseimage": "1.6.0"
+            },
+            "LifeTime 11.0.308.0": {
+                "baseimage": "1.8.0"
             }
         },
         "virtualMachine": {
             "name": "[parameters('controllerName')]",
             "adminUser": "[parameters('controllerAdminUser')]",
             "adminPass": "[parameters('controllerAdminPass')]",
+            "serviceCenterPass": "[parameters('serviceCenterPassword')]",
             "size": "[parameters('controllerSize')]",
             "subnetId": "[variables('controllerSubnetId')]",
             "imageSku": "[if(equals(parameters('environmentPurpose'),'Lifetime'),'lifetime','platformserver')]",
@@ -154,6 +165,7 @@
             "serverRole": "Controller",
             "environmentPurpose": "[parameters('environmentPurpose')]",
             "sslOffLoad": "[not(empty(trim(parameters('gatewayName'))))]",
+            "serviceCenterPassword": "[parameters('serviceCenterPassword')]",
             "deploymentName": "[concat(deployment().name, '.Config')]",
             "templateUri": "[uri(variables('_artifactsLocation'), concat('outsystemsResources/outsystemsConfig.json', variables('_artifactsLocationSasToken')))]"
         }
@@ -257,6 +269,9 @@
                     },
                     "sslOffLoad": {
                         "value": "[variables('outsystemsConfig').sslOffLoad]"
+                    },
+                    "serviceCenterPassword": {
+                        "value": "[variables('outsystemsConfig').serviceCenterPassword]"
                     },
                     "storageAccountURI": {
                         "value": "\"\""
