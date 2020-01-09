@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "vmssName": {
@@ -93,7 +93,7 @@
         }
     },
     "variables": {
-        "_artifactsLocation": "https://catalogartifact.azureedge.net/publicartifacts/outsystems.outsystems_platform-f305c2a3-8ee0-4661-9a7a-2b04d6d14e3c-outsystems-infrastructure/Artifacts/",
+        "_artifactsLocation": "https://catalogartifact.azureedge.net/publicartifacts/outsystems.outsystems_platform-e8cb7567-f493-490c-aada-71ed93dd0396-outsystems-infrastructure/Artifacts/",
         "_artifactsLocationSasToken": " ",
         "location": "[resourceGroup().location]",
         "vmssSubnetId": "[concat(resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName')), '/subnets/', parameters('vmssSubnetName'))]",
@@ -102,7 +102,6 @@
             "name": "[parameters('vmssName')]",
             "adminUser": "[parameters('vmssInstanceAdminUser')]",
             "adminPass": "[parameters('vmssInstanceAdminPass')]",
-            "serviceCenterPass": "[parameters('serviceCenterPassword')]",
             "size": "[parameters('vmssInstanceSize')]",
             "count": "[parameters('vmssInstanceCount')]",
             "subnetId": "[variables('vmssSubnetId')]",
@@ -210,7 +209,7 @@
                         "value": "[parameters('platformDatabaseName')]"
                     },
                     "serviceCenterPassword": {
-                        "value": "[variables('outsystemsConfig').serviceCenterPassword]"
+                        "value": "[variables('outsystemsFrontendConfig').serviceCenterPassword]"
                     },
                     "dbSession": {
                         "value": "[parameters('sessionDatabaseName')]"
