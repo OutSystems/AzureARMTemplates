@@ -64,6 +64,9 @@
                 "description": "Virtual machine scale set Application Gateway name"
             }
         },
+        "serviceCenterPassword": {
+            "type": "securestring"
+        },
         "gatewaySubnetName": {
             "type": "string",
             "metadata": {
@@ -99,11 +102,12 @@
             "name": "[parameters('vmssName')]",
             "adminUser": "[parameters('vmssInstanceAdminUser')]",
             "adminPass": "[parameters('vmssInstanceAdminPass')]",
+            "serviceCenterPass": "[parameters('serviceCenterPassword')]",
             "size": "[parameters('vmssInstanceSize')]",
             "count": "[parameters('vmssInstanceCount')]",
             "subnetId": "[variables('vmssSubnetId')]",
             "imageSku": "platformserver",
-            "imageVersion": "1.6.0",
+            "imageVersion": "1.8.0",
             "deploymentName": "[concat(deployment().name, '.Frontends.VirtualMachineScaleSet')]",
             "templateUri": "[uri(variables('_artifactsLocation'), concat('sharedResources/virtualMachineScaleSets.json', variables('_artifactsLocationSasToken')))]"
         },
@@ -117,6 +121,7 @@
         "outsystemsFrontendConfig": {
             "serverRole": "Frontend",
             "environmentPurpose": "N/A",
+            "serviceCenterPassword": "[parameters('serviceCenterPassword')]",
             "resourceType": "virtualMachineScaleSets",
             "deploymentName": "[concat(deployment().name, '.Frontends.Config')]",
             "templateUri": "[uri(variables('_artifactsLocation'), concat('outsystemsResources/outsystemsConfig.json', variables('_artifactsLocationSasToken')))]"
@@ -203,6 +208,9 @@
                     },
                     "dbOutsys": {
                         "value": "[parameters('platformDatabaseName')]"
+                    },
+                    "serviceCenterPassword": {
+                        "value": "[variables('outsystemsConfig').serviceCenterPassword]"
                     },
                     "dbSession": {
                         "value": "[parameters('sessionDatabaseName')]"
