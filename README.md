@@ -159,3 +159,6 @@ The version to use and the software installed on each one are described in the f
 You can also use the versioning here to update your scalesets. Please follow Microsoft's reference documentation on the subject here:
 
 [Update the OS image for your scale set](https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-upgrade-scale-set#update-the-os-image-for-your-scale-set)
+
+Or here, directly from OutSystems Public documentation:
+[Update the OutSystems Version in your scale set](https://success.outsystems.com/Documentation/11/Setting_Up_OutSystems/OutSystems_on_Microsoft_Azure/Additional_Configurations_for_OutSystems_on_Microsoft_Azure#Update_Azure_Scale_Sets_to_a_Newer_Platform_Version)
