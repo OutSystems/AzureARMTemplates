@@ -78,6 +78,9 @@
                 "description": "Only needed if gatewayName parameter is specified. Use the one you created when deploying the Virtual Network for Single Environments Template"
             }
         },
+        "serviceCenterPassword": {
+            "type": "securestring"
+        },
         "environmentPurpose": {
             "type": "string",
             "allowedValues": [
@@ -183,6 +186,7 @@
             "serverRole": "Controller",
             "environmentPurpose": "[parameters('environmentPurpose')]",
             "sslOffLoad": "[not(empty(trim(parameters('gatewayName'))))]",
+            "serviceCenterPassword": "[parameters('serviceCenterPassword')]",
             "deploymentName": "[concat(deployment().name, '.Config')]",
             "templateUri": "[uri(variables('_artifactsLocation'), concat('outsystemsResources/outsystemsConfig.json', variables('_artifactsLocationSasToken')))]"
         }
@@ -362,6 +366,9 @@
                     },
                     "sslOffLoad": {
                         "value": "[variables('outsystemsConfig').sslOffLoad]"
+                    },
+                    "serviceCenterPassword": {
+                        "value": "[variables('outsystemsConfig').serviceCenterPassword]"
                     },
                     "storageAccountURI": {
                         "value": "\"\""
