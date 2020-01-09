@@ -1,5 +1,5 @@
 {
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "virtualNetworkName": {
@@ -67,25 +67,45 @@
                     {
                         "name": "[parameters('devSubnetName')]",
                         "properties": {
-                            "addressPrefix": "[parameters('devSubnetAddressSpace')]"
+                            "addressPrefix": "[parameters('devSubnetAddressSpace')]",
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.Sql"
+                                }
+                            ]
                         }
                     },
                     {
                         "name": "[parameters('testSubnetName')]",
                         "properties": {
-                            "addressPrefix": "[parameters('testSubnetAddressSpace')]"
+                            "addressPrefix": "[parameters('testSubnetAddressSpace')]",
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.Sql"
+                                }
+                            ]
                         }
                     },
                     {
                         "name": "[parameters('prodSubnetName')]",
                         "properties": {
-                            "addressPrefix": "[parameters('prodSubnetAddressSpace')]"
+                            "addressPrefix": "[parameters('prodSubnetAddressSpace')]",
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.Sql"
+                                }
+                            ]
                         }
                     },
                     {
                         "name": "[parameters('lifetimeSubnetName')]",
                         "properties": {
-                            "addressPrefix": "[parameters('lifetimeSubnetAddressSpace')]"
+                            "addressPrefix": "[parameters('lifetimeSubnetAddressSpace')]",
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.Sql"
+                                }
+                            ]
                         }
                     },
                     {
