@@ -150,10 +150,11 @@ In the SKU field you can type _platformserver_ if you're deploying a VM that wil
 
 The version to use and the software installed on each one are described in the following table:
 
-| Image Version  | Platform Server | Lifetime | Service Studio |
-|---|---|---|---|
-| 1.5.0 | 11.0.211.0 | 11.0.304.0 | 11.0.408.0 |
-| 1.6.0 | 11.0.424.0 | 11.0.308.0 | 11.0.511.0 |
+| Image Version  | Platform Server | Lifetime |
+|---|---|---|
+| 1.5.0 | 11.0.211.0 | 11.0.304.0 |
+| 1.6.0 | 11.0.424.0 | 11.0.308.0 |
+| 1.8.0 | 11.0.607.0 | 11.0.322.0 |
 
 You can also use the versioning here to update your scalesets. Please follow Microsoft's reference documentation on the subject here:
 
