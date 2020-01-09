@@ -93,9 +93,10 @@
             "type": "string",
             "allowedValues": [
                 "11.0.211.0",
-                "11.0.424.0"
+                "11.0.424.0"",
+                "11.0.607.0"
             ],
-            "defaultValue": "11.0.424.0",
+            "defaultValue": "11.0.607.0",
             "metadata": {
                     "description": "If the Purpose is Development, the template will install the Platform version declared here."
             }
@@ -104,7 +105,8 @@
             "type": "string",
             "allowedValues": [
                 "LifeTime 11.0.211.0",
-                "LifeTime 11.0.308.0"
+                "LifeTime 11.0.308.0",
+                "LifeTime 11.0.327.0
             ],
             "defaultValue": "LifeTime 11.0.308.0",
             "metadata": {
@@ -124,6 +126,9 @@
             },
             "11.0.424.0":{
                 "baseimage": "1.6.0"
+            },
+            "11.0.607.0":{
+                "baseimage": "1.8.0"
             }
         },
         "LTImage":{
@@ -132,6 +137,9 @@
             },
             "LifeTime 11.0.308.0":{
                 "baseimage": "1.6.0"
+            },
+            "LifeTime 11.0.327.0":{
+                "baseimage": "1.8.0"
             }
         },
         "virtualMachine": {
