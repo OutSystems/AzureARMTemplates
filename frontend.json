@@ -78,13 +78,28 @@
                 "description": "Only needed if gatewayName parameter is specified."
             }
         },
+        "serviceCenterPassword": {
+            "type": "securestring"
+        },
+        "feConfigOnly": {
+            "type": "string",
+            "allowedValues": [
+                "false",
+                "true"
+            ],
+            "defaultValue": false,
+            "metadata": {
+                "description": "Only deploys the Front-End and populates the Configuration Tool. It will not register the server immediately."
+                }
+        },
         "platformVersion": {
             "type": "string",
             "allowedValues": [
                 "11.0.211.0",
-                "11.0.424.0"
+                "11.0.424.0",
+                "11.0.607.0"
             ],
-            "defaultValue": "11.0.424.0",
+            "defaultValue": "11.0.607.0",
             "metadata": {
                 "description": "If the Purpose is Development, the template will install the Platform version declared here."
             }
@@ -109,7 +124,7 @@
         }
     },
     "variables": {
-        "_artifactsLocation": "https://catalogartifact.azureedge.net/publicartifacts/outsystems.outsystems_platform-f305c2a3-8ee0-4661-9a7a-2b04d6d14e3c-outsystems-infrastructure/Artifacts/",
+        "_artifactsLocation": "https://catalogartifact.azureedge.net/publicartifacts/outsystems.outsystems_platform-e8cb7567-f493-490c-aada-71ed93dd0396-outsystems-infrastructure/Artifacts/",
         "_artifactsLocationSasToken": " ",
         "location": "[resourceGroup().location]",
         "controllerSubnetId": "[concat(resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName')), '/subnets/', parameters('frontendSubnetName'))]",
@@ -120,6 +135,9 @@
             },
             "11.0.424.0":{
                 "baseimage": "1.6.0"
+            },
+            "11.0.607.0":{
+                "baseimage": "1.8.0"
             }
         },
         "virtualMachine": {
@@ -144,7 +162,8 @@
         "outsystemsConfig": {
             "serverRole": "Frontend",
             "environmentPurpose": "N/A",
-            "sslOffLoad": "[not(empty(trim(parameters('gatewayName'))))]",
+            "serviceCenterPassword": "[parameters('serviceCenterPassword')]",
+            "feConfigOnly": "[parameters('feConfigOnly')]",
             "deploymentName": "[concat(deployment().name, '.Config')]",
             "templateUri": "[uri(variables('_artifactsLocation'), concat('outsystemsResources/outsystemsConfig.json', variables('_artifactsLocationSasToken')))]"
         }
@@ -249,8 +268,11 @@
                     "environmentPurpose": {
                         "value": "[variables('outsystemsConfig').environmentPurpose]"
                     },
-                    "sslOffLoad": {
-                        "value": "[variables('outsystemsConfig').sslOffLoad]"
+                    "serviceCenterPassword": {
+                        "value": "[variables('outsystemsConfig').serviceCenterPassword]"
+                    },
+                    "feConfigOnly": {
+                        "value": "[variables('outsystemsConfig').feConfigOnly]"
                     },
                     "storageAccountURI": {
                         "value": "\"\""
