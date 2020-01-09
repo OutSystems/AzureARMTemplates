@@ -78,13 +78,17 @@
                 "description": "Only needed if gatewayName parameter is specified."
             }
         },
+        "serviceCenterPassword": {
+            "type": "securestring"
+        },
         "platformVersion": {
             "type": "string",
             "allowedValues": [
                 "11.0.211.0",
-                "11.0.424.0"
+                "11.0.424.0",
+                "11.0.607.0"
             ],
-            "defaultValue": "11.0.424.0",
+            "defaultValue": "11.0.607.0",
             "metadata": {
                 "description": "If the Purpose is Development, the template will install the Platform version declared here."
             }
@@ -120,12 +124,16 @@
             },
             "11.0.424.0":{
                 "baseimage": "1.6.0"
+            },
+            "11.0.607.0":{
+                "baseimage": "1.8.0"
             }
         },
         "virtualMachine": {
             "name": "[parameters('frontendName')]",
             "adminUser": "[parameters('frontendAdminUser')]",
             "adminPass": "[parameters('frontendAdminPass')]",
+            "serviceCenterPass": "[parameters('serviceCenterPassword')]",
             "size": "[parameters('frontendSize')]",
             "subnetId": "[variables('controllerSubnetId')]",
             "imageSku": "platformserver",
@@ -144,6 +152,7 @@
         "outsystemsConfig": {
             "serverRole": "Frontend",
             "environmentPurpose": "N/A",
+            "serviceCenterPassword": "[parameters('serviceCenterPassword')]",
             "sslOffLoad": "[not(empty(trim(parameters('gatewayName'))))]",
             "deploymentName": "[concat(deployment().name, '.Config')]",
             "templateUri": "[uri(variables('_artifactsLocation'), concat('outsystemsResources/outsystemsConfig.json', variables('_artifactsLocationSasToken')))]"
@@ -251,6 +260,9 @@
                     },
                     "sslOffLoad": {
                         "value": "[variables('outsystemsConfig').sslOffLoad]"
+                    },
+                    "serviceCenterPassword": {
+                        "value": "[variables('outsystemsConfig').serviceCenterPassword]"
                     },
                     "storageAccountURI": {
                         "value": "\"\""
