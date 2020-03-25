@@ -98,9 +98,10 @@
             "allowedValues": [
                 "11.0.211.0",
                 "11.0.424.0",
-                "11.0.607.0"
+                "11.0.607.0",
+                "11.7.3.7036"
             ],
-            "defaultValue": "11.0.607.0",
+            "defaultValue": "11.7.3.7036",
             "metadata": {
                 "description": "If the Purpose is Development, the template will install the Platform version declared here."
             }
@@ -133,6 +134,9 @@
             },
             "11.0.607.0":{
                 "baseimage": "1.8.0"
+            },
+            "11.7.3.7036":{
+                "baseimage": "2.0.0"
             }
         },
         "LTImage": {

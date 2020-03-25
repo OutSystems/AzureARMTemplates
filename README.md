@@ -155,6 +155,7 @@ The version to use and the software installed on each one are described in the f
 | 1.5.0 | 11.0.211.0 | 11.0.304.0 |
 | 1.6.0 | 11.0.424.0 | 11.0.308.0 |
 | 1.8.0 | 11.0.607.0 | 11.0.322.0 |
+| 2.0.0 | 11.7.3.7036 | not available |
 
 You can also use the versioning here to update your scalesets. Please follow Microsoft's reference documentation on the subject here:
 
