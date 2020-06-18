@@ -108,7 +108,7 @@
             "allowedValues": [
                 "11.5.3"
             ],
-            "defaultValue": "LifeTime 11.5.3",
+            "defaultValue": "11.5.3",
             "metadata": {
                 "description": "If the Purpose is LifeTime, the template will install the LifeTime version declared here."
             }
