@@ -137,14 +137,9 @@ The virtual network will contain five subnets. One for Dev, another for Test, tw
 
 ## Base Image Versioning
 
-In case you want to use OutSystems Base Images (VMs) published (unlisted) in the Azure Marketplace, you can use the following settings to include them in your ARM templates:
+To have a different version of OutSystems deployed, fork this repo, refer to the table below and change the code accordingly in the correspoding template. Here's an example:
+[![BaseImageUpdate](https://raw.githubusercontent.com/OutSystems/AzureARMTemplates/master/media/image_update.png)]
 
-    "virtualMachineImage": {
-        "publisher": "outsystems",
-        "offer": "os11-vm-baseimage",
-        "sku": "platformserver/lifetime",
-        "version": "1.x.x"
-        }
 
 In the SKU field you can type _platformserver_ if you're deploying a VM that will run one of the development or production environments. Type _lifetime_ if your VM will run the Lifetime environment only.
 
@@ -156,6 +151,8 @@ The version to use and the software installed on each one are described in the f
 | 1.6.0 | 11.0.424.0 | 11.0.308.0 |
 | 1.8.0 | 11.0.607.0 | 11.0.322.0 |
 | 2.0.0 | 11.7.3.7036 | not available |
+| 2.1.0 | 11.8.1 | 11.5.3 |
+
 
 You can also use the versioning here to update your scalesets. Please follow Microsoft's reference documentation on the subject here:
 
