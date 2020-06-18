@@ -92,12 +92,9 @@
         "platformVersion": {
             "type": "string",
             "allowedValues": [
-                "11.0.211.0",
-                "11.0.424.0",
-                "11.0.607.0",
-                "11.7.3.7036"
+                "11.8.1"
             ],
-            "defaultValue": "11.7.3.7036",
+            "defaultValue": "11.8.1",
             "metadata": {
                     "description": "If the Purpose is Development, the template will install the Platform version declared here."
             }
@@ -105,11 +102,9 @@
         "lifetimeVersion": {
             "type": "string",
             "allowedValues": [
-                "LifeTime 11.0.211.0",
-                "LifeTime 11.0.308.0",
-                "LifeTime 11.0.327.0"
+                "11.5.3"
             ],
-            "defaultValue": "LifeTime 11.0.308.0",
+            "defaultValue": "11.5.3",
             "metadata": {
                 "description": "If the Purpose is LifeTime, the template will install the LifeTime version declared here."
         }
@@ -122,28 +117,13 @@
         "controllerSubnetId": "[concat(resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName')), '/subnets/', parameters('controllerSubnetName'))]",
         "gatewaySubnetId": "[concat(resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName')), '/subnets/', parameters('gatewaySubnetName'))]",
         "PSImage":{
-            "11.0.211.0":{
-                "baseimage": "1.5.0"
-            },
-            "11.0.424.0":{
-                "baseimage": "1.6.0"
-            },
-            "11.0.607.0":{
-                "baseimage": "1.8.0"
-            },
-            "11.7.3.7036":{
-                "baseimage": "2.0.0"
+            "11.8.1":{
+                "baseimage": "2.1.0"
             }
         },
         "LTImage":{
-            "LifeTime 11.0.211.0":{
-                "baseimage": "1.5.0"
-            },
-            "LifeTime 11.0.308.0":{
-                "baseimage": "1.6.0"
-            },
-            "LifeTime 11.0.327.0":{
-                "baseimage": "1.8.0"
+            "11.5.3":{
+                "baseimage": "2.1.0"
             }
         },
         "virtualMachine": {
