@@ -139,7 +139,7 @@ The virtual network will contain five subnets. One for Dev, another for Test, tw
 
 To have a different version of OutSystems deployed, fork this repo, refer to the table below and change the code accordingly in the corresponding template. Here's an example:
 
-[![BaseImageUpdate](https://raw.githubusercontent.com/OutSystems/AzureARMTemplates/master/media/image_update.png)]
+![BaseImageUpdate](https://raw.githubusercontent.com/OutSystems/AzureARMTemplates/master/media/image_update.png)
 
 
 In the SKU field you can type _platformserver_ if you're deploying a VM that will run one of the development or production environments. Type _lifetime_ if your VM will run the Lifetime environment only.
