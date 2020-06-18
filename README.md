@@ -137,7 +137,7 @@ The virtual network will contain five subnets. One for Dev, another for Test, tw
 
 ## Base Image Versioning
 
-To have a different version of OutSystems deployed, fork this repo, refer to the table below and change the code accordingly in the correspoding template. Here's an example:
+To have a different version of OutSystems deployed, fork this repo, refer to the table below and change the code accordingly in the corresponding template. Here's an example:
 [![BaseImageUpdate](https://raw.githubusercontent.com/OutSystems/AzureARMTemplates/master/media/image_update.png)]
 
 
