@@ -106,7 +106,7 @@
         "lifetimeVersion": {
             "type": "string",
             "allowedValues": [
-                "LifeTime 11.5.3"
+                "11.5.3"
             ],
             "defaultValue": "LifeTime 11.5.3",
             "metadata": {
@@ -121,12 +121,12 @@
         "controllerSubnetId": "[concat(resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName')), '/subnets/', parameters('controllerSubnetName'))]",
         "gatewaySubnetId": "[concat(resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName')), '/subnets/', parameters('gatewaySubnetName'))]",
         "PSImage":{
-            "Platform Server 11.8.1":{
+            "11.8.1":{
                 "baseimage": "2.1.0"
             }
         },
         "LTImage": {
-            "LifeTime 11.5.3": {
+            "11.5.3": {
                 "baseimage": "2.1.0"
             }
         },
