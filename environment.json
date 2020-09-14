@@ -38,11 +38,7 @@
             }
         },
         "controllerWithPublicIp": {
-            "type": "string",
-            "allowedValues": [
-                "false",
-                "true"
-            ],
+            "type": "bool",
             "defaultValue": false
         },
         "databaseServerName": {
