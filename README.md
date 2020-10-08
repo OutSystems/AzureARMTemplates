@@ -163,3 +163,7 @@ You can also use the versioning here to update your scalesets. Please follow Mic
 
 Or here, directly from OutSystems Public documentation:
 [Update the OutSystems Version in your scale set](https://success.outsystems.com/Documentation/11/Setting_Up_OutSystems/OutSystems_on_Microsoft_Azure/Additional_Configurations_for_OutSystems_on_Microsoft_Azure#Update_Azure_Scale_Sets_to_a_Newer_Platform_Version)
+
+
+
+TEST OR
