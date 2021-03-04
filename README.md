@@ -96,19 +96,13 @@ Fill the form with your own naming convention, replacing the default values plac
 - **To Add this Environment to an existing Marketplace Deployment, first use the following template to add a new network the Resource Group of your OutSystems installation and take note of the names you give to the Virtual Network and Subnetworks.**: [Virtual Network Ready for Complete Environment](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOutSystems%2FAzureARMTemplates%2Fmaster%2Fresources%2FvirtualNetworkVMSS.json)
 Alternatively you can create a new subnet inside your existing VNet, create an Microsoft.Sql Endpoint on it and use it to deploy this template #6. If opting for this, use the existing gateway-subnet to deploy the new Application Gateway.
 
-## Azure SQL + Containers
-
-For environments with OutSystems 11 on Azure Container Service (ACS) with Kubernetes checkout [our github](https://github.com/OutSystems/Containers-ACS-AzDevOps) repo.
-
-![ACS](https://raw.githubusercontent.com/OutSystems/AzureARMTemplates/master/media/ACS.PNG)
-
 ## Full stack on Azure SQL
 
 For a full stack with Dev, Test, Prod and Lifetime environments deployed on a new VNET with Azure SQL as the database engine, use our [Azure Marketplace template](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/outsystems.outsystems_platform?tab=Overview).
 
 To deploy a full stack on an existing VNET you can also use this templates but you will need to deploy each environment one at the time.
 
-Use template number five for the Dev, Test and Prod environments and the number six for Lifetime. If you want to have a Prod environment with scalling and HA capabilities, use the template number seven.
+Use template number four to deploy each environment separately. If you want to have a Prod environment with scalling and HA capabilities, use the template number three after deploying the prod environment.
 
 ## Auxiliary Templates
 
