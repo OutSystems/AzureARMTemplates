@@ -102,9 +102,9 @@
         "lifetimeVersion": {
             "type": "string",
             "allowedValues": [
-                "11.14.1"
+                "11.14.2"
             ],
-            "defaultValue": "11.14.1",
+            "defaultValue": "11.14.2",
             "metadata": {
                 "description": "If the Purpose is LifeTime, the template will install the LifeTime version declared here."
         }
@@ -118,12 +118,12 @@
         "gatewaySubnetId": "[concat(resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName')), '/subnets/', parameters('gatewaySubnetName'))]",
         "PSImage":{
             "11.17.0":{
-                "baseimage": "2.13.0"
+                "baseimage": "2.14.0"
             }
         },
         "LTImage":{
-            "11.14.1":{
-                "baseimage": "2.13.0"
+            "11.14.2":{
+                "baseimage": "2.14.0"
             }
         },
         "virtualMachine": {
