@@ -102,7 +102,7 @@
         "lifetimeVersion": {
             "type": "string",
             "allowedValues": [
-                "11.17.1"
+                "11.20.1"
             ],
             "defaultValue": "11.17.1",
             "metadata": {
