@@ -8,7 +8,7 @@
         },
         "controllerAdminUser": {
             "type": "string",
-            "defaultValue": "OutSystemsVMAdmin"
+            "defaultValue": "KONDA"
         },
         "controllerAdminPass": {
             "type": "securestring"
