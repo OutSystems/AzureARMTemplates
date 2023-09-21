@@ -95,9 +95,9 @@
         "platformVersion": {
             "type": "string",
             "allowedValues": [
-                "11.22.0"
+                "11.23.0"
             ],
-            "defaultValue": "11.22.0",
+            "defaultValue": "11.23.0",
             "metadata": {
                 "description": "If the Purpose is Development, the template will install the Platform version declared here."
             }
@@ -128,8 +128,8 @@
         "controllerSubnetId": "[concat(resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName')), '/subnets/', parameters('frontendSubnetName'))]",
         "gatewaySubnetId": "[concat(resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName')), '/subnets/', parameters('gatewaySubnetName'))]",
         "PSImage":{
-            "11.22.0":{
-                "baseimage": "2.17.0"
+            "11.23.0":{
+                "baseimage": "2.18.0"
             }
         },
         "virtualMachine": {
