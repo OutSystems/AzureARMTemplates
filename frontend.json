@@ -129,7 +129,7 @@
         "gatewaySubnetId": "[concat(resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName')), '/subnets/', parameters('gatewaySubnetName'))]",
         "PSImage":{
             "11.29.0":{
-                "baseimage": ""
+                "baseimage": "2.25.0"
             }
         },
         "virtualMachine": {
