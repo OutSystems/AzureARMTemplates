@@ -92,9 +92,9 @@
         "platformVersion": {
             "type": "string",
             "allowedValues": [
-                "11.28.0"
+                "11.29.0"
             ],
-            "defaultValue": "11.28.0",
+            "defaultValue": "11.29.0",
             "metadata": {
                     "description": "If the Purpose is Development, the template will install the Platform version declared here."
             }
@@ -102,9 +102,9 @@
         "lifetimeVersion": {
             "type": "string",
             "allowedValues": [
-                "11.23.0"
+                ""
             ],
-            "defaultValue": "11.23.0",
+            "defaultValue": "",
             "metadata": {
                 "description": "If the Purpose is LifeTime, the template will install the LifeTime version declared here."
         }
@@ -117,13 +117,13 @@
         "controllerSubnetId": "[concat(resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName')), '/subnets/', parameters('controllerSubnetName'))]",
         "gatewaySubnetId": "[concat(resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName')), '/subnets/', parameters('gatewaySubnetName'))]",
         "PSImage":{
-            "11.28.0":{
-                "baseimage": "2.24.0"
+            "11.29.0":{
+                "baseimage": ""
             }
         },
         "LTImage":{
-            "11.23.0":{
-                "baseimage": "2.24.0"
+            "":{
+                "baseimage": ""
             }
         },
         "virtualMachine": {
