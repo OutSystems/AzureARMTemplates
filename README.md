@@ -169,6 +169,7 @@ The version to use and the software installed on each one are described in the f
 | 2.27.0 | 11.31.0 | 11.25.0 |
 | 2.28.0 | 11.32.0 | 11.25.2 |
 | 2.30.0 | 11.34.0 | 11.26.1 |
+| 2.31.0.3 | 11.38.0 | 11.27.4 |
 
 You can also use the versioning here to update your scalesets. Please follow Microsoft's reference documentation on the subject here:
 
